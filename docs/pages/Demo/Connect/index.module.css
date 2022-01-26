@@ -1,0 +1,39 @@
+.connected-spin {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    position: relative;
+}
+
+.connected-spin::after,
+.connected-spin::before {
+    @apply transition-colors;
+    
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: currentColor;
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    animation: spin 2s ease-in-out infinite;
+}
+
+.connected-spin::after {
+    animation-delay: 1s;
+}
+
+@keyframes spin {
+    0%,
+    100% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}

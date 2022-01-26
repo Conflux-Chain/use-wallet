@@ -1,0 +1,270 @@
+import create from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware';
+import { unstable_batchedUpdates } from 'react-dom';
+import detectProvider from './detect-provider';
+import Unit from './Unit';
+import { type Provider, type ProviderType } from './types'
+
+interface WalletState {
+    status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
+    accounts?: Array<string>;
+    chainId?: string;
+    balance?: Unit;
+    maxAvailableBalance?: Unit;
+}
+
+class Wallet<T extends ProviderType> {
+    private evtPrefix!: 'cfx' | 'eth';
+    private balanceTimer: number | null = null;
+    private resolveDetect!: () => void;
+    private detectPromise = new Promise<void>((resolve) => this.resolveDetect = resolve);
+
+    private provider?: Provider<T>;
+    private store = create(
+        subscribeWithSelector(
+            () =>
+                ({
+                    status: 'in-detecting',
+                    accounts: undefined,
+                    chainId: undefined,
+                    balance: undefined,
+                    maxAvailableBalance: undefined,
+                } as WalletState),
+        ),
+    );
+
+    constructor(providerType: 'conflux', params?: { mustBeFluent?: boolean; silent?: boolean; timeout?: number });
+    constructor(providerType: 'ethereum', params?: { mustBeMetaMask?: boolean; silent?: boolean; timeout?: number });
+    constructor(providerType: T) {
+        this.evtPrefix = providerPreFixMap[providerType];
+
+        detectProvider(arguments[0], arguments[1])
+            .then((provider) => {
+                this.provider = provider as Provider<T>;
+                this.batchGetInfo({ isInit: true });
+                this.subProvider();
+            })
+            .catch((err) => {
+                console.error('detect error:', err);
+                this.store.setState({ status: 'not-installed' });
+                this.resolveDetect();
+            })
+    }
+
+    private subProvider = async () => {
+        this.store.subscribe(selectors.chainId, this.trackBalance);
+        this.provider!.on('accountsChanged', () => this.batchGetInfo());
+        this.provider!.on('chainChanged', () => this.batchGetInfo());
+        // this.provider!.on('disconnect', (err) => { console.log('disconnect', err); });
+        // this.provider!.on('message', (message) => { console.log('message', message); });
+        // this.provider!.on('connect', (err) => { console.log('connect', err); });
+        // if (this.evtPrefix === 'cfx') {
+        // }
+    };
+
+    private handleAccountsChanged = (accounts?: string[]) => {
+        // console.log('handleAccountsChanged: ', accounts);
+        this.store.setState({ accounts, status: !!accounts?.[0] ? 'active' : 'not-active'});
+    };
+
+    private handleChainChanged = (chainId: string) => {
+        // console.log('handleChainChanged: ', String(parseInt(chainId)));
+        if (!chainId || chainId === '0xNaN') {
+            this.store.setState({ chainId: undefined, status: 'not-active', accounts: undefined, balance: undefined });
+            return;
+        }
+
+        const preChainId = this.store.getState().chainId;
+        if (preChainId !== chainId) {
+            this.store.setState({ chainId: String(parseInt(chainId)), balance: undefined });
+        }
+    };
+
+    private handleBalanceChanged = (newBalance?: Unit) => {
+        // console.log('handleBalanceChanged: ', newBalance);
+        if (!newBalance) return;
+        const preBalance = this.store.getState().balance;
+
+        if (preBalance === undefined || !preBalance.equalsWith(newBalance)) {
+            this.store.setState({ balance: newBalance });
+        }
+    };
+
+    // when connect or init, get account|chainId|balance batch, to reduce interface jitter.
+    private batchGetInfo = async({ isInit }: { isInit: boolean; } = { isInit: false }) => {
+        try {
+            const [chainId, accounts] = await Promise.all([this.getChainId(), isInit ? this.getAccounts() : this.requestAccounts()]);
+            const balance = await this.getBalance(accounts);
+            unstable_batchedUpdates(() => {
+                this.handleAccountsChanged(accounts);
+                this.handleChainChanged(chainId);
+                this.store.setState({ balance });
+            });
+        } catch (err) {
+            console.error('batchGetInfo error: ', err);
+            throw err;
+        } finally {
+            if (isInit) {
+                this.resolveDetect();
+            }
+        }
+    }
+
+    private requestAccounts = () => {
+        this.store.setState({ status: 'in-activating' });
+
+        const promise = this.provider!.request({ method: `${this.evtPrefix}_requestAccounts` })
+        promise.catch(() => this.store.setState({ status: 'not-active' }));
+        return promise;
+    };
+
+    private getAccounts = () => this.provider!.request({ method: `${this.evtPrefix}_accounts` });
+    private getChainId = () => this.provider!.request({ method: `${this.evtPrefix}_chainId` });
+
+    private getBalance = async (accounts?: Array<string>) => {
+        const account = accounts ? accounts[0] : this.store.getState().accounts?.[0];
+        if (!account) return;
+
+        try {
+            const minUnitBalance = await this.provider!.request({
+                method: `${this.evtPrefix}_getBalance`,
+                params: [account, this.evtPrefix === 'cfx' ? 'latest_state' : 'latest'],
+            });
+
+            return Unit.fromMinUnit(minUnitBalance);
+        } catch (err) {
+            console.error('Get balance error: ', err);
+            throw err;
+        }
+    };
+
+    private checkConnected = () => {
+        const account = this.store.getState().accounts?.[0];
+        if (!account) {
+            throw new Error('Operate error: request connect to wallet.');
+        }
+        return account;
+    }
+
+    private trackBalance = () => {
+        const account = this.store.getState().accounts?.[0];
+
+        const clearTimer = () => {
+            if (typeof this.balanceTimer === 'number') {
+                clearInterval(this.balanceTimer);
+                this.balanceTimer = null;
+            }
+        }
+
+        if (!account) {
+            this.store.setState({ balance: undefined });
+            clearTimer();
+            return;
+        }
+
+        clearTimer();
+
+        const getAndSetBalance = () => this.getBalance().then(balance => this.handleBalanceChanged(balance));
+        getAndSetBalance();
+
+        this.balanceTimer = setInterval(getAndSetBalance, 1500);
+    };
+
+
+
+    /* <--------- func ---------> */
+    public connect = () => {
+        const currentStatus = this.store.getState().status;
+        if (currentStatus !== 'not-active') {
+            if (currentStatus === 'active')
+                throw Promise.resolve();
+            else
+                throw new Error(`currentStatus can't activate`);
+        }
+        return this.batchGetInfo();
+    }
+
+    public sendTransaction = ({ to, value, data }: { to: string; value:string; data?: string; }) => {
+        const account = this.checkConnected();
+
+        if (!value.startsWith('0x'))
+            throw new Error('sendTransaction error: value must be hex string.');
+
+        return this.provider!.request({
+            method: `${this.evtPrefix}_sendTransaction`,
+            params: [{
+                from: account,
+                to,
+                data,
+                value
+            }],
+        });
+    }
+
+    public personalSign = (message: string) => {
+        const account = this.checkConnected();
+
+        return this.provider!.request({
+            method: 'personal_sign',
+            params: [message, account]
+        });
+    }
+
+    public typedSign = (message: string) => {
+        const account = this.checkConnected();
+
+        return this.provider!.request({
+            method: 'personal_sign',
+            params: [message, account]
+        });
+    }
+
+    /* <--------- utils ---------> */
+    public trackBalanceChangeOnce = (callback: () => void) => {
+        if (!callback) return;
+        let unsubBalance: Function | null = null;
+        let unsubAccount: Function | null = null;
+        unsubAccount = this.store.subscribe(selectors.accounts, () => {
+            if (!unsubAccount) return;
+            if (unsubBalance) {
+                unsubBalance();
+            }
+            unsubAccount();
+            unsubAccount = null;
+        });
+        unsubBalance = this.store.subscribe(selectors.balance, () => {
+            if (!unsubBalance) return;
+            callback();
+            unsubBalance();
+            unsubBalance = null;
+        });
+    }
+
+
+
+    /* <--------- hooks ---------> */
+    public useStatus = () => this.store(selectors.status);
+    public useAccount = () => this.store(selectors.account);
+    public useChainId = () => this.store(selectors.chainId);
+    public useBalance = () => this.store(selectors.balance);
+    public useMaxAvailableBalance = () => this.store(selectors.maxAvailableBalance);
+
+    /* <--------- other ---------> */
+    public detect = () => this.detectPromise;
+}
+
+const selectors = {
+    status: (state: WalletState) => state.status,
+    accounts: (state: WalletState) => state.accounts,
+    account: (state: WalletState) => state.accounts?.[0],
+    chainId: (state: WalletState) => state.chainId,
+    balance: (state: WalletState) => state.balance,
+    maxAvailableBalance: (state: WalletState) => state.maxAvailableBalance,
+};
+
+const providerPreFixMap = {
+    conflux: 'cfx',
+    ethereum: 'eth',
+} as const;
+
+export default Wallet;

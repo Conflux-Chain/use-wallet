@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "allowJs": false,
+        "skipLibCheck": false,
+        "esModuleInterop": false,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "baseUrl": ".",
+        "paths": {
+            "@fluent-wallet/useWallet*": ["src/index"],
+            "@hooks/*": ["docs/hooks/*"],
+            "@assets/*": ["docs/assets/*"],
+            "@pages/*": ["docs/pages/*"],
+            "@utils/*": ["docs/utils/*"],
+            "@components/*": ["docs/components/*"],
+            "@router/*": ["docs/router/*"]
+        }
+    },
+    "include": ["./src", "./docs", "./types", "./dist"]
+}

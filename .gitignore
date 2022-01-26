@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+site
+dist
+dist-ssr
+stats.html
+*.local
+.vscode
