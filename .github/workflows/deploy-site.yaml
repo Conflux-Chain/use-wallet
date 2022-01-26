@@ -1,0 +1,25 @@
+name: Deploy Site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-dapp-demo:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [16.5]
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn
+      - run: yarn build:site
+      - run: cp CNAME site
+      - name: Deploy to use-wallet.fluentwallet.dev
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: "use-wallet.fluentwallet.dev"
+          project: "./site/"
+          login: ${{ secrets.CONFLUX_ECO_SURGE_LOGIN}}
+          token: ${{ secrets.CONFLUX_ECO_SURGE_TOKEN}}
