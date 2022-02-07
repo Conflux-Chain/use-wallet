@@ -3,30 +3,30 @@ import useI18n from '@hooks/useI18n';
 
 const transitions = {
     en: {
-        useWallet: 'useWallet',
+        useWallet: 'use-wallet',
         slogan: `A simpler way to 'use' wallet in react-base dapp`,
         introduce: 'This is a front-end-view wallet hooks library for lightweight dapp rapid development use, only encapsulating the wallet injection in the window provider.If you need more complete and powerful support, js-conflux-sdk or web3.js will be more suitable.',
         feature1_title: 'Support both fluent and metamask',
-        feature1_text: `useWallet supports all wallets whose provider are compatible with the 'conflux' and 'ethereum' specifications.(Only full support for fluent and metamask is guaranteed)`,
+        feature1_text: `use-wallet supports all wallets whose provider are compatible with the 'conflux' and 'ethereum' specifications.(Only full support for fluent and metamask is guaranteed)`,
         feature2_title: 'Easy to use',
-        feature2_text: `useWallet has a high level encapsulation, without the need to pay attention to the provider and other specification-oriented concepts. From a front-end developer's perspective, focus on hooks and func and just use them.`,
+        feature2_text: `use-wallet has a high level encapsulation, without the need to pay attention to the provider and other specification-oriented concepts. From a front-end developer's perspective, focus on hooks and func and just use them.`,
         feature3_title: 'Fine-grained hooks to avoid duplicate render',
         feature3_text: `Some similar hooks package in the community have a habit of return frequently changing data like balance along with other data, which causes unnecessary render and is not advocated.`,
         feature4_title: 'Tiny',
-        feature4_text: `useWallet only communicates with the wallet through the wallet-injected provider, as well as providing some lightweight tooling methods.In many cases, developing a dapp doesn't require importing a large and comprehensive library like js-conflux-sdk, web3.js.`,
+        feature4_text: `use-wallet only communicates with the wallet through the wallet-injected provider, as well as providing some lightweight tooling methods.In many cases, developing a dapp doesn't require importing a large and comprehensive library like js-conflux-sdk, web3.js.`,
     },
     zh: {
-        useWallet: 'useWallet',
+        useWallet: 'use-wallet',
         slogan: `更简单地在 react 开发的 dapp 中使用钱包`,
         introduce: '这是一个前端视角的钱包 hooks 库，供轻量级 dapp 快速开发使用，仅仅封装了钱包注入在 window 中的 provider。如果你需要更完整强大的功能支持， js-conflux-sdk 或者 web3.js会更适合。',
         feature1_title: '同时支持 fluent 和 metamask',
-        feature1_text: `useWallet 支持 provider 兼容 'conflux' 和 'ethereum' 规范的所有钱包。(只保证对 fluent 和 metamask 的完全支持)`,
+        feature1_text: `use-wallet 支持 provider 兼容 'conflux' 和 'ethereum' 规范的所有钱包。(只保证对 fluent 和 metamask 的完全支持)`,
         feature2_title: '开箱即用',
-        feature2_text: `useWallet 做了高层次的封装，无需关注 provider 等偏规范的概念。以前端开发者的视角，聚焦于 hooks 和 func，直接使用即可。`,
+        feature2_text: `use-wallet 做了高层次的封装，无需关注 provider 等偏规范的概念。以前端开发者的视角，聚焦于 hooks 和 func，直接使用即可。`,
         feature3_title: '细分的 hooks 以规避重复渲染',
         feature3_text: `社区中的一些同类 hooks 封装习惯把 balance 这种经常变化的数据与其他数据一起返回。这会引起不必要的重复渲染，是不被提倡的。`,
         feature4_title: '体积小（10k）',
-        feature4_text: `useWallet 仅仅通过钱包注入的 provider 来沟通钱包，以及提供了一些轻量级的工具方法。很多情况下，开发一个 dapp 并不需要引入 js-conflux-sdk、web3.js 这样大而全的库。`,
+        feature4_text: `use-wallet 仅仅通过钱包注入的 provider 来沟通钱包，以及提供了一些轻量级的工具方法。很多情况下，开发一个 dapp 并不需要引入 js-conflux-sdk、web3.js 这样大而全的库。`,
     },
 } as const;
 

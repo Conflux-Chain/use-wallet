@@ -10,6 +10,7 @@ import ConnectDemo from './Connect';
 import ConnectBothDemo from './ConnectBoth';
 import ConnectSwitch from './ConnectSwitch';
 import SendTransaction from './SendTransaction';
+import Sign from './Sign';
 
 const demos = [
     {
@@ -33,13 +34,13 @@ const demos = [
         Demo: SendTransaction,
     },
     {
-        title: 'demo_connect_both_title4',
-        introduce: 'demo_connect_both_introduce',
-        Demo: ConnectDemo,
+        title: 'demo_sign_title',
+        introduce: 'demo_sign_introduce',
+        Demo: Sign,
     },
     {
-        title: 'demo_connect_both_title5',
-        introduce: 'demo_connect_both_introduce',
+        title: 'demo_addSwitch_title',
+        introduce: 'demo_addSwitch_introduce',
         Demo: ConnectDemo,
     },
 ] as const;
@@ -57,7 +58,11 @@ const transitions = {
         demo_connect_switch_introduce:
             `Maybe you need to make a dapp that supports both Conflux and Ethereum, and don't want to maintain two similar pieces of code.`,
         demo_send_transaction_title: 'Send Transaction',
-        demo_send_transaction_introduce: `This example demonstrates how to send a transaction.`,    
+        demo_send_transaction_introduce: `This example demonstrates how to send a transaction.`,
+        demo_sign_title: 'Sign',
+        demo_sign_introduce: 'Use use-wallet wrapped personalSign and typedSign method signatures.',
+        demo_addSwitch_title: 'add/switch chain and watchAsset',
+        demo_addSwitch_introduce: 'Add/switch chain and add token using use-wallet wrapper methods',
     },
     zh: {
         demo_connect_title: '连接 fluent 钱包',
@@ -69,6 +74,10 @@ const transitions = {
             '也许你需要做一个同时支持 Conflux 和 Ethereum 的 dapp，又不想维护两份相似的代码。',
         demo_send_transaction_title: '发起交易',
         demo_send_transaction_introduce: `这个例子演示了如何发起一笔交易。`,
+        demo_sign_title: '签名',
+        demo_sign_introduce: '使用 use-wallet 封装的 personalSign 和 typedSign 的方法签名。',
+        demo_addSwitch_title: '添加/切换链 以及 添加token',
+        demo_addSwitch_introduce: '使用 use-wallet 封装方法 添加/切换链 以及 添加token。',
     },
 } as const;
 
@@ -123,7 +132,7 @@ const DemoPage: React.FC = () => {
         to: {
             translateX: '-50%',
             scaleX: open ? 1 : (480 / (Math.min(window.innerWidth * .8, 1024))),
-            scaleY: open ? 1 : (rect.height / 400),
+            scaleY: open ? 1 : (rect.height / 460),
             borderColor: open ? 'var(--color-primary)' : 'transparent',
         },
     });
@@ -152,9 +161,9 @@ const DemoPage: React.FC = () => {
                     'absolute top-12 left-1/2 translate-x-[-50%] max-w-[1024px] rounded-md bg-primarytrans dark:bg-[#4b5563] border-4 border-transparent contain-strict origin-top transition-colors not-transition-border-color will-change-transform z-10',
                     !open && 'pointer-events-none',
                 )}
-                style={{ ...panelStyle, width: `${Math.min(window.innerWidth * .8, 1024)}px`, height: '400px' }}
+                style={{ ...panelStyle, width: `${Math.min(window.innerWidth * .8, 1024)}px`, height: '460px' }}
             >   
-                <CustomScrollbar  className='h-[400px]' contentClassName='w-full p-4 flex flex-wrap justify-center items-stretch gap-4'>
+                <CustomScrollbar  className='qwe h-[460px]' contentClassName='w-full p-4 flex flex-wrap justify-center items-stretch gap-4'>
                     {transition(
                         (style, demo) =>
                             demo && (

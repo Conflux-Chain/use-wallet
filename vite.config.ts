@@ -18,7 +18,8 @@ export default defineConfig({
             '@utils': path.resolve(__dirname, 'docs/utils'),
             '@components': path.resolve(__dirname, 'docs/components'),
             '@router': path.resolve(__dirname, 'docs/router'),
-            '@cfxjs/use-wallet': path.resolve(__dirname, 'src')
+            '@cfxjs/use-wallet': path.resolve(__dirname, 'src'),
+            '@custom-react-scrollbar': path.resolve(__dirname, 'custom-react-scrollbar'),
         },
     },
 });

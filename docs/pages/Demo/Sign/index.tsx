@@ -5,7 +5,7 @@ import showToast from '@components/tools/Toast';
 import { showWaitFluent, showTransactionSubmitted, hideWaitFluent, hideTransactionSubmitted } from '@components/tools/Modal';
 import styles from '../Connect/index.module.css';
 
-const SendTransactionDemo: React.FC = () => {
+const SignDemo: React.FC = () => {
     const status = useStatus();
     const account = useAccount();
     const chainId = useChainId();
@@ -94,4 +94,4 @@ const Balance: React.FC = memo(() => {
     );
 });
 
-export default SendTransactionDemo;
+export default SignDemo;

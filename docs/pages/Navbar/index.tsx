@@ -38,7 +38,7 @@ const Navbar: React.FC<Props> = ({ handleSwitchLocale, handleSwitchMode }) => {
             <div className="container mx-auto px-8 h-full flex items-center justify-between">
                 <div className="h-full flex items-center">
                     <img className="w-10 h-10 mr-1 translate-y-[-1px]" src={Logo} alt="logo" />
-                    <span className="mr-4 text-xl text-text1 transition-colors whitespace-nowrap">Fluent useWallet</span>
+                    <span className="mr-4 text-xl text-text1 transition-colors whitespace-nowrap">Fluent use-wallet</span>
 
                     {routes.map((route) => (
                         <Link

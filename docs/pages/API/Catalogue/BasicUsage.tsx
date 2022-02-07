@@ -4,18 +4,18 @@ import useI18n from '@hooks/useI18n';
 
 const transitions = {
     en: {
-        step1: 'This example shows how to develop a basic Dapp with \'useWallet\'.',
+        step1: 'This example shows how to develop a basic Dapp with \'use-wallet\'.',
         step2: 'First, you need to get the current status of the wallet with useStatus. A robust application should handle all statuses. the values of status are described later in the api, and the code in the example covers all statuses of the wallet from detection to connection completion.',
         step3: 'Once you have successfully connected to the wallet (and obtained authorization from the wallet for the current url), you can get the status of your current account and issue transactions.',
-        step4: `'useWallet' also provides some tool functions to facilitate development. For example, the Unit in the example is used for balance conversions and calculations with sufficient precision.`,
+        step4: `'use-wallet' also provides some tool functions to facilitate development. For example, the Unit in the example is used for balance conversions and calculations with sufficient precision.`,
         step5: `The main portal '@cfxjs/use-wallet' is connected to the conflux wallet (Fluent | Portal), to connect to the ethereum wallet just change the portal to '@cfxjs/use-wallet/ethereum'.`,
         step6: 'The changes to account, chainId, and balance are batch-processed so that they always change together during the "initialization of the activated" / "authorized wallet connection" / "switching of accounts", so you can use them without worrying about page jitter.'
     },
     zh: {
-        step1: '这个例子展示了如何用 \'useWallet\' 开发一个基本的 Dapp。',
+        step1: '这个例子展示了如何用 \'use-wallet\' 开发一个基本的 Dapp。',
         step2: '首先，需要用 useStatus 获取钱包当前状态。一个健壮的应用理应处理所有的状态。status 的各个值会在后面的 api 中具体介绍，例子中的代码涵盖了钱包从 探测 到 连接完成 的所有 状态。',
         step3: '当成功连接到钱包（取得钱包对当前 url 的授权）后，就可以获取当前账户的状态，以及签发交易了。',
-        step4: '\'useWallet\' 也提供了一些工具函数方便开发。比如例子中的 Unit，用以足够精度的 balance 进制转换、计算。',
+        step4: '\'use-wallet\' 也提供了一些工具函数方便开发。比如例子中的 Unit，用以足够精度的 balance 进制转换、计算。',
         step5: `主入口 '@cfxjs/use-wallet' 连接的是 conflux 钱包（Fluent | Portal），连接 ethereum 钱包只需要把入口换成 '@cfxjs/use-wallet/ethereum' 即可。`,
         step6: `account、chainId、balance 的变动做了批处理，它们在 初始化已激活/授权连接钱包/切换账户 的过程中永远是一起变化的，你可以放心的使用它们不用担心造成的页面的抖动。`
     },
