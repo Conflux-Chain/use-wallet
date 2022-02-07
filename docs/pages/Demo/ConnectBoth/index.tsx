@@ -5,14 +5,14 @@ import {
     useChainId as useFluentChainId,
     useBalance as useFluentBalance,
     connect as connectFluent,
-} from '@fluent-wallet/useWallet';
+} from '@cfxjs/use-wallet';
 import {
     useStatus as useMetaMaskStatus,
     useAccount as useMetaMaskAccount,
     useChainId as useMetaMaskChainId,
     useBalance as useMetaMaskBalance,
     connect as connectMetaMask,
-} from '@fluent-wallet/useWallet/entry-ethereum';
+} from '@cfxjs/use-wallet/ethereum';
 
 import WalletCard from './WalletCard';
 

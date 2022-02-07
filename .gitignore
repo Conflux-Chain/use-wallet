@@ -6,3 +6,6 @@ dist-ssr
 stats.html
 *.local
 .vscode
+yarn.lock
+package-lock.json
+pnpm-lock.yaml

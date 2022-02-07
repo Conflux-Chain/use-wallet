@@ -30,7 +30,7 @@ const WalletCard: React.FC<Props> = ({ useStatus, useAccount, useChainId, useBal
             }
         }
     }, []);
-    console.log('render  status:', status, ' , account:', account, ' , chainId:', chainId);
+    console.log(`render ${type} status:`, status, ' , account:', account, ' , chainId:', chainId);
 
     return (
         <div className="flex justify-center items-center">
@@ -77,12 +77,12 @@ const WalletCard: React.FC<Props> = ({ useStatus, useAccount, useChainId, useBal
 };
 
 const Balance: React.FC<{ useBalance: typeof useBalance; type: Props['type']; }> = memo(({ useBalance, type }) => {
-    const balance = useBalance();
+    const balance = useBalance()!;
 
     return (
         <>
             <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
-            <p className="text-[14px] leading-[18px] text-text2 transition-colors">{balance !== undefined ? `${balance.toDecimalStandardUnit()} ${type === 'Fluent' ? 'CFX' : 'ETH'}` : 'fetching...'}</p>
+            <p className="text-[14px] leading-[18px] text-text2 transition-colors">{`${balance.toDecimalStandardUnit()} ${type === 'Fluent' ? 'CFX' : 'ETH'}`}</p>
         </>
     );
 });

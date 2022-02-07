@@ -18,7 +18,7 @@ export default defineConfig({
             '@utils': path.resolve(__dirname, 'docs/utils'),
             '@components': path.resolve(__dirname, 'docs/components'),
             '@router': path.resolve(__dirname, 'docs/router'),
-            '@fluent-wallet/useWallet': path.resolve(__dirname, 'src')
+            '@cfxjs/use-wallet': path.resolve(__dirname, 'src')
         },
     },
 });

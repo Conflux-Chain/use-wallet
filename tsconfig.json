@@ -17,7 +17,7 @@
         "jsx": "react-jsx",
         "baseUrl": ".",
         "paths": {
-            "@fluent-wallet/useWallet*": ["src/index"],
+            "@cfxjs/use-wallet*": ["src/index"],
             "@hooks/*": ["docs/hooks/*"],
             "@assets/*": ["docs/assets/*"],
             "@pages/*": ["docs/pages/*"],

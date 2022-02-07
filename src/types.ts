@@ -2,10 +2,33 @@ export type ProviderType = 'conflux' | 'ethereum';
 type PreFixType = 'cfx' | 'eth';
 type Events = 'chainChanged' | 'accountsChanged' | 'connect' | 'disconnect';
 
-interface ProviderRpcError extends Error {
+export interface ProviderRpcError extends Error {
     message: string;
     code: number;
     data?: unknown;
+}
+
+export interface AddChainParameter {
+    chainId: string; // A 0x-prefixed hexadecimal string
+    chainName: string;
+    nativeCurrency: {
+        name: string;
+        symbol: string; // 2-6 characters long
+        decimals: 18;
+    };
+    rpcUrls: string[];
+    blockExplorerUrls?: string[];
+    iconUrls?: string[]; // Currently ignored.
+}
+
+export interface WatchAssetParams {
+    type: 'ERC20'; // In the future, other standards will be supported
+    options: {
+      address: string; // The address of the token contract
+      'symbol': string; // A ticker symbol or shorthand, up to 5 characters
+      decimals: number; // The number of token decimals
+      image: string; // A string url of the token logo
+    };
 }
 
 export interface Provider<T extends ProviderType = 'conflux'> {
@@ -21,8 +44,10 @@ export interface Provider<T extends ProviderType = 'conflux'> {
     request(args: { method: `${PreFixType}_sendTransaction`; params: [{ from: string; to: string; value: string; data?: string }] }): Promise<any>;
     request(args: { method: `${PreFixType}_getBalance`; params: [string, 'latest' | 'latest_state'] }): Promise<string>;
     request(args: { method: 'personal_sign'; params: [string, string] }): Promise<any>;
-    request(args: { method: `wallet_add${Capitalize<T>}Chain`; params: any }): Promise<any>;
-    request(args: { method: `wallet_switch${Capitalize<T>}Chain`; params: [{ chainId: string }] }): Promise<any>;
+    request(args: { method: `${PreFixType}_signTypedData_v4`; params: [string, string] }): Promise<any>;
+    request(args: { method: `wallet_add${Capitalize<ProviderType>}Chain`; params: [AddChainParameter] }): Promise<null>;
+    request(args: { method: `wallet_switch${Capitalize<ProviderType>}Chain`; params: [{ chainId: string }] }): Promise<null>;
+    request(args: { method: `wallet_watchAsset`; params: { type: string; options: Object; } }): Promise<boolean>;
 
     isFluent?: boolean;
     isMetaMask?: boolean;

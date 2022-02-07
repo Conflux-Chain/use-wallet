@@ -3,23 +3,23 @@ import { subscribeWithSelector } from 'zustand/middleware';
 import { unstable_batchedUpdates } from 'react-dom';
 import detectProvider from './detect-provider';
 import Unit from './Unit';
-import { type Provider, type ProviderType } from './types'
+import type { Provider, ProviderType, AddChainParameter, WatchAssetParams } from './types'
 
 interface WalletState {
     status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
     accounts?: Array<string>;
     chainId?: string;
     balance?: Unit;
-    maxAvailableBalance?: Unit;
 }
 
 class Wallet<T extends ProviderType> {
+    private providerType: Capitalize<ProviderType>;
     private evtPrefix!: 'cfx' | 'eth';
     private balanceTimer: number | null = null;
     private resolveDetect!: () => void;
     private detectPromise = new Promise<void>((resolve) => this.resolveDetect = resolve);
 
-    private provider?: Provider<T>;
+    public provider?: Provider<T>;
     private store = create(
         subscribeWithSelector(
             () =>
@@ -28,7 +28,6 @@ class Wallet<T extends ProviderType> {
                     accounts: undefined,
                     chainId: undefined,
                     balance: undefined,
-                    maxAvailableBalance: undefined,
                 } as WalletState),
         ),
     );
@@ -36,12 +35,13 @@ class Wallet<T extends ProviderType> {
     constructor(providerType: 'conflux', params?: { mustBeFluent?: boolean; silent?: boolean; timeout?: number });
     constructor(providerType: 'ethereum', params?: { mustBeMetaMask?: boolean; silent?: boolean; timeout?: number });
     constructor(providerType: T) {
+        this.providerType = providerType === 'conflux' ? 'Conflux' : 'Ethereum';
         this.evtPrefix = providerPreFixMap[providerType];
 
         detectProvider(arguments[0], arguments[1])
             .then((provider) => {
                 this.provider = provider as Provider<T>;
-                this.batchGetInfo({ isInit: true });
+                this.batchGetInfo();
                 this.subProvider();
             })
             .catch((err) => {
@@ -55,16 +55,17 @@ class Wallet<T extends ProviderType> {
         this.store.subscribe(selectors.chainId, this.trackBalance);
         this.provider!.on('accountsChanged', () => this.batchGetInfo());
         this.provider!.on('chainChanged', () => this.batchGetInfo());
-        // this.provider!.on('disconnect', (err) => { console.log('disconnect', err); });
-        // this.provider!.on('message', (message) => { console.log('message', message); });
-        // this.provider!.on('connect', (err) => { console.log('connect', err); });
-        // if (this.evtPrefix === 'cfx') {
-        // }
     };
 
     private handleAccountsChanged = (accounts?: string[]) => {
         // console.log('handleAccountsChanged: ', accounts);
-        this.store.setState({ accounts, status: !!accounts?.[0] ? 'active' : 'not-active'});
+        const hasAccount = !!accounts?.[0];
+
+        if (hasAccount) {
+            this.store.setState({ status: 'active', accounts });
+        } else {
+            this.store.setState({ status: 'not-active', balance: undefined });
+        }
     };
 
     private handleChainChanged = (chainId: string) => {
@@ -91,9 +92,9 @@ class Wallet<T extends ProviderType> {
     };
 
     // when connect or init, get account|chainId|balance batch, to reduce interface jitter.
-    private batchGetInfo = async({ isInit }: { isInit: boolean; } = { isInit: false }) => {
+    private batchGetInfo = async({ isRequestConnect }: { isRequestConnect: boolean; } = { isRequestConnect: false }) => {
         try {
-            const [chainId, accounts] = await Promise.all([this.getChainId(), isInit ? this.getAccounts() : this.requestAccounts()]);
+            const [chainId, accounts] = await Promise.all([this.getChainId(), isRequestConnect ? this.requestAccounts() : this.getAccounts()]);
             const balance = await this.getBalance(accounts);
             unstable_batchedUpdates(() => {
                 this.handleAccountsChanged(accounts);
@@ -104,14 +105,15 @@ class Wallet<T extends ProviderType> {
             console.error('batchGetInfo error: ', err);
             throw err;
         } finally {
-            if (isInit) {
-                this.resolveDetect();
-            }
+            this.resolveDetect();
         }
     }
 
     private requestAccounts = () => {
-        this.store.setState({ status: 'in-activating' });
+        const preStatus = this.store.getState().status;
+        if (preStatus !== 'active') {
+            this.store.setState({ status: 'in-activating' });
+        }
 
         const promise = this.provider!.request({ method: `${this.evtPrefix}_requestAccounts` })
         promise.catch(() => this.store.setState({ status: 'not-active' }));
@@ -181,14 +183,15 @@ class Wallet<T extends ProviderType> {
             else
                 throw new Error(`currentStatus can't activate`);
         }
-        return this.batchGetInfo();
+        return this.batchGetInfo({ isRequestConnect: true });
     }
 
     public sendTransaction = ({ to, value, data }: { to: string; value:string; data?: string; }) => {
         const account = this.checkConnected();
 
-        if (!value.startsWith('0x'))
+        if (!value.startsWith('0x')) {
             throw new Error('sendTransaction error: value must be hex string.');
+        }
 
         return this.provider!.request({
             method: `${this.evtPrefix}_sendTransaction`,
@@ -210,15 +213,41 @@ class Wallet<T extends ProviderType> {
         });
     }
 
-    public typedSign = (message: string) => {
+    public typedSign = (typedData: Object) => {
         const account = this.checkConnected();
 
+        if (typeof typedData !== 'object') {
+            throw new Error('typedSign error: typedData must be object.');
+        }
+
         return this.provider!.request({
-            method: 'personal_sign',
-            params: [message, account]
+            method: `${this.evtPrefix}_signTypedData_v4`,
+            params: [account, JSON.stringify(typedData)]
         });
     }
 
+    public addChain = (param: AddChainParameter) => {
+        return this.provider!.request({
+            method: `wallet_add${this.providerType}Chain`,
+            params: [param]
+        });
+    }
+
+    public switchChain = (chainId: string) => {
+        return this.provider!.request({
+            method: `wallet_switch${this.providerType}Chain`,
+            params: [{ chainId }]
+        });
+    }
+
+    public watchAsset = (param: WatchAssetParams) => {
+        if (!param) return;
+        return this.provider!.request({
+            method: 'wallet_watchAsset',
+            params: param
+        });
+    }
+    
     /* <--------- utils ---------> */
     public trackBalanceChangeOnce = (callback: () => void) => {
         if (!callback) return;
@@ -247,10 +276,9 @@ class Wallet<T extends ProviderType> {
     public useAccount = () => this.store(selectors.account);
     public useChainId = () => this.store(selectors.chainId);
     public useBalance = () => this.store(selectors.balance);
-    public useMaxAvailableBalance = () => this.store(selectors.maxAvailableBalance);
 
     /* <--------- other ---------> */
-    public detect = () => this.detectPromise;
+    public completeDetect = () => this.detectPromise;
 }
 
 const selectors = {
@@ -259,7 +287,6 @@ const selectors = {
     account: (state: WalletState) => state.accounts?.[0],
     chainId: (state: WalletState) => state.chainId,
     balance: (state: WalletState) => state.balance,
-    maxAvailableBalance: (state: WalletState) => state.maxAvailableBalance,
 };
 
 const providerPreFixMap = {

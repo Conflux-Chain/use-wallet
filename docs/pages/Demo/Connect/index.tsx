@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import cx from 'clsx';
-import { useStatus, useAccount, useChainId, useBalance, connect } from '@fluent-wallet/useWallet';
+import { useStatus, useAccount, useChainId, useBalance, connect } from '@cfxjs/use-wallet';
 import showToast from '@components/tools/Toast';
 import CFX from '@assets/cfx.svg';
 import styles from './index.module.css';
@@ -62,13 +62,13 @@ const ConnectDemo: React.FC = () => {
 };
 
 const Balance: React.FC = memo(() => {
-    const balance = useBalance();
+    const balance = useBalance()!;
 
     return (
         <>
             <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
             <p className="text-[14px] leading-[18px] text-text2 transition-colors">
-                {balance !== undefined ? `${balance.toDecimalStandardUnit()} CFX` : 'fetching...'}
+                {`${balance.toDecimalStandardUnit()} CFX`}
             </p>
         </>
     );
