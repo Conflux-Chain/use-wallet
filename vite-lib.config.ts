@@ -22,7 +22,7 @@ export default defineConfig({
         },
     ],
     build: {
-        target: 'esnext',
+        target: 'es6',
         lib: {
             entry: 'src/index.ts',
             fileName: () => 'index.js',

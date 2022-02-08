@@ -41,7 +41,7 @@ export interface Provider<T extends ProviderType = 'conflux'> {
     request(args: { method: `${PreFixType}_accounts` }): Promise<Array<string>>;
     request(args: { method: `${PreFixType}_requestAccounts` }): Promise<Array<string>>;
     request(args: { method: `${PreFixType}_chainId` }): Promise<string>;
-    request(args: { method: `${PreFixType}_sendTransaction`; params: [{ from: string; to: string; value: string; data?: string }] }): Promise<any>;
+    request(args: { method: `${PreFixType}_sendTransaction`; params: [{ from: string; to: string; value: string | number; data?: string }] }): Promise<any>;
     request(args: { method: `${PreFixType}_getBalance`; params: [string, 'latest' | 'latest_state'] }): Promise<string>;
     request(args: { method: 'personal_sign'; params: [string, string] }): Promise<any>;
     request(args: { method: `${PreFixType}_signTypedData_v4`; params: [string, string] }): Promise<any>;

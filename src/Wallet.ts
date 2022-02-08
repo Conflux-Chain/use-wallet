@@ -186,12 +186,8 @@ class Wallet<T extends ProviderType> {
         return this.batchGetInfo({ isRequestConnect: true });
     }
 
-    public sendTransaction = ({ to, value, data }: { to: string; value:string; data?: string; }) => {
+    public sendTransaction = ({ to, value, data }: { to: string; value: string | number; data?: string; }) => {
         const account = this.checkConnected();
-
-        if (!value.startsWith('0x')) {
-            throw new Error('sendTransaction error: value must be hex string.');
-        }
 
         return this.provider!.request({
             method: `${this.evtPrefix}_sendTransaction`,
