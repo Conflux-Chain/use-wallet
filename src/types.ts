@@ -31,6 +31,15 @@ export interface WatchAssetParams {
     };
 }
 
+export interface TransactionParameters {
+    gasPrice?: string; // customizable by user during MetaMask confirmation.
+    gas?: string; // customizable by user during MetaMask confirmation.
+    to: string; // Required except during contract publications.
+    from: string; // must match user's active address.
+    value: string; // Only required to send ether to the recipient from the initiating external account.
+    data?: string; // Optional, but used for defining smart contract creation and interaction.
+}
+
 export interface Provider<T extends ProviderType = 'conflux'> {
     isConnected(): boolean;
     on(event: 'connect', cb: (param: { chainId: string; networkId: number }) => void): void;
@@ -41,7 +50,7 @@ export interface Provider<T extends ProviderType = 'conflux'> {
     request(args: { method: `${PreFixType}_accounts` }): Promise<Array<string>>;
     request(args: { method: `${PreFixType}_requestAccounts` }): Promise<Array<string>>;
     request(args: { method: `${PreFixType}_chainId` }): Promise<string>;
-    request(args: { method: `${PreFixType}_sendTransaction`; params: [{ from: string; to: string; value: string | number; data?: string }] }): Promise<any>;
+    request(args: { method: `${PreFixType}_sendTransaction`; params: [TransactionParameters] }): Promise<any>;
     request(args: { method: `${PreFixType}_getBalance`; params: [string, 'latest' | 'latest_state'] }): Promise<string>;
     request(args: { method: 'personal_sign'; params: [string, string] }): Promise<any>;
     request(args: { method: `${PreFixType}_signTypedData_v4`; params: [string, string] }): Promise<any>;
@@ -51,4 +60,5 @@ export interface Provider<T extends ProviderType = 'conflux'> {
 
     isFluent?: boolean;
     isMetaMask?: boolean;
+    isConfluxPortal?: boolean;
 }

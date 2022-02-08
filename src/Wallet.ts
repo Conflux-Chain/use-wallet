@@ -3,7 +3,7 @@ import { subscribeWithSelector } from 'zustand/middleware';
 import { unstable_batchedUpdates } from 'react-dom';
 import detectProvider from './detect-provider';
 import Unit from './Unit';
-import type { Provider, ProviderType, AddChainParameter, WatchAssetParams } from './types'
+import type { Provider, ProviderType, AddChainParameter, WatchAssetParams, TransactionParameters } from './types'
 
 interface WalletState {
     status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
@@ -41,6 +41,14 @@ class Wallet<T extends ProviderType> {
         detectProvider(arguments[0], arguments[1])
             .then((provider) => {
                 this.provider = provider as Provider<T>;
+                if (provider.isConfluxPortal && (provider as any).send && !provider.request) {
+                    this.provider.request = ({ method, params }: any) => {
+                        if (method === 'accounts') return Promise.resolve((this.provider as any).selectedAddress);
+                        if (method === 'cfx_chainId') return Promise.resolve((this.provider as any).networkVersion);
+                        return (this.provider as any)?.send(method, params);
+                    }
+                }
+
                 this.batchGetInfo();
                 this.subProvider();
             })
@@ -64,7 +72,7 @@ class Wallet<T extends ProviderType> {
         if (hasAccount) {
             this.store.setState({ status: 'active', accounts });
         } else {
-            this.store.setState({ status: 'not-active', balance: undefined });
+            this.store.setState({ status: 'not-active', accounts, balance: undefined });
         }
     };
 
@@ -186,16 +194,18 @@ class Wallet<T extends ProviderType> {
         return this.batchGetInfo({ isRequestConnect: true });
     }
 
-    public sendTransaction = ({ to, value, data }: { to: string; value: string | number; data?: string; }) => {
+    public sendTransaction = (params: Omit<TransactionParameters, 'from'>) => {
         const account = this.checkConnected();
+
+        if (typeof params !== 'object') {
+            throw new Error('sendTransaction error: params must be object.');
+        }
 
         return this.provider!.request({
             method: `${this.evtPrefix}_sendTransaction`,
             params: [{
+                ...params,
                 from: account,
-                to,
-                data,
-                value
             }],
         });
     }
