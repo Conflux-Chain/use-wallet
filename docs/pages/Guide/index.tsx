@@ -100,19 +100,19 @@ const GuidePage: React.FC = () => {
             </div>
 
             <div className="mt-14">
-                <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                <div className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
                     {features.map((feature) => (
                         <div className="relative" key={feature.title}>
-                            <dt>
+                            <div>
                                 <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white transition-colors">
                                     {feature.icon}
                                 </div>
                                 <p className="ml-16 text-lg leading-6 font-medium text-text1 transition-colors">{i18n[feature.title]}</p>
-                            </dt>
+                            </div>
                             <dd className="mt-2 ml-16 text-base text-text2 transition-colors">{i18n[feature.text]}</dd>
                         </div>
                     ))}
-                </dl>
+                </div>
             </div>
         </div>
     );

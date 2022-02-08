@@ -1,7 +1,7 @@
 import Unit from '../Unit';
 import type { Provider, AddChainParameter, WatchAssetParams } from '../types';
 
-export declare const provider: Provider<'ethereum'> | undefined;
+export declare const provider: Provider;
 export declare const completeDetect: () => Promise<void>;
 export declare const connect: () => Promise<void>;
 export declare const sendTransaction: ({

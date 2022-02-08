@@ -24,10 +24,10 @@ export interface AddChainParameter {
 export interface WatchAssetParams {
     type: 'ERC20'; // In the future, other standards will be supported
     options: {
-      address: string; // The address of the token contract
-      'symbol': string; // A ticker symbol or shorthand, up to 5 characters
-      decimals: number; // The number of token decimals
-      image: string; // A string url of the token logo
+        address: string; // The address of the token contract
+        symbol: string; // A ticker symbol or shorthand, up to 5 characters
+        decimals: number; // The number of token decimals
+        image: string; // A string url of the token logo
     };
 }
 
@@ -40,7 +40,7 @@ export interface TransactionParameters {
     data?: string; // Optional, but used for defining smart contract creation and interaction.
 }
 
-export interface Provider<T extends ProviderType = 'conflux'> {
+export interface Provider {
     isConnected(): boolean;
     on(event: 'connect', cb: (param: { chainId: string; networkId: number }) => void): void;
     on(event: 'disconnect', cb: (a: any) => void): void;
@@ -50,13 +50,13 @@ export interface Provider<T extends ProviderType = 'conflux'> {
     request(args: { method: `${PreFixType}_accounts` }): Promise<Array<string>>;
     request(args: { method: `${PreFixType}_requestAccounts` }): Promise<Array<string>>;
     request(args: { method: `${PreFixType}_chainId` }): Promise<string>;
-    request(args: { method: `${PreFixType}_sendTransaction`; params: [TransactionParameters] }): Promise<any>;
+    request(args: { method: `${PreFixType}_sendTransaction`; params: [TransactionParameters] }): Promise<string>;
     request(args: { method: `${PreFixType}_getBalance`; params: [string, 'latest' | 'latest_state'] }): Promise<string>;
-    request(args: { method: 'personal_sign'; params: [string, string] }): Promise<any>;
-    request(args: { method: `${PreFixType}_signTypedData_v4`; params: [string, string] }): Promise<any>;
+    request(args: { method: 'personal_sign'; params: [string, string] }): Promise<string>;
+    request(args: { method: `${PreFixType}_signTypedData_v4`; params: [string, string] }): Promise<string>;
     request(args: { method: `wallet_add${Capitalize<ProviderType>}Chain`; params: [AddChainParameter] }): Promise<null>;
     request(args: { method: `wallet_switch${Capitalize<ProviderType>}Chain`; params: [{ chainId: string }] }): Promise<null>;
-    request(args: { method: `wallet_watchAsset`; params: { type: string; options: Object; } }): Promise<boolean>;
+    request(args: { method: `wallet_watchAsset`; params: { type: string; options: Record<string, any> } }): Promise<boolean>;
 
     isFluent?: boolean;
     isMetaMask?: boolean;

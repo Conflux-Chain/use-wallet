@@ -25,7 +25,7 @@ const UseStatus: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <dt>
+        <div>
             <h3>useStatus</h3>
 
             <h4>declare:</h4>
@@ -40,7 +40,7 @@ const UseStatus: React.FC = () => {
             <p>{i18n.step4}</p>
             <p>{i18n.step5}</p>
             <p>{i18n.step6}</p>
-        </dt>
+        </div>
     );
 }
 

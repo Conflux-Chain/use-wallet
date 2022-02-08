@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import cx from 'clsx';
 import { useStatus, useAccount, useChainId, useBalance, connect } from '@cfxjs/use-wallet';
 import showToast from '@components/tools/Toast';
@@ -9,6 +9,7 @@ const ConnectDemo: React.FC = () => {
     const status = useStatus();
     const account = useAccount();
     const chainId = useChainId();
+    const balance = useBalance()!;
 
     const handleClickConnect = useCallback(async () => {
         try {
@@ -46,8 +47,11 @@ const ConnectDemo: React.FC = () => {
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{chainId}</p>
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">account address:</p>
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{account}</p>
-                    <Balance />
-
+                    <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
+                    <p className="text-[14px] leading-[18px] text-text2 transition-colors">
+                        {`${balance.toDecimalStandardUnit()} CFX`}
+                    </p>
+                    
                     <div className="mt-[16px] px-[12px] py-[10px] flex items-center text-[14px] text-[#3D3F4C] bg-[#F7F8FA] rounded-[2px]">
                         <img className="mr-[8px] w-[24px] h-[24px]" src={CFX} alt="cfx icon" />
                         CFX (Conflux Network)
@@ -61,17 +65,5 @@ const ConnectDemo: React.FC = () => {
     );
 };
 
-const Balance: React.FC = memo(() => {
-    const balance = useBalance()!;
-
-    return (
-        <>
-            <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
-            <p className="text-[14px] leading-[18px] text-text2 transition-colors">
-                {`${balance.toDecimalStandardUnit()} CFX`}
-            </p>
-        </>
-    );
-});
 
 export default ConnectDemo;

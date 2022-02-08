@@ -23,7 +23,11 @@ export const routes = [{
 }] as const;
 
 const AppRouter = () => {
-    const [mode, setMode] = useState<'light' | 'dark'>(() => localStorage.getItem('mode') as 'light' || 'light');
+    const [mode, setMode] = useState<'light' | 'dark'>(() => {
+        const last = localStorage.getItem('mode') as 'light' || 'light';
+        if (last === 'light' || last === 'dark') return last;
+        return 'light';
+    });
 
     useEffect(() => {
         if (mode === 'dark') {
@@ -42,7 +46,11 @@ const AppRouter = () => {
     }, []);
 
 
-    const [locale, setLocal] = useState<'zh' | 'en'>(() => localStorage.getItem('locale') as 'en' || (navigator.language.includes('zh') ? 'zh' : 'en'));
+    const [locale, setLocal] = useState<'zh' | 'en'>(() => {
+        const last = localStorage.getItem('locale') as 'en' | 'zh';
+        if (last === 'en' || last === 'zh') return last;
+        return (navigator.language.includes('zh') ? 'zh' : 'en')
+    });
     const handleSwitchLocale = useCallback(() => setLocal(preLocale => {
         const locale = preLocale === 'zh' ? 'en' : 'zh';
         localStorage.setItem('locale', locale);

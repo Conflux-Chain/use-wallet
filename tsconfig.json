@@ -18,7 +18,6 @@
         "baseUrl": ".",
         "paths": {
             "@cfxjs/use-wallet*": ["src/index"],
-            "@custom-react-scrollbar*": ["custom-react-scrollbar/index"],
             "@hooks/*": ["docs/hooks/*"],
             "@assets/*": ["docs/assets/*"],
             "@pages/*": ["docs/pages/*"],

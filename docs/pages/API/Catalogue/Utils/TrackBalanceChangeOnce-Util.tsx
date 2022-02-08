@@ -17,7 +17,7 @@ const TrackBalanceChangeOnce: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <dt>
+        <div>
             <h3>trackBalanceChangeOnce</h3>
 
             <h4>declare:</h4>
@@ -28,7 +28,7 @@ const TrackBalanceChangeOnce: React.FC = () => {
             <h4 className='mt-[16px]'>Description:</h4>
             <p dangerouslySetInnerHTML={{ __html: i18n.step1 }}/>
             <p>{i18n.step2}</p>
-        </dt>
+        </div>
     );
 }
 

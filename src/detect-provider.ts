@@ -17,9 +17,9 @@ import { type Provider, type ProviderType } from './types'
  * @returns A Promise that resolves with the Provider if it is detected within
  * given timeout, otherwise null.
  */
-export default function detectProvider(providerType: 'conflux', params?: { mustBeFluent?: boolean; silent?: boolean; timeout?: number }): Promise<Provider<'conflux'>>;
-export default function detectProvider(providerType: 'ethereum', params?: { mustBeMetaMask?: boolean; silent?: boolean; timeout?: number }): Promise<Provider<'ethereum'>>;
-export default function detectProvider<T extends ProviderType>(): Promise<Provider<T>> {
+export default function detectProvider(providerType: 'conflux', params?: { mustBeFluent?: boolean; silent?: boolean; timeout?: number }): Promise<Provider>;
+export default function detectProvider(providerType: 'ethereum', params?: { mustBeMetaMask?: boolean; silent?: boolean; timeout?: number }): Promise<Provider>;
+export default function detectProvider(): Promise<Provider> {
     const providerType = arguments[0] as ProviderType;
     const { mustBeMetaMask = false, mustBeFluent = false, silent = false , timeout = 0 } = arguments[1] ?? {};
     _validateInputs();
@@ -49,7 +49,7 @@ export default function detectProvider<T extends ProviderType>(): Promise<Provid
 
             window.removeEventListener(`${providerType}#initialized`, handleEthereum);
 
-            const provider = (window as any)[providerType] as Provider<T>;
+            const provider = (window as any)[providerType] as Provider;
 
             const mustBeOfficalWallet = providerType === 'conflux' ? mustBeFluent : mustBeMetaMask;
             let isOfficalWallet = !!provider;

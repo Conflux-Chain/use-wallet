@@ -17,7 +17,7 @@ const UseBalance: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <dt>
+        <div>
             <h3>useBalance</h3>
 
             <h4>declare:</h4>
@@ -28,7 +28,7 @@ const UseBalance: React.FC = () => {
             <h4 className='mt-[16px]'>Description:</h4>
             <p>{i18n.step1}</p>
             <p>{i18n.step2}</p>
-        </dt>
+        </div>
     );
 }
 

@@ -25,7 +25,7 @@ const BasicUsage: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <dt>
+        <div>
             <p>{i18n.step1}</p>
             <p>{i18n.step2}</p>
             <p>{i18n.step3}</p>
@@ -35,7 +35,7 @@ const BasicUsage: React.FC = () => {
             <Code className='mt-[16px]'>
                 {code}
             </Code>
-        </dt>
+        </div>
     );
 }
 

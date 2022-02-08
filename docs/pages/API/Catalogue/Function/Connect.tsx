@@ -21,7 +21,7 @@ const Connect: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <dt>
+        <div>
             <h3>Connect</h3>
 
             <h4>declare:</h4>
@@ -34,7 +34,7 @@ const Connect: React.FC = () => {
             <p>{i18n.step2}</p>
             <p>{i18n.step3}</p>
             <p><strong>{i18n.step4}</strong></p>
-        </dt>
+        </div>
     );
 }
 

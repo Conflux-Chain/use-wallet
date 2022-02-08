@@ -7,7 +7,7 @@ import './index.css';
 
 const ApiDocs: React.FC = () => {
     return (
-        <dl className={"docs py-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"}>
+        <div className={"docs py-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"}>
             <h2>Basic Usage</h2>
             <BasicUsage />
 
@@ -19,7 +19,7 @@ const ApiDocs: React.FC = () => {
 
             <h2>Utils</h2>
             <Utils />
-        </dl>
+        </div>
     );
 }
 

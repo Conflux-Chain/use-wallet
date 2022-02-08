@@ -19,7 +19,7 @@ const SendTransaction: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <dt>
+        <div>
             <h3>sendTransaction</h3>
 
             <h4>declare:</h4>
@@ -31,7 +31,7 @@ const SendTransaction: React.FC = () => {
             <p>{i18n.step1}</p>
             <p>{i18n.step2}</p>
             <p>{i18n.step3}</p>
-        </dt>
+        </div>
     );
 }
 

@@ -1,14 +1,15 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import cx from 'clsx';
-import { useStatus, useAccount, useChainId, useBalance, connect, sendTransaction, trackBalanceChangeOnce, Unit } from '@cfxjs/use-wallet';
+import { useStatus, useAccount, useChainId, useBalance, connect, personalSign, typedSign } from '@cfxjs/use-wallet';
 import showToast from '@components/tools/Toast';
-import { showWaitFluent, showTransactionSubmitted, hideWaitFluent, hideTransactionSubmitted } from '@components/tools/Modal';
+import { showWaitFluent, showActionSubmitted, hideWaitFluent } from '@components/tools/Modal';
 import styles from '../Connect/index.module.css';
 
 const SignDemo: React.FC = () => {
     const status = useStatus();
     const account = useAccount();
-    const chainId = useChainId();
+    const chainId = useChainId()!;
+    const balance = useBalance()!;
 
     const handleClickConnect = useCallback(async () => {
         try {
@@ -22,29 +23,33 @@ const SignDemo: React.FC = () => {
         }
     }, []);
 
-    const handleClickSendTransaction = useCallback(async () => {
-        if (!account) return;
-
+    const handleClickPersonalSign = useCallback(async () => {
         let waitFluentKey: string | number = null!;
-        let transactionSubmittedKey: string | number = null!;
         try {
-            waitFluentKey = showWaitFluent()
-            const TxnHash = await sendTransaction({
-                to: account,
-                value: Unit.fromStandardUnit('1').toHexMinUnit(),
-            });
-            transactionSubmittedKey = showTransactionSubmitted(TxnHash);
-            trackBalanceChangeOnce(() => {
-                hideTransactionSubmitted(transactionSubmittedKey)
-                showToast('It seems the transaction is complete')
-            });
+            waitFluentKey = showWaitFluent();
+            const TxnHash = await personalSign('Personal Sign message example');
+            showActionSubmitted(TxnHash, 'Personal Sign');
         } catch (err) {
-            hideWaitFluent(waitFluentKey)
+            hideWaitFluent(waitFluentKey);
             if ((err as any)?.code === 4001) {
-                showToast('User canceled transaction.');
+                showToast('User canceled Personal Sign.');
             }
         }
-    }, [account]);
+    }, []);
+
+    const handleClickTypedSign = useCallback(async () => {
+        let waitFluentKey: string | number = null!;
+        try {
+            waitFluentKey = showWaitFluent();
+            const TxnHash = await typedSign(typedData);
+            showActionSubmitted(TxnHash, 'Typed Sign');
+        } catch (err) {
+            hideWaitFluent(waitFluentKey);
+            if ((err as any)?.code === 4001) {
+                showToast('User canceled Typed Sign.');
+            }
+        }
+    }, []);
 
     return (
         <div className="flex justify-center items-center">
@@ -70,28 +75,69 @@ const SignDemo: React.FC = () => {
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{chainId}</p>
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">account address:</p>
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{account}</p>
-                    <Balance />
+                    <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
+                    <p className="text-[14px] leading-[18px] text-text2 transition-colors">{`${balance.toDecimalStandardUnit()} CFX`}</p>
 
-                    <button className="button w-full my-4 h-[36px]" onClick={handleClickSendTransaction}>
-                        Send 1 native token to self (connected account)
-                    </button>
+                    <div className="flex gap-8">
+                        <button className="button w-[50%] my-4 h-[36px]" onClick={handleClickPersonalSign}>
+                            Personal Sign
+                        </button>
+                        <button className="button w-[50%] my-4 h-[36px]" onClick={handleClickTypedSign}>
+                            Typed Sign
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
     );
 };
 
-const Balance: React.FC = memo(() => {
-    const balance = useBalance()!;
-
-    return (
-        <>
-            <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
-            <p className="text-[14px] leading-[18px] text-text2 transition-colors">
-                {`${balance.toDecimalStandardUnit()} CFX`}
-            </p>
-        </>
-    );
-});
+const typedData = {
+    types: {
+        CIP23Domain: [
+            { name: 'name', type: 'string' },
+            { name: 'version', type: 'string' },
+            { name: 'chainId', type: 'uint256' },
+            { name: 'verifyingContract', type: 'address' },
+        ],
+        Person: [
+            { name: 'name', type: 'string' },
+            { name: 'wallets', type: 'address[]' },
+        ],
+        Mail: [
+            { name: 'from', type: 'Person' },
+            { name: 'to', type: 'Person[]' },
+            { name: 'contents', type: 'string' },
+        ],
+        Group: [
+            { name: 'name', type: 'string' },
+            { name: 'members', type: 'Person[]' },
+        ],
+    },
+    domain: {
+        name: 'Ether Mail',
+        version: '1',
+        chainId: 1,
+        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+    },
+    primaryType: 'Mail',
+    message: {
+        from: {
+            name: 'Cow',
+            wallets: ['0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826', '0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF'],
+        },
+        to: [
+            {
+                name: 'Bob',
+                wallets: [
+                    '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+                    '0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57',
+                    '0xB0B0b0b0b0b0B000000000000000000000000000',
+                ],
+            },
+        ],
+        contents: 'Hello, Bob!',
+    },
+};
 
 export default SignDemo;

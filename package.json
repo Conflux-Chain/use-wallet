@@ -22,7 +22,7 @@
         "@react-spring/web": "^9.4.2",
         "clsx": "^1.1.1",
         "custom-keyboard": "^0.0.0",
-        "custom-react-scrollbar": "^0.0.1",
+        "custom-react-scrollbar": "^0.0.2",
         "decimal.js": "^10.3.1",
         "lodash-es": "^4.17.21",
         "react": "^17.0.2",

@@ -1,11 +1,10 @@
 
 import Wallet from './Wallet';
 import Unit from './Unit';
-import type { Provider } from './types';
 
 const FluentWallet = new Wallet('conflux');
 
-export const provider = FluentWallet.provider as (Provider<'conflux'> | undefined);
+export const provider = FluentWallet.provider;
 export const completeDetect = FluentWallet.completeDetect;
 export const connect = FluentWallet.connect;
 export const sendTransaction = FluentWallet.sendTransaction;

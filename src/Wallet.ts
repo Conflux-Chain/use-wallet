@@ -19,7 +19,7 @@ class Wallet<T extends ProviderType> {
     private resolveDetect!: () => void;
     private detectPromise = new Promise<void>((resolve) => this.resolveDetect = resolve);
 
-    public provider?: Provider<T>;
+    public provider?: Provider;
     private store = create(
         subscribeWithSelector(
             () =>
@@ -40,7 +40,7 @@ class Wallet<T extends ProviderType> {
 
         detectProvider(arguments[0], arguments[1])
             .then((provider) => {
-                this.provider = provider as Provider<T>;
+                this.provider = provider as Provider;
                 if (provider.isConfluxPortal && (provider as any).send && !provider.request) {
                     this.provider.request = ({ method, params }: any) => {
                         if (method === 'accounts') return Promise.resolve((this.provider as any).selectedAddress);
@@ -66,7 +66,6 @@ class Wallet<T extends ProviderType> {
     };
 
     private handleAccountsChanged = (accounts?: string[]) => {
-        // console.log('handleAccountsChanged: ', accounts);
         const hasAccount = !!accounts?.[0];
 
         if (hasAccount) {
@@ -77,7 +76,6 @@ class Wallet<T extends ProviderType> {
     };
 
     private handleChainChanged = (chainId: string) => {
-        // console.log('handleChainChanged: ', String(parseInt(chainId)));
         if (!chainId || chainId === '0xNaN') {
             this.store.setState({ chainId: undefined, status: 'not-active', accounts: undefined, balance: undefined });
             return;
@@ -90,7 +88,6 @@ class Wallet<T extends ProviderType> {
     };
 
     private handleBalanceChanged = (newBalance?: Unit) => {
-        // console.log('handleBalanceChanged: ', newBalance);
         if (!newBalance) return;
         const preBalance = this.store.getState().balance;
 
@@ -219,7 +216,7 @@ class Wallet<T extends ProviderType> {
         });
     }
 
-    public typedSign = (typedData: Object) => {
+    public typedSign = (typedData: Record<string, any>) => {
         const account = this.checkConnected();
 
         if (typeof typedData !== 'object') {
@@ -247,13 +244,18 @@ class Wallet<T extends ProviderType> {
     }
 
     public watchAsset = (param: WatchAssetParams) => {
-        if (!param) return;
+        if (!param) {
+            throw new Error('watchAsset error: param must be object.');
+        }
+
         return this.provider!.request({
             method: 'wallet_watchAsset',
             params: param
         });
     }
-    
+
+
+
     /* <--------- utils ---------> */
     public trackBalanceChangeOnce = (callback: () => void) => {
         if (!callback) return;
@@ -282,6 +284,7 @@ class Wallet<T extends ProviderType> {
     public useAccount = () => this.store(selectors.account);
     public useChainId = () => this.store(selectors.chainId);
     public useBalance = () => this.store(selectors.balance);
+
 
     /* <--------- other ---------> */
     public completeDetect = () => this.detectPromise;

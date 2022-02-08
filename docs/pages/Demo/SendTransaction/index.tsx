@@ -1,14 +1,15 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import cx from 'clsx';
 import { useStatus, useAccount, useChainId, useBalance, connect, sendTransaction, trackBalanceChangeOnce, Unit } from '@cfxjs/use-wallet';
 import showToast from '@components/tools/Toast';
-import { showWaitFluent, showTransactionSubmitted, hideWaitFluent, hideTransactionSubmitted } from '@components/tools/Modal';
+import { showWaitFluent, showActionSubmitted, hideWaitFluent, hideTransactionSubmitted } from '@components/tools/Modal';
 import styles from '../Connect/index.module.css';
 
 const SendTransactionDemo: React.FC = () => {
     const status = useStatus();
     const account = useAccount();
     const chainId = useChainId();
+    const balance = useBalance()!;
 
     const handleClickConnect = useCallback(async () => {
         try {
@@ -33,7 +34,7 @@ const SendTransactionDemo: React.FC = () => {
                 to: account,
                 value: Unit.fromStandardUnit('1').toHexMinUnit(),
             });
-            transactionSubmittedKey = showTransactionSubmitted(TxnHash);
+            transactionSubmittedKey = showActionSubmitted(TxnHash);
             trackBalanceChangeOnce(() => {
                 hideTransactionSubmitted(transactionSubmittedKey)
                 showToast('It seems the transaction is complete')
@@ -70,8 +71,11 @@ const SendTransactionDemo: React.FC = () => {
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{chainId}</p>
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">account address:</p>
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{account}</p>
-                    <Balance />
-
+                    <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
+                    <p className="text-[14px] leading-[18px] text-text2 transition-colors">
+                        {`${balance.toDecimalStandardUnit()} CFX`}
+                    </p>
+                    
                     <button className="button w-full my-4 h-[36px]" onClick={handleClickSendTransaction}>
                         Send 1 native token to self (connected account)
                     </button>
@@ -81,17 +85,5 @@ const SendTransactionDemo: React.FC = () => {
     );
 };
 
-const Balance: React.FC = memo(() => {
-    const balance = useBalance()!;
-
-    return (
-        <>
-            <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
-            <p className="text-[14px] leading-[18px] text-text2 transition-colors">
-                {`${balance.toDecimalStandardUnit()} CFX`}
-            </p>
-        </>
-    );
-});
 
 export default SendTransactionDemo;

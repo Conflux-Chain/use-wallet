@@ -11,37 +11,45 @@ import ConnectBothDemo from './ConnectBoth';
 import ConnectSwitch from './ConnectSwitch';
 import SendTransaction from './SendTransaction';
 import Sign from './Sign';
+import AddSwitch from './AddSwitch';
+import Code from '@assets/code.svg';
 
 const demos = [
     {
         title: 'demo_connect_title',
         introduce: 'demo_connect_introduce',
         Demo: ConnectDemo,
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/Connect/index.tsx'
     },
     {
         title: 'demo_connect_both_title',
         introduce: 'demo_connect_both_introduce',
         Demo: ConnectBothDemo,
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/ConnectBoth/index.tsx'
     },
     {
         title: 'demo_connect_switch_title',
         introduce: 'demo_connect_switch_introduce',
         Demo: ConnectSwitch,
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/ConnectSwitch/index.tsx'
     },
     {
         title: 'demo_send_transaction_title',
         introduce: 'demo_send_transaction_introduce',
         Demo: SendTransaction,
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/SendTransaction/index.tsx'
     },
     {
         title: 'demo_sign_title',
         introduce: 'demo_sign_introduce',
         Demo: Sign,
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/Sign/index.tsx'
     },
     {
         title: 'demo_addSwitch_title',
         introduce: 'demo_addSwitch_introduce',
-        Demo: ConnectDemo,
+        Demo: AddSwitch,
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/AddSwitch/index.tsx'
     },
 ] as const;
 
@@ -68,7 +76,7 @@ const transitions = {
         demo_connect_title: '连接 fluent 钱包',
         demo_connect_introduce: `Dapp 的第一步，连接你的钱包。然后可以获取当前账户的信息。`,
         demo_connect_both_title: '同时连接 fluent 和 metamask',
-        demo_connect_both_introduce: '需要跨链的 dapp，或者是 conflux 跨 space的 dapp，需要同时连接多个钱包。',
+        demo_connect_both_introduce: '需要跨链的 dapp，或者是 conflux 跨space 的 dapp，需要同时连接多个钱包。',
         demo_connect_switch_title: '同一份代码切换连接的钱包',
         demo_connect_switch_introduce:
             '也许你需要做一个同时支持 Conflux 和 Ethereum 的 dapp，又不想维护两份相似的代码。',
@@ -128,11 +136,11 @@ const DemoPage: React.FC = () => {
     const panelStyle = useSpring({
         ref: panelSpringRef,
         config: { ...config.stiff, clamp: true },
-        from: { borderColor: 'transparent', translateX: '-50%', scaleX: 0, scaleY: 0 },
+        from: { borderColor: 'transparent', translateX: '-50%', width: 480, height: rect.height },
         to: {
             translateX: '-50%',
-            scaleX: open ? 1 : (480 / (Math.min(window.innerWidth * .8, 1024))),
-            scaleY: open ? 1 : (rect.height / 460),
+            width: open ? Math.min(window.innerWidth * .8, 1024) : 480,
+            height: open ? 460: rect.height,
             borderColor: open ? 'var(--color-primary)' : 'transparent',
         },
     });
@@ -158,12 +166,12 @@ const DemoPage: React.FC = () => {
             <a.dl
                 ref={panelRef}
                 className={cx(
-                    'absolute top-12 left-1/2 translate-x-[-50%] max-w-[1024px] rounded-md bg-primarytrans dark:bg-[#4b5563] border-4 border-transparent contain-strict origin-top transition-colors not-transition-border-color will-change-transform z-10',
+                    'absolute top-12 left-1/2 translate-x-[-50%] max-w-[1024px] rounded-md bg-primarytrans dark:bg-[#4b5563] border-4 border-transparent contain-strict transition-colors not-transition-border-color z-10',
                     !open && 'pointer-events-none',
                 )}
-                style={{ ...panelStyle, width: `${Math.min(window.innerWidth * .8, 1024)}px`, height: '460px' }}
+                style={panelStyle}
             >   
-                <CustomScrollbar  className='qwe h-[460px]' contentClassName='w-full p-4 flex flex-wrap justify-center items-stretch gap-4'>
+                <CustomScrollbar  className='h-[460px]' contentClassName='w-full pt-4 pb-5 flex flex-wrap justify-center items-stretch gap-4'>
                     {transition(
                         (style, demo) =>
                             demo && (
@@ -175,8 +183,8 @@ const DemoPage: React.FC = () => {
                                     style={style}
                                     onClick={() => handleChangeDemo(demo.title)}
                                 >
-                                    <dt className="text-lg font-semibold text-text1 transition-colors">{i18n[demo.title]}</dt>
-                                    <dt className="mt-4 text-base text-text2 transition-colors">{i18n[demo.introduce]}</dt>
+                                    <div className="text-lg font-semibold text-text1 transition-colors">{i18n[demo.title]}</div>
+                                    <div className="mt-4 text-base text-text2 transition-colors">{i18n[demo.introduce]}</div>
                                 </a.div>
                             ),
                     )}
@@ -190,11 +198,12 @@ const DemoPage: React.FC = () => {
                 )}
                 style={currentDemoStyle}
             >
-                <dt className="relative text-lg font-semibold text-text1 transition-colors">
+                <div className="relative text-lg font-semibold text-text1 transition-colors">
                     <p className='w-[55%]'>{i18n[currentDemo.title]}</p>
+                    <a className="button absolute w-10 p-0 h-8 text-sm top-0 right-[7.5rem]" href={currentDemo.code} target="_blank" rel="nofollow noopener noreferrer" title={currentDemo.code}><img className="w-6 h-6 max-w-none" src={Code} alt="code" /></a>
                     <button className="button absolute px-2 h-8 text-sm top-0 right-0" onClick={openPanel}>More Demo</button>
-                </dt>
-                <dt className="relative mt-4 text-base text-text2 transition-colors">{i18n[currentDemo.introduce]}</dt>
+                </div>
+                <div className="relative mt-4 text-base text-text2 transition-colors">{i18n[currentDemo.introduce]}</div>
             </a.div>
             <DemoContainer Demo={currentDemo.Demo} mt={Math.max(280, rect.height + 100)} />
         </>
