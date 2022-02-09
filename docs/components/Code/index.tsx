@@ -1,21 +1,29 @@
 import type React from 'react';
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { prism, dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
+import cx from 'clsx';
 import useMode from '@hooks/useMode';
+import Highlight, { defaultProps } from "prism-react-renderer";
+import light from "prism-react-renderer/themes/nightOwlLight";
+import dark from "prism-react-renderer/themes/nightOwl";
+import './index.css';
 
-SyntaxHighlighter.registerLanguage('tsx', tsx);
-SyntaxHighlighter.registerLanguage('ts', ts);
-
-const Code: React.FC<React.HTMLAttributes<HTMLDivElement> & { language?: 'tsx' | 'ts'; }> = ({ children, language = 'tsx', ...props }) => {
+const Code: React.FC<React.HTMLAttributes<HTMLDivElement> & { language?: 'tsx' | 'ts'; }> = ({ children, language = 'tsx', className, ...props }) => {
     const mode = useMode();
     
     return (
-        <div  {...props}>
-            <SyntaxHighlighter language={language} style={mode === 'dark' ? dark : prism}>
-                {children}
-            </SyntaxHighlighter>
+        <div className={cx(className, 'prism-' + mode)} {...props}>
+            <Highlight {...defaultProps} theme={mode === 'dark' ? dark : light} code={children as string} language={language === 'ts' ? 'typescript' : language}>
+                {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                <pre className={className} style={style}>
+                    {tokens.map((line, i) => (
+                    <div {...getLineProps({ line, key: i })}>
+                        {line.map((token, key) => (
+                        <span {...getTokenProps({ token, key })} />
+                        ))}
+                    </div>
+                    ))}
+                </pre>
+                )}
+            </Highlight>
         </div>
     );
 }
