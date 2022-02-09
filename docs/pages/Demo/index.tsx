@@ -140,7 +140,7 @@ const DemoPage: React.FC = () => {
         to: {
             translateX: '-50%',
             width: open ? Math.min(window.innerWidth * .8, 1024) : 480,
-            height: open ? 460: rect.height,
+            height: open ? 480: rect.height,
             borderColor: open ? 'var(--color-primary)' : 'transparent',
         },
     });
@@ -171,7 +171,7 @@ const DemoPage: React.FC = () => {
                 )}
                 style={panelStyle}
             >   
-                <CustomScrollbar  className='h-[460px]' contentClassName='w-full pt-4 pb-5 flex flex-wrap justify-center items-stretch gap-4'>
+                <CustomScrollbar  className='h-[480px]' contentClassName='w-full pt-4 pb-5 flex flex-wrap justify-center items-stretch gap-4'>
                     {transition(
                         (style, demo) =>
                             demo && (
@@ -200,7 +200,7 @@ const DemoPage: React.FC = () => {
             >
                 <div className="relative text-lg font-semibold text-text1 transition-colors">
                     <p className='w-[55%]'>{i18n[currentDemo.title]}</p>
-                    <a className="button absolute w-10 p-0 h-8 text-sm top-0 right-[7.5rem]" href={currentDemo.code} target="_blank" rel="nofollow noopener noreferrer" title={currentDemo.code}><img className="w-6 h-6 max-w-none" src={Code} alt="code" /></a>
+                    <a className="button absolute w-10 p-0 h-8 text-sm top-0 right-[7.5rem]" href={currentDemo.code} target="_blank" rel="nofollow noopener noreferrer" title={currentDemo.code}><img className="w-5 h-5 max-w-none" src={Code} alt="code" /></a>
                     <button className="button absolute px-2 h-8 text-sm top-0 right-0" onClick={openPanel}>More Demo</button>
                 </div>
                 <div className="relative mt-4 text-base text-text2 transition-colors">{i18n[currentDemo.introduce]}</div>

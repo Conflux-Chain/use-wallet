@@ -1,10 +1,14 @@
 import React from 'react';
 import ApiDocs from './Catalogue';
+import Menu from './Menu';
 
 const ApiPage: React.FC = () => {
     return (
-        <ApiDocs />
+        <>
+            <Menu />
+            <ApiDocs />
+        </>
     );
-}
+};
 
 export default ApiPage;

@@ -1,26 +1,17 @@
 import { useState, useCallback, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import CustomScrollbar from 'custom-react-scrollbar';
 import GuidePage from '@pages/Guide';
-import APIPage from '@pages/API';
 import DemoPage from '@pages/Demo';
+import APIPage from '@pages/API';
+import BasicAPI from '@pages/API/Catalogue/Basic';
+import FunctionAPI from '@pages/API/Catalogue/Function';
+import HooksAPI from '@pages/API/Catalogue/Hooks';
+import UtilsAPI from '@pages/API/Catalogue/Utils';
+import OthersAPI from '@pages/API/Catalogue/Others';
 import Navbar from '@pages/Navbar';
 import { LocaleContext } from '@hooks/useI18n';
 import { ModeContext } from '@hooks/useMode';
-
-export const routes = [{
-    path: '/',
-    element: GuidePage,
-    key: "Guide"
-}, {
-    path: '/api',
-    element: APIPage,
-    key: "API"
-}, {
-    path: '/demo',
-    element: DemoPage,
-    key: "Demo"
-}] as const;
 
 const AppRouter = () => {
     const [mode, setMode] = useState<'light' | 'dark'>(() => {
@@ -64,9 +55,17 @@ const AppRouter = () => {
                     <Navbar handleSwitchLocale={handleSwitchLocale} handleSwitchMode={handleSwitchMode} />
                     <CustomScrollbar contentClassName='scroll-content'>
                         <Routes>
-                            {routes.map(route =>
-                                <Route key={route.path} path={route.path} element={<route.element />} />
-                            )}
+                            <Route key='Guide' path='/' element={<GuidePage />} />
+                            <Route key='API' path='api' element={<APIPage />}>
+                                <Route index element={<BasicAPI />}  />
+                                <Route key='basic' path='basic' element={<BasicAPI />}  />
+                                <Route key='function' path='function' element={<FunctionAPI />} />
+                                <Route key='hooks' path='hooks' element={<HooksAPI />} />
+                                <Route key='utils' path='utils' element={<UtilsAPI />} />
+                                <Route key='others' path='others' element={<OthersAPI />} />
+                            </Route>
+                            <Route key='Demo' path='demo' element={<DemoPage />} />
+                            <Route path="*" element={<Navigate to="/"/>} />
                         </Routes>
                     </CustomScrollbar>
                 </Router>

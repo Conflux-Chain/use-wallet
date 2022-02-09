@@ -15,7 +15,7 @@ const UseChainId: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <div>
+        <section>
             <h3>useChainId</h3>
 
             <h4>declare:</h4>
@@ -25,7 +25,7 @@ const UseChainId: React.FC = () => {
 
             <h4 className='mt-[16px]'>Description:</h4>
             <p>{i18n.step1}</p>
-        </div>
+        </section>
     );
 }
 

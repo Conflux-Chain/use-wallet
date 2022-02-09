@@ -56,6 +56,9 @@ const AddSwitchDemo: React.FC = () => {
                 if ((err as any)?.code === 4001) {
                     showToast(`User rejected switch to ${chainId === '12000' ? 'Testnet' : 'EvmTest'} chain.`);
                 }
+                if ((err as any)?.code === -32602 && (err as any)?.message?.indexOf('try add the network') !== -1) {
+                    showToast(`${chainId === '12000' ? 'Testnet' : 'EvmTest'} chain not added, try add first.`);
+                }
             });
     }, [chainId]);
 

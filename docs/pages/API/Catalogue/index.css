@@ -1,9 +1,9 @@
 .docs h2 {
-    @apply text-text1 text-[30px] leading-[48px] font-semibold transition-colors;
+    @apply text-text1 text-[36px] leading-[48px] font-semibold transition-colors;
 }
 
 .docs h2::after {
-    @apply mb-[24px] block bg-text1 h-[1px] opacity-10 transition-colors;
+    @apply mt-[4px] mb-[24px] block bg-text1 h-[1px] opacity-10 transition-colors;
 
     content: '';
 }
@@ -24,10 +24,10 @@
     @apply mt-[8px];
 }
 
-.docs dt + dt {
+.docs section + section {
     @apply mt-[60px];
 }
 
-.docs dt + h2 {
+.docs section + h2 {
     @apply mt-[160px];
 }

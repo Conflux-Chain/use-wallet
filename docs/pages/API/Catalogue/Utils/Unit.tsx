@@ -21,7 +21,7 @@ const Unit: React.FC = () => {
     const i18n = useI18n(transitions);
 
     return (
-        <div>
+        <section>
             <h3>Unit</h3>
 
             <h4>declare:</h4>
@@ -34,7 +34,7 @@ const Unit: React.FC = () => {
             <p>{i18n.step2}</p>
             <p>{i18n.step3}</p>
             <p>{i18n.step4}</p>
-        </div>
+        </section>
     );
 }
 

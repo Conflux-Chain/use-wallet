@@ -4,7 +4,6 @@ import cx from 'clsx';
 import Logo from '@assets/logo.svg';
 import DarkMode from '@assets/dark-mode.svg';
 import LightMode from '@assets/light-mode.svg';
-import { routes } from '@router/index';
 import useI18n, { useLocale } from '@hooks/useI18n';
 import useMode from '@hooks/useMode';
 
@@ -26,15 +25,27 @@ const transitions = {
     },
 } as const;
 
+
+export const routes = [{
+    path: '/home',
+    key: "Guide"
+}, {
+    path: '/api',
+    key: "API"
+}, {
+    path: '/demo',
+    key: "Demo"
+}] as const;
+
 const Navbar: React.FC<Props> = ({ handleSwitchLocale, handleSwitchMode }) => {
     const mode = useMode();
     const locale = useLocale();
     const i18n = useI18n(transitions);
-    const { pathname } = useLocation();
-
+    const { pathname: _pathname } = useLocation();
+    const pathname = _pathname === '/' ? '/home' : _pathname;
 
     return (
-        <nav className={cx("flex items-center h-16 bg-bg transition-colors", { 'shadow': mode === 'light' })}>
+        <nav className={"flex items-center h-16 bg-bg transition-colors shadow-sm z-10"}>
             <div className="container mx-auto px-8 h-full flex items-center justify-between">
                 <div className="h-full flex items-center">
                     <img className="w-10 h-10 mr-1 translate-y-[-1px]" src={Logo} alt="logo" />
@@ -46,16 +57,16 @@ const Navbar: React.FC<Props> = ({ handleSwitchLocale, handleSwitchMode }) => {
                                 'relative text-center transition-colors',
                                 locale === 'zh' ? 'w-18 ml-4' : 'w-20 ml-5',
                                 mode === 'light' ? 'h-full flex justify-center items-center' : 'h-10 leading-10 rounded-md',
-                                pathname !== route.path && 'hover:text-text1 cursor-pointer',
-                                pathname === route.path ? 'pointer-events-none text-text1' : 'text-text2',
-                                pathname === route.path && mode === 'dark' && 'bg-[#4b5563]',
-                                pathname !== route.path && mode === 'dark' && 'hover:bg-[#374151]',
+                                pathname.indexOf(route.path) === -1 && 'hover:text-text1 cursor-pointer',
+                                pathname.indexOf(route.path) !== -1 ? 'pointer-events-none text-text1' : 'text-text2',
+                                pathname.indexOf(route.path) !== -1 && mode === 'dark' && 'bg-[#4b5563]',
+                                pathname.indexOf(route.path) === -1 && mode === 'dark' && 'hover:bg-[#374151]',
                             )}
                             to={route.path}
                             key={route.key}
                         >
                             {i18n[route.key]}
-                            {mode === 'light' && <span className={cx('absolute w-full left-0 bottom-0 h-1 rounded-sm bg-primary opacity-0 transition-opacity', pathname === route.path && 'opacity-100')} />}
+                            {mode === 'light' && <span className={cx('absolute w-full left-0 bottom-0 h-1 rounded-sm bg-primary opacity-0 transition-opacity', pathname.indexOf(route.path) !== -1 && 'opacity-100')} />}
                         </Link>
                     ))}
                 </div>

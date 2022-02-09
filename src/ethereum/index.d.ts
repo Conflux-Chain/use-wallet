@@ -25,5 +25,4 @@ export declare const useStatus: () => 'in-detecting' | 'not-installed' | 'not-ac
 export declare const useAccount: () => string | undefined;
 export declare const useChainId: () => string | undefined;
 export declare const useBalance: () => Unit | undefined;
-export declare const useMaxAvailableBalance: () => Unit | undefined;
 export { Unit };
