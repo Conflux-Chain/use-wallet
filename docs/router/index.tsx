@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import CustomScrollbar from 'custom-react-scrollbar';
 import GuidePage from '@pages/Guide';
 import DemoPage from '@pages/Demo';
