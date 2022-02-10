@@ -18,6 +18,7 @@ export default defineConfig({
             '@utils': path.resolve(__dirname, 'docs/utils'),
             '@components': path.resolve(__dirname, 'docs/components'),
             '@router': path.resolve(__dirname, 'docs/router'),
+            '@cfxjs/use-wallet/dist/ethereum': path.resolve(__dirname, 'src/ethereum'),
             '@cfxjs/use-wallet': path.resolve(__dirname, 'src'),
         },
     },

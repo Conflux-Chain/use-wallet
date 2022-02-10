@@ -140,7 +140,7 @@ const DemoPage: React.FC = () => {
         to: {
             translateX: '-50%',
             width: open ? Math.min(window.innerWidth * .8, 1024) : 480,
-            height: open ? 480: rect.height,
+            height: open ? 460: rect.height,
             borderColor: open ? 'var(--color-primary)' : 'transparent',
         },
     });
@@ -171,7 +171,7 @@ const DemoPage: React.FC = () => {
                 )}
                 style={panelStyle}
             >   
-                <CustomScrollbar  className='h-[480px]' contentClassName='w-full pt-4 pb-5 flex flex-wrap justify-center items-stretch gap-4'>
+                <CustomScrollbar  className='h-[460px]' contentClassName='w-full pt-4 pb-5 flex flex-wrap justify-center items-stretch gap-4'>
                     {transition(
                         (style, demo) =>
                             demo && (

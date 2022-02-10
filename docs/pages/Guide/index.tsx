@@ -11,9 +11,9 @@ const transitions = {
         feature2_title: 'Easy to use',
         feature2_text: `use-wallet has a high level encapsulation, without the need to pay attention to the provider and other specification-oriented concepts. From a front-end developer's perspective, focus on hooks and func and just use them.`,
         feature3_title: 'Fine-grained hooks to avoid duplicate render',
-        feature3_text: `Some similar hooks package in the community have a habit of return frequently changing data like balance along with other data, which causes unnecessary render and is not advocated.`,
+        feature3_text: `Some similar hooks wrappers in the community have a habit of returning a lot of data wrapped together, which causes unnecessary render and is not advocated.`,
         feature4_title: 'Tiny',
-        feature4_text: `use-wallet only communicates with the wallet through the wallet-injected provider, as well as providing some lightweight tooling methods.In many cases, developing a dapp doesn't require importing a large and comprehensive library like js-conflux-sdk, web3.js.`,
+        feature4_text: `use-wallet only communicates with the wallet through the wallet-injected provider, as well as providing some lightweight tooling methods.In many cases, developing a dapp doesn't require importing a large and comprehensive library like js-conflux-sdk, web3.js.(gzip: 3.7kb - source code, 20kb - include decimal.js)`,
     },
     zh: {
         useWallet: 'use-wallet',
@@ -23,10 +23,10 @@ const transitions = {
         feature1_text: `use-wallet 支持 provider 兼容 'conflux' 和 'ethereum' 规范的所有钱包。(只保证对 fluent 和 metamask 的完全支持)`,
         feature2_title: '开箱即用',
         feature2_text: `use-wallet 做了高层次的封装，无需关注 provider 等偏规范的概念。以前端开发者的视角，聚焦于 hooks 和 func，直接使用即可。`,
-        feature3_title: '细分的 hooks 以规避重复渲染',
-        feature3_text: `社区中的一些同类 hooks 封装习惯把 balance 这种经常变化的数据与其他数据一起返回。这会引起不必要的重复渲染，是不被提倡的。`,
-        feature4_title: '体积小（10k）',
-        feature4_text: `use-wallet 仅仅通过钱包注入的 provider 来沟通钱包，以及提供了一些轻量级的工具方法。很多情况下，开发一个 dapp 并不需要引入 js-conflux-sdk、web3.js 这样大而全的库。`,
+        feature3_title: '细分的 hooks、数据变动的批处理 以规避重复渲染',
+        feature3_text: `社区中的一些同类 hooks 封装习惯把很多数据封装在一起返回。这容易引起不必要的重复渲染，是不被提倡的。`,
+        feature4_title: '体积小',
+        feature4_text: `use-wallet 仅仅通过钱包注入的 provider 来沟通钱包，以及提供了一些轻量级的工具方法。很多情况下，开发一个 dapp 并不需要引入 js-conflux-sdk、web3.js 这样大而全的库。(gzip: 3.7kb - 源码, 20kb - 包含 decimal.js)`,
     },
 } as const;
 

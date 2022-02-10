@@ -18,6 +18,7 @@
         "baseUrl": ".",
         "paths": {
             "@cfxjs/use-wallet*": ["src/index"],
+            "@cfxjs/use-wallet/dist/ethereum*": ["src/ethereum/index"],
             "@hooks/*": ["docs/hooks/*"],
             "@assets/*": ["docs/assets/*"],
             "@pages/*": ["docs/pages/*"],

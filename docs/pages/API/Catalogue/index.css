@@ -25,9 +25,13 @@
 }
 
 .docs section + section {
-    @apply mt-[60px];
+    @apply mt-[80px];
 }
 
 .docs section + h2 {
     @apply mt-[160px];
+}
+
+.docs section a {
+    @apply text-primary hover:underline;
 }

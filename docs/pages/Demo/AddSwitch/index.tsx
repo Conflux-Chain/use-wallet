@@ -25,7 +25,7 @@ const AddSwitchDemo: React.FC = () => {
     const handleClickAddChain = useCallback(async () => {
         addChain({
             chainId: '0x2ee0',
-            chainName: 'EVM Conflux',
+            chainName: '123Conflux',
             nativeCurrency: {
                 name: 'Conflux',
                 symbol: 'CFX',
@@ -35,14 +35,14 @@ const AddSwitchDemo: React.FC = () => {
             blockExplorerUrls: ['https://confluxscan.io'],
         })
             .then(() => {
-                showToast('Add EvmTest chain success!');
+                showToast('Add 123Conflux chain success!');
             })
             .catch((err) => {
                 if ((err as any)?.code === 4001) {
-                    showToast('User rejected add EvmTest chain.');
+                    showToast('User rejected add 123Conflux chain.');
                 }
                 if ((err as any)?.code === -32602 && (err as any)?.message?.indexOf('Duplicate network endpoint') !== -1) {
-                    showToast('Have added EvmTest chain.');
+                    showToast('Have added 123Conflux chain.');
                 }
             });
     }, []);
@@ -50,14 +50,14 @@ const AddSwitchDemo: React.FC = () => {
     const handleClickSwitchChain = useCallback(async () => {
         switchChain(chainId === '12000' ? '0x1' : '0x2ee0')
             .then(() => {
-                showToast(`Switch to ${chainId === '12000' ? 'Testnet' : 'EvmTest'} chain success!`);
+                showToast(`Switch to ${chainId === '12000' ? 'Testnet' : '123Conflux'} chain success!`);
             })
             .catch((err) => {
                 if ((err as any)?.code === 4001) {
-                    showToast(`User rejected switch to ${chainId === '12000' ? 'Testnet' : 'EvmTest'} chain.`);
+                    showToast(`User rejected switch to ${chainId === '12000' ? 'Testnet' : '123Conflux'} chain.`);
                 }
                 if ((err as any)?.code === -32602 && (err as any)?.message?.indexOf('try add the network') !== -1) {
-                    showToast(`${chainId === '12000' ? 'Testnet' : 'EvmTest'} chain not added, try add first.`);
+                    showToast(`${chainId === '12000' ? 'Testnet' : '123Conflux'} chain not added, try add first.`);
                 }
             });
     }, [chainId]);
@@ -119,13 +119,13 @@ const AddSwitchDemo: React.FC = () => {
 
                     <div className="flex gap-4">
                         <button className="button w-[50%] my-4 h-[36px]" onClick={handleClickAddChain}>
-                            Add EvmTest Chain
+                            Add 123Conflux Chain
                         </button>
                         <button
                             className="button w-[50%] my-4 h-[36px]"
                             onClick={handleClickSwitchChain}
                         >
-                            {chainId !== '12000' ? 'Switch to EvmTest' : 'Switch to Testnet'}
+                            {chainId !== '12000' ? 'Switch to 123Conflux' : 'Switch to Testnet'}
                         </button>
                         <button
                             className="button w-[50%] my-4 h-[36px]"

@@ -34,7 +34,7 @@ const CompleteDetect: React.FC = () => {
 
 const code = `declare const completeDetect: () => Promise<void>;
 import { completeDetect } from '@cfxjs/use-wallet';
-import { completeDetect as completeDetectEthereum } from '@cfxjs/use-wallet/ethereum';
+import { completeDetect as completeDetectEthereum } from '@cfxjs/use-wallet/dist/ethereum';
 
 completeDetect().then(() => {
     ReactDOM.render(

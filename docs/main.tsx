@@ -4,7 +4,7 @@ import Router from '@router/index';
 import 'custom-react-scrollbar/dist/style.css';
 import './index.css';
 // import { completeDetect } from '@cfxjs/use-wallet';
-// import { completeDetect as completeDetectEthereum } from '@cfxjs/use-wallet/ethereum';
+// import { completeDetect as completeDetectEthereum } from '@cfxjs/use-wallet/dist/ethereum';
 
 const mode = localStorage.getItem('mode') ?? 'light';
 if (mode === 'dark') {

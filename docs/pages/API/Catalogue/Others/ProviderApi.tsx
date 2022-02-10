@@ -33,7 +33,7 @@ const Provider: React.FC = () => {
 }
 
 const code = `import { provider } from '@cfxjs/use-wallet';
-// import { provider } from '@cfxjs/use-wallet/ethereum';
+// import { provider } from '@cfxjs/use-wallet/dist/ethereum';
 
 // same as window.conflux | window.ethereum`
 

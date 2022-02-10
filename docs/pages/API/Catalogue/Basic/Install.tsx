@@ -4,10 +4,10 @@ import useI18n from '@hooks/useI18n';
 
 const transitions = {
     en: {
-        step1: `The default import of @cfxjs/use-wallet is conflux wallet (fluent | portal). The ethereum wallet (metamask) can simply import from @cfxjs/use-wallet/ethereum. There is no difference in their usage and presentation.`,
+        step1: `The default import of @cfxjs/use-wallet is conflux wallet (fluent | portal). The ethereum wallet (metamask) can simply import from @cfxjs/use-wallet/dist/ethereum. There is no difference in their usage and presentation.`,
     },
     zh: {
-        step1: `@cfxjs/use-wallet 默认 import 的是 conflux 钱包(fluent | portal)。以太坊钱包(metamask) 从 @cfxjs/use-wallet/ethereum 中引入即可。它们在使用和表现上没有任何区别。`,
+        step1: `@cfxjs/use-wallet 默认 import 的是 conflux 钱包(fluent | portal)。以太坊钱包(metamask) 从 @cfxjs/use-wallet/dist/ethereum 中引入即可。它们在使用和表现上没有任何区别。`,
     },
 } as const;
 
@@ -21,7 +21,7 @@ const Install: React.FC = () => {
                 {codeInstall}
             </Code>
 
-            <h3 className='mt-4'>import</h3>
+            <h3 className='mt-[40px]'>import</h3>
             <Code language='ts'>
                 {codeImport}
             </Code>
@@ -36,6 +36,6 @@ const codeInstall = `npm install @cfxjs/use-wallet --save
 yarn add @cfxjs/use-wallet`
 
 const codeImport = `import { useStatus, useAccount, useChainId, useBalance, connect, ... } from '@cfxjs/use-wallet';
-import { useStatus, useAccount, useChainId, useBalance, connect, ... } from '@cfxjs/use-wallet/ethereum';`
+import { useStatus, useAccount, useChainId, useBalance, connect, ... } from '@cfxjs/use-wallet/dist/ethereum';`
 
 export default Install;

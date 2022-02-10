@@ -12,7 +12,7 @@ import {
     useChainId as useMetaMaskChainId,
     useBalance as useMetaMaskBalance,
     connect as connectMetaMask,
-} from '@cfxjs/use-wallet/ethereum';
+} from '@cfxjs/use-wallet/dist/ethereum';
 
 import WalletCard from './WalletCard';
 
