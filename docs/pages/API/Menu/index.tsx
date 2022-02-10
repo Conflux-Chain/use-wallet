@@ -4,7 +4,7 @@ import cx from 'clsx';
 import { throttle } from 'lodash-es';
 import useMode from '@hooks/useMode';
 
-const menu = ['basic', 'function', 'hooks', 'utils', 'others'] as const;
+const menu = ['basic', 'hooks',  'function', 'utils', 'others'] as const;
 
 const Menu: React.FC = () => {
     const mode = useMode();
@@ -108,7 +108,7 @@ const SideSectionBar: React.FC<{ currentCataloguePath: string; }> = memo(({ curr
     }, []);
 
     return (
-        <div className="fixed flex-col hidden xl:flex right-2 2xl:right-12 top-[33%] translate-y-[-50%]">
+        <div className="fixed flex-col hidden xl:flex left-[50%] top-[33.5%] translate-x-[600px] translate-y-[-50%]">
             {sections?.map((section) => (
                 <a
                     className={cx('h-8 cursor-pointer transition-colors', currentSection === section.textContent ? 'text-primary' : 'text-text2')}

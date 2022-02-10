@@ -41,6 +41,8 @@ class Wallet<T extends ProviderType> {
         detectProvider(arguments[0], arguments[1])
             .then((provider) => {
                 this.provider = provider as Provider;
+
+                // Conflux Portal Wallet support
                 if (provider.isConfluxPortal && (provider as any).send && !provider.request) {
                     this.provider.request = ({ method, params }: any) => {
                         if (method === 'accounts') return Promise.resolve((this.provider as any).selectedAddress);

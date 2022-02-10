@@ -64,3 +64,7 @@ button:disabled {
 .not-transition-border-color {
     transition-property: color, background-color, text-decoration-color, fill, stroke;
 }
+
+.scrollbar__thumb {
+    @apply bg-primary opacity-40;
+}

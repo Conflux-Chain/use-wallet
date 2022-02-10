@@ -54,7 +54,6 @@
         "type": "git",
         "url": "git+https://github.com/Conflux-Chain/use-wallet.git"
     },
-    "author": "",
     "bugs": {
         "url": "https://github.com/Conflux-Chain/use-wallet/issues"
     },

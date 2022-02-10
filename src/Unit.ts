@@ -43,7 +43,11 @@ class Unit {
 
     toDecimalStandardUnit = (toFixed?: number) => {
         if (typeof toFixed === 'number' && toFixed > 0) {
-            return this.value.div(ratio).toFixed(toFixed);
+            const strVal = this.value.div(ratio).toString();
+            const dotIndex = strVal.indexOf('.');
+            if (dotIndex === -1) return strVal + '.' + '0'.repeat(toFixed);
+            if (strVal.length - dotIndex - 1 < toFixed) return strVal + '0'.repeat(toFixed - (strVal.length - dotIndex - 1));
+            return strVal.slice(0, dotIndex) + '.' + strVal.slice(dotIndex + 1, dotIndex + toFixed + 1);
         }
         return this.value.div(ratio).toString();
     };

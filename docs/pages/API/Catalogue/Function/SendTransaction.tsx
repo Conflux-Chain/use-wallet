@@ -42,6 +42,6 @@ const code = `declare const sendTransaction: ({ from, to, value, data }: {
     to: string;
     value: string;
     data?: string | undefined;
-}) => Promise<any>;`
+}) => Promise<string>;`
 
 export default SendTransaction;

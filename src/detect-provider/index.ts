@@ -1,4 +1,4 @@
-import { type Provider, type ProviderType } from './types'
+import { type Provider, type ProviderType } from '../types'
 
 /**
  * Returns a Promise that resolves to the value of window.ethereum | window.conflux if it is
