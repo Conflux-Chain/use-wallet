@@ -32,8 +32,8 @@ const Install: React.FC = () => {
     );
 }
 
-const codeInstall = `npm install @cfxjs/use-wallet --save
-yarn add @cfxjs/use-wallet`
+const codeInstall = `npm install @cfxjs/use-wallet decimal.js --save
+yarn add @cfxjs/use-wallet decimal.js`
 
 const codeImport = `import { useStatus, useAccount, useChainId, useBalance, connect, ... } from '@cfxjs/use-wallet';
 import { useStatus, useAccount, useChainId, useBalance, connect, ... } from '@cfxjs/use-wallet/dist/ethereum';`

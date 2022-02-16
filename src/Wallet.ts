@@ -186,7 +186,7 @@ class Wallet<T extends ProviderType> {
         const currentStatus = this.store.getState().status;
         if (currentStatus !== 'not-active') {
             if (currentStatus === 'active')
-                throw Promise.resolve();
+                return Promise.resolve();
             else
                 throw new Error(`currentStatus can't activate`);
         }

@@ -104,7 +104,7 @@ const AddSwitchDemo: React.FC = () => {
                 </button>
             )}
             {status === 'active' && (
-                <div className="min-w-[440px] mt-[16px] p-[16px] rounded-[8px] border-[1px] border-[#EAECEF] dark:border-transparent shadow dark:shadow-none bg-white dark:bg-[#374151] transition-colors">
+                <div className="mt-[16px] p-[16px] rounded-[8px] border-[1px] border-[#EAECEF] dark:border-transparent shadow dark:shadow-none bg-white dark:bg-[#374151] transition-colors">
                     <p className="inline-flex items-center px-[10px] py-[4px] rounded-3xl text-[16px] text-primary bg-[#ecedf5] dark:text-[#f8f9fe] dark:bg-primary transition-colors">
                         <span className={`mr-[4px] ${styles['connected-spin']}`} />
                         Conflux Chain

@@ -30,7 +30,7 @@ export default defineConfig({
         },
         rollupOptions: {
             plugins: [visualizer()],
-            external: ['react', 'react-dom', 'decimal.js', 'zustand'],
+            external: ['react', 'react-dom', 'decimal.js'],
         },
     },
 });
