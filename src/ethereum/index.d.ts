@@ -1,6 +1,15 @@
+import type { UseBoundStore, StoreApi } from 'zustand';
 import Unit from '../Unit';
 import type { Provider, AddChainParameter, WatchAssetParams, TransactionParameters } from '../types';
 
+interface WalletState {
+    status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
+    accounts?: Array<string>;
+    chainId?: string;
+    balance?: Unit;
+}
+
+export declare const store: UseBoundStore<WalletState, StoreApi<WalletState>>;
 export declare const provider: Provider | undefined;
 export declare const completeDetect: () => Promise<void>;
 export declare const connect: () => Promise<void>;

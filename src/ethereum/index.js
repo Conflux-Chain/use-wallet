@@ -2,6 +2,7 @@ import Wallet, { Unit } from '../index';
 
 const FluentWallet = new Wallet('ethereum');
 
+const store = FluentWallet.store;
 const provider = FluentWallet.provider;
 const completeDetect = FluentWallet.completeDetect;
 const connect = FluentWallet.connect;
@@ -19,6 +20,7 @@ const useBalance = FluentWallet.useBalance;
 
 export {
     Unit,
+    store,
     provider,
     completeDetect,
     connect,

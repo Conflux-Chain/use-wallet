@@ -1,9 +1,10 @@
 
-import Wallet from './Wallet';
+import Wallet, { type WalletState} from './Wallet';
 import Unit from './Unit';
 
 const FluentWallet = new Wallet('conflux');
 
+export const store = FluentWallet.store;
 export const provider = FluentWallet.provider;
 export const completeDetect = FluentWallet.completeDetect;
 export const connect = FluentWallet.connect;

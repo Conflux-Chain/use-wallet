@@ -5,7 +5,7 @@ import detectProvider from './detect-provider';
 import Unit from './Unit';
 import type { Provider, ProviderType, AddChainParameter, WatchAssetParams, TransactionParameters } from './types'
 
-interface WalletState {
+export interface WalletState {
     status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
     accounts?: Array<string>;
     chainId?: string;
@@ -20,7 +20,7 @@ class Wallet<T extends ProviderType> {
     private detectPromise = new Promise<void>((resolve) => this.resolveDetect = resolve);
 
     public provider?: Provider;
-    private store = create(
+    public store = create(
         subscribeWithSelector(
             () =>
                 ({
