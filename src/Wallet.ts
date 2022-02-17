@@ -37,14 +37,13 @@ class Wallet<T extends ProviderType> {
     constructor(providerType: T) {
         this.providerType = providerType === 'conflux' ? 'Conflux' : 'Ethereum';
         this.evtPrefix = providerPreFixMap[providerType];
+        this.provider = (window as any)[providerType] as Provider;
 
         detectProvider(arguments[0], arguments[1])
             .then((provider) => {
-                this.provider = provider as Provider;
-
                 // Conflux Portal Wallet support
                 if (provider.isConfluxPortal && (provider as any).send && !provider.request) {
-                    this.provider.request = ({ method, params }: any) => {
+                    this.provider!.request = ({ method, params }: any) => {
                         if (method === 'accounts') return Promise.resolve((this.provider as any).selectedAddress);
                         if (method === 'cfx_chainId') return Promise.resolve((this.provider as any).networkVersion);
                         return (this.provider as any)?.send(method, params);
@@ -204,6 +203,7 @@ class Wallet<T extends ProviderType> {
             method: `${this.evtPrefix}_sendTransaction`,
             params: [{
                 ...params,
+                ...(params.value ? {} : { value: '0x0' }),
                 from: account,
             }],
         });
