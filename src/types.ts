@@ -34,7 +34,7 @@ export interface WatchAssetParams {
 export interface TransactionParameters {
     gasPrice?: string; // customizable by user during MetaMask confirmation.
     gas?: string; // customizable by user during MetaMask confirmation.
-    to: string; // Required except during contract publications.
+    to?: string; // Required except during contract publications.
     from: string; // must match user's active address.
     value?: string; // Only required to send ether to the recipient from the initiating external account.
     data?: string; // Optional, but used for defining smart contract creation and interaction.
