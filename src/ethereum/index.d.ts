@@ -1,15 +1,16 @@
-import type { UseBoundStore, StoreApi } from 'zustand';
 import Unit from '../Unit';
 import type { Provider, AddChainParameter, WatchAssetParams, TransactionParameters } from '../types';
+import { type WalletState } from '../Wallet';
 
-interface WalletState {
-    status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
-    accounts?: Array<string>;
-    chainId?: string;
-    balance?: Unit;
-}
-
-export declare const store: UseBoundStore<WalletState, StoreApi<WalletState>>;
+export declare const store: import("zustand").UseBoundStore<WalletState, Omit<import("zustand").StoreApi<WalletState>, "subscribe"> & {
+    subscribe: {
+        (listener: import("zustand").StateListener<WalletState>): () => void;
+        <StateSlice>(selector: import("zustand").StateSelector<WalletState, StateSlice>, listener: import("zustand").StateSliceListener<StateSlice>, options?: {
+            equalityFn?: import("zustand").EqualityChecker<StateSlice> | undefined;
+            fireImmediately?: boolean | undefined;
+        } | undefined): () => void;
+    };
+}>;
 export declare const provider: Provider | undefined;
 export declare const completeDetect: () => Promise<void>;
 export declare const connect: () => Promise<void>;

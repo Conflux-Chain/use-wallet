@@ -21,6 +21,22 @@ class Unit {
         return a.value.eq(b.value);
     }
 
+    static lessThan = (a: Unit, b: Unit) => {
+        return a.value.lessThan(b.value);
+    }
+
+    static greaterThan = (a: Unit, b: Unit) => {
+        return a.value.greaterThan(b.value);
+    }
+
+    static lessThanOrEqualTo = (a: Unit, b: Unit) => {
+        return a.value.lessThanOrEqualTo(b.value);
+    }
+
+    static greaterThanOrEqualTo = (a: Unit, b: Unit) => {
+        return a.value.greaterThanOrEqualTo(b.value);
+    }
+
     static add = (a: Unit, b: Unit) => {
         return new Unit(a.value.add(b.value));
     }
