@@ -110,7 +110,7 @@ class Wallet<T extends ProviderType> {
                     this.handleChainChanged(chainId);
                 });
                 this.resolveDetect();
-            }, 100);
+            }, 1500);
 
             const balance = await this.getBalance(accounts);
             if (balanceTimeout !== null) {
@@ -152,7 +152,7 @@ class Wallet<T extends ProviderType> {
                 method: `${this.evtPrefix}_getBalance`,
                 params: [account, this.evtPrefix === 'cfx' ? 'latest_state' : 'latest'],
             });
-
+            
             return Unit.fromMinUnit(minUnitBalance);
         } catch (err) {
             console.error('Get balance error: ', err);
