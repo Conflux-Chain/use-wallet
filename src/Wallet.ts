@@ -101,12 +101,26 @@ class Wallet<T extends ProviderType> {
     private batchGetInfo = async({ isRequestConnect }: { isRequestConnect: boolean; } = { isRequestConnect: false }) => {
         try {
             const [chainId, accounts] = await Promise.all([this.getChainId(), isRequestConnect ? this.requestAccounts() : this.getAccounts()]);
+            
+            // In very rare cases, the fullnode balance roc may crash, so the balance batch has to be dropped.
+            let balanceTimeout: number | null = setTimeout(() => {
+                balanceTimeout = null;
+                unstable_batchedUpdates(() => {
+                    this.handleAccountsChanged(accounts);
+                    this.handleChainChanged(chainId);
+                });
+                this.resolveDetect();
+            }, 100);
+
             const balance = await this.getBalance(accounts);
-            unstable_batchedUpdates(() => {
-                this.handleAccountsChanged(accounts);
-                this.handleChainChanged(chainId);
-                this.store.setState({ balance });
-            });
+            if (balanceTimeout !== null) {
+                clearTimeout(balanceTimeout);
+                unstable_batchedUpdates(() => {
+                    this.handleAccountsChanged(accounts);
+                    this.handleChainChanged(chainId);
+                    this.store.setState({ balance });
+                });
+            }
         } catch (err) {
             console.error('batchGetInfo error: ', err);
             throw err;
