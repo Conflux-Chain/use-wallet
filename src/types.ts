@@ -58,7 +58,8 @@ export interface Provider {
     request(args: { method: `wallet_add${Capitalize<ProviderType>}Chain`; params: [AddChainParameter] }): Promise<null>;
     request(args: { method: `wallet_switch${Capitalize<ProviderType>}Chain`; params: [{ chainId: string }] }): Promise<null>;
     request(args: { method: `wallet_watchAsset`; params: { type: string; options: Record<string, any> } }): Promise<boolean>;
-
+    request(args: { method: `eth_estimateGas`; params: [TransactionParameters] }): Promise<string>;
+    request(args: { method: `eth_gasPrice`; params: [] }): Promise<string>;
     isFluent?: boolean;
     isMetaMask?: boolean;
     isConfluxPortal?: boolean;

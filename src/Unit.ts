@@ -1,7 +1,5 @@
 import Decimal from 'decimal.js';
 
-const ratio = Decimal.pow(10, 18);
-
 class Unit {
     private value: Decimal; // decimal min unit('drip' in conflux and 'wei' in eth).
 
@@ -9,8 +7,19 @@ class Unit {
         this.value = value;
     }
 
+    private static decimals = Decimal.pow(10, 18);
+    
+    static setDecimals = (decimals: number) => {
+        let _decimals = decimals;
+        if (typeof _decimals !== 'number') _decimals = 18;
+        else if (_decimals > 18) _decimals = 18;
+        else if (_decimals <= 0) _decimals = 18;
+
+        Unit.decimals = Decimal.pow(10, _decimals);
+    }
+
     static fromStandardUnit = (value: string | number) => {
-        return new Unit(new Decimal(value).mul(ratio));
+        return new Unit(new Decimal(value).mul(Unit.decimals));
     };
 
     static fromMinUnit = (value: string | number) => {
@@ -59,17 +68,17 @@ class Unit {
 
     toDecimalStandardUnit = (toFixed?: number) => {
         if (typeof toFixed === 'number' && toFixed > 0) {
-            const strVal = this.value.div(ratio).toString();
+            const strVal = this.value.div(Unit.decimals).toString();
             const dotIndex = strVal.indexOf('.');
             if (dotIndex === -1) return strVal + '.' + '0'.repeat(toFixed);
             if (strVal.length - dotIndex - 1 < toFixed) return strVal + '0'.repeat(toFixed - (strVal.length - dotIndex - 1));
             return strVal.slice(0, dotIndex) + '.' + strVal.slice(dotIndex + 1, dotIndex + toFixed + 1);
         }
-        return this.value.div(ratio).toString();
+        return this.value.div(Unit.decimals).toString();
     };
 
     toHexStandardUnit = () => {
-        return this.value.div(ratio).toHex();
+        return this.value.div(Unit.decimals).toHex();
     };
 
     toDecimalMinUnit = () => {
