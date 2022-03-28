@@ -37,7 +37,7 @@ class Wallet<T extends ProviderType> {
     constructor(providerType: T) {
         this.providerType = providerType === 'conflux' ? 'Conflux' : 'Ethereum';
         this.evtPrefix = providerPreFixMap[providerType];
-        this.provider = (window as any)[providerType] as Provider;
+        this.provider = (globalThis as any)[providerType] as Provider;
 
         detectProvider(arguments[0], arguments[1])
             .then((provider) => {

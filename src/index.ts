@@ -1,5 +1,5 @@
 
-import Wallet, { type WalletState} from './Wallet';
+import Wallet from './Wallet';
 import Unit from './Unit';
 
 const FluentWallet = new Wallet('conflux');

@@ -27,10 +27,10 @@ export default function detectProvider(): Promise<Provider> {
     let handled = false;
 
     return new Promise((resolve, reject) => {
-        if ((window as any)[providerType]) {
+        if ((globalThis as any)[providerType]) {
             handleEthereum();
         } else {
-            window.addEventListener(`${providerType}#initialized`, handleEthereum, { once: true });
+            globalThis.addEventListener(`${providerType}#initialized`, handleEthereum, { once: true });
 
             if (timeout > 0) {
                 setTimeout(() => {
@@ -47,9 +47,9 @@ export default function detectProvider(): Promise<Provider> {
             }
             handled = true;
 
-            window.removeEventListener(`${providerType}#initialized`, handleEthereum);
+            globalThis.removeEventListener(`${providerType}#initialized`, handleEthereum);
 
-            const provider = (window as any)[providerType] as Provider;
+            const provider = (globalThis as any)[providerType] as Provider;
 
             const mustBeOfficalWallet = providerType === 'conflux' ? mustBeFluent : mustBeMetaMask;
             let isOfficalWallet = !!provider;
