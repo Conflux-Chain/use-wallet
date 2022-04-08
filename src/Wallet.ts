@@ -110,7 +110,7 @@ class Wallet<T extends ProviderType> {
                     this.handleChainChanged(chainId);
                 });
                 this.resolveDetect();
-            }, 1500);
+            }, 1500) as unknown as number;
 
             const balance = await this.getBalance(accounts);
             if (balanceTimeout !== null) {
@@ -189,7 +189,7 @@ class Wallet<T extends ProviderType> {
         const getAndSetBalance = () => this.getBalance().then(balance => this.handleBalanceChanged(balance));
         getAndSetBalance();
 
-        this.balanceTimer = setInterval(getAndSetBalance, 1500);
+        this.balanceTimer = setInterval(getAndSetBalance, 1500) as unknown as number;
     };
 
 
