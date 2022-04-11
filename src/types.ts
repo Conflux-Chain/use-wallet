@@ -60,6 +60,7 @@ export interface Provider {
     request(args: { method: `wallet_watchAsset`; params: { type: string; options: Record<string, any> } }): Promise<boolean>;
     request(args: { method: `eth_estimateGas`; params: [TransactionParameters] }): Promise<string>;
     request(args: { method: `eth_gasPrice`; params: [] }): Promise<string>;
+    request(args: { method: `eth_getTransactionReceipt`; params: [string] }): Promise<Record<string, any>>;
     isFluent?: boolean;
     isMetaMask?: boolean;
     isConfluxPortal?: boolean;

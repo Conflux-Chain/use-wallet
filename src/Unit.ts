@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+Decimal.set({ precision: 50  });
 
 class Unit {
     private value: Decimal; // decimal min unit('drip' in conflux and 'wei' in eth).
@@ -14,7 +15,6 @@ class Unit {
         if (typeof _decimals !== 'number') _decimals = 18;
         else if (_decimals > 18) _decimals = 18;
         else if (_decimals <= 0) _decimals = 18;
-
         Unit.decimals = Decimal.pow(10, _decimals);
     }
 
