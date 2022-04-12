@@ -18,8 +18,12 @@ class Unit {
         Unit.decimals = Decimal.pow(10, _decimals);
     }
 
-    static fromStandardUnit = (value: string | number) => {
-        return new Unit(new Decimal(value).mul(Unit.decimals));
+    static fromStandardUnit = (value: string | number, decimals?: number) => {
+        let _decimals = Unit.decimals;
+        if (typeof decimals === 'number' && decimals > 0) {
+            _decimals = Decimal.pow(10, decimals);
+        }
+        return new Unit(new Decimal(value).mul(_decimals));
     };
 
     static fromMinUnit = (value: string | number) => {
@@ -66,19 +70,27 @@ class Unit {
         return this.value.eq(another.value);
     }
 
-    toDecimalStandardUnit = (toFixed?: number) => {
+    toDecimalStandardUnit = (toFixed?: number, decimals?: number) => {
+        let _decimals = Unit.decimals;
+        if (typeof decimals === 'number' && decimals > 0) {
+            _decimals = Decimal.pow(10, decimals);
+        }
         if (typeof toFixed === 'number' && toFixed > 0) {
-            const strVal = this.value.div(Unit.decimals).toString();
+            const strVal = this.value.div(_decimals).toString();
             const dotIndex = strVal.indexOf('.');
             if (dotIndex === -1) return strVal + '.' + '0'.repeat(toFixed);
             if (strVal.length - dotIndex - 1 < toFixed) return strVal + '0'.repeat(toFixed - (strVal.length - dotIndex - 1));
             return strVal.slice(0, dotIndex) + '.' + strVal.slice(dotIndex + 1, dotIndex + toFixed + 1);
         }
-        return this.value.div(Unit.decimals).toString();
+        return this.value.div(_decimals).toString();
     };
 
-    toHexStandardUnit = () => {
-        return this.value.div(Unit.decimals).toHex();
+    toHexStandardUnit = (decimals?: number) => {
+        let _decimals = Unit.decimals;
+        if (typeof decimals === 'number' && decimals > 0) {
+            _decimals = Decimal.pow(10, decimals);
+        }
+        return this.value.div(_decimals).toHex();
     };
 
     toDecimalMinUnit = () => {

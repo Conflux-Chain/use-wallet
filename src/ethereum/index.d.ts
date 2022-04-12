@@ -1,5 +1,6 @@
 import Unit from '../Unit';
 import type { Provider, AddChainParameter, WatchAssetParams, TransactionParameters } from '../types';
+import Wallet from '../Wallet';
 import { type WalletState } from '../Wallet';
 
 export declare const store: import("zustand").UseBoundStore<WalletState, Omit<import("zustand").StoreApi<WalletState>, "subscribe"> & {
@@ -26,3 +27,4 @@ export declare const useAccount: () => string | undefined;
 export declare const useChainId: () => string | undefined;
 export declare const useBalance: () => Unit | undefined;
 export { Unit };
+export default Wallet;

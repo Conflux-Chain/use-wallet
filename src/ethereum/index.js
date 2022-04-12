@@ -36,3 +36,5 @@ export {
     useChainId,
     useStatus,
 };
+
+export default Wallet;

@@ -21,14 +21,14 @@ class Wallet<T extends ProviderType> {
 
     public provider?: Provider;
     public store = create(
-        subscribeWithSelector(
+        subscribeWithSelector<WalletState>(
             () =>
                 ({
                     status: 'in-detecting',
                     accounts: undefined,
                     chainId: undefined,
                     balance: undefined,
-                } as WalletState),
+                }),
         ),
     );
 
