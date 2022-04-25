@@ -73,7 +73,7 @@ const SendTransactionDemo: React.FC = () => {
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{account}</p>
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">
-                        {`${balance.toDecimalStandardUnit()} CFX`}
+                        {`${balance?.toDecimalStandardUnit()} CFX`}
                     </p>
                     
                     <button className="button w-full my-4 h-[36px]" onClick={handleClickSendTransaction}>

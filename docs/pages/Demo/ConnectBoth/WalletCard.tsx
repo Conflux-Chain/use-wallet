@@ -63,7 +63,7 @@ const WalletCard: React.FC<Props> = ({ useStatus, useAccount, useChainId, useBal
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">account address:</p>
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{account}</p>
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
-                    <p className="text-[14px] leading-[18px] text-text2 transition-colors">{`${balance.toDecimalStandardUnit()} ${type === 'Fluent' ? 'CFX' : 'ETH'}`}</p>
+                    <p className="text-[14px] leading-[18px] text-text2 transition-colors">{`${balance?.toDecimalStandardUnit()} ${type === 'Fluent' ? 'CFX' : 'ETH'}`}</p>
 
                     <div className="mt-[16px] px-[12px] py-[10px] flex items-center text-[14px] text-[#3D3F4C] bg-[#F7F8FA] rounded-[2px]">
                         <img className="mr-[8px] w-[24px] h-[24px]" src={type === 'Fluent' ? CFX : MetaMask} alt="cfx icon" />

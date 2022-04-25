@@ -115,7 +115,7 @@ const AddSwitchDemo: React.FC = () => {
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">account address:</p>
                     <p className="text-[14px] leading-[18px] text-text2 transition-colors">{account}</p>
                     <p className="mt-[6px] text-[16px] leading-[22px] text-text1 transition-colors">balance:</p>
-                    <p className="text-[14px] leading-[18px] text-text2 transition-colors">{`${balance.toDecimalStandardUnit()} CFX`}</p>
+                    <p className="text-[14px] leading-[18px] text-text2 transition-colors">{`${balance?.toDecimalStandardUnit()} CFX`}</p>
 
                     <div className="flex gap-4">
                         <button className="button w-[50%] my-4 h-[36px]" onClick={handleClickAddChain}>

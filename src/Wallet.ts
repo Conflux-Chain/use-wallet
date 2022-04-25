@@ -54,7 +54,7 @@ class Wallet<T extends ProviderType> {
                 this.subProvider();
             })
             .catch((err) => {
-                console.error('detect error:', err);
+                // console.error('detect error:', err);
                 this.store.setState({ status: 'not-installed' });
                 this.resolveDetect();
             })
@@ -122,7 +122,7 @@ class Wallet<T extends ProviderType> {
                 });
             }
         } catch (err) {
-            console.error('batchGetInfo error: ', err);
+            // console.error('batchGetInfo error: ', err);
             throw err;
         } finally {
             this.resolveDetect();
@@ -155,7 +155,7 @@ class Wallet<T extends ProviderType> {
             
             return Unit.fromMinUnit(minUnitBalance);
         } catch (err) {
-            console.error('Get balance error: ', err);
+            // console.error('Get balance error: ', err);
             throw err;
         }
     };
@@ -168,7 +168,7 @@ class Wallet<T extends ProviderType> {
         return account;
     }
 
-    private trackBalance = () => {
+    private trackBalance = (chainId?: string) => {
         const account = this.store.getState().accounts?.[0];
 
         const clearTimer = () => {
@@ -178,7 +178,7 @@ class Wallet<T extends ProviderType> {
             }
         }
 
-        if (!account) {
+        if (!chainId || chainId === '9007199254740991' || !account) {
             this.store.setState({ balance: undefined });
             clearTimer();
             return;

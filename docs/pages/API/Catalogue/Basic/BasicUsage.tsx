@@ -92,7 +92,7 @@ const WalletInfo: React.FC = memo(() => {
             <p>account: {account}</p>
             <p>chainId: {chainId}</p>
             <p>
-                balance: {\`\${balance.toDecimalStandardUnit()} CFX\`}
+                balance: {\`\${balance?.toDecimalStandardUnit()} CFX\`}
             </p>
 
             <button onClick={handleClickSendTransaction}>
