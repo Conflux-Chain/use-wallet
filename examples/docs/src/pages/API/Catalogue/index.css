@@ -1,0 +1,37 @@
+.docs h2 {
+    @apply text-text1 text-[36px] leading-[48px] font-semibold transition-colors;
+}
+
+.docs h2::after {
+    @apply mt-[4px] mb-[24px] block bg-text1 h-[1px] opacity-10 transition-colors;
+
+    content: '';
+}
+
+.docs h3 {
+    @apply inline-block mb-[8px] px-[8px] py-[2px] rounded text-text1 text-[24px] leading-[36px] font-medium bg-text2 text-white dark:text-black transition-colors;
+}
+
+.docs h4 {
+    @apply px-[8px] mb-[2px] text-text1 text-[18px] leading-[28px] font-medium transition-colors opacity-90;
+}
+
+.docs p {
+    @apply text-text1 text-[16px] leading-[24px] indent-[2em] transition-colors opacity-80;
+}
+
+.docs p + p {
+    @apply mt-[8px];
+}
+
+.docs section + section {
+    @apply mt-[80px];
+}
+
+.docs section + h2 {
+    @apply mt-[160px];
+}
+
+.docs section a {
+    @apply text-primary hover:underline;
+}

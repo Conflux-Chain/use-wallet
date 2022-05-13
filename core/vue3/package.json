@@ -1,0 +1,38 @@
+{
+    "name": "vue3",
+    "version": "0.0.1-0",
+    "type": "module",
+    "scripts": {
+        "build": "rimraf dist && node ./build/index.js",
+        "release": "rimraf dist && node ./build/release.js"
+    },
+    "peerDependencies": {
+        "decimal.js": "^10.3.1",
+        "vue": ">=3"
+    },
+    "devDependencies": {
+        "base": "*",
+        "chalk": "^5.0.1",
+        "esbuild": "^0.14.42",
+        "inquirer": "^8.2.4",
+        "semver": "^7.3.7",
+        "tsconfig": "*",
+        "typescript": "latest"
+    },
+    "dependencies": {
+        "decimal.js": "^10.3.1",
+        "vue": "^3.2.36"
+    },
+    "license": "MIT",
+    "directories": {
+        "doc": "docs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Conflux-Chain/use-wallet.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Conflux-Chain/use-wallet/issues"
+    },
+    "homepage": "https://github.com/Conflux-Chain/use-wallet#readme"
+}

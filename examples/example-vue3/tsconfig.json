@@ -1,0 +1,12 @@
+{
+    "extends": "tsconfig/website.json",
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "jsx": "preserve",
+        "baseUrl": "./",
+        "paths": {
+            "@cfxjs/use-wallet-vue3/conflux*": ["../../core/vue3/src/index"],
+        }
+    },
+}

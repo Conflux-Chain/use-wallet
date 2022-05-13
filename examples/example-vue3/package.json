@@ -1,0 +1,20 @@
+{
+    "name": "example-vue3",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite --port 3003 --host",
+        "build": "vue-tsc --noEmit && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "vue": "^3.2.36"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^2.3.3",
+        "tsconfig": "*",
+        "typescript": "latest",
+        "vite": "^2.9.9",
+        "vue-tsc": "^0.34.17"
+    }
+}

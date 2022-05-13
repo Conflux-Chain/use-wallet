@@ -1,0 +1,16 @@
+{
+    "name": "eslint-config-custom",
+    "version": "0.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "devDependencies": {
+        "eslint": "latest",
+        "eslint-config-prettier": "latest",
+        "eslint-plugin-react": "latest",
+        "eslint-plugin-vue": "latest",
+        "typescript": "latest"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}

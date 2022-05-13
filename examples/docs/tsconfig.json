@@ -1,0 +1,16 @@
+{
+    "extends": "tsconfig/website.json",
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@hooks/*": ["src/hooks/*"],
+            "@assets/*": ["src/assets/*"],
+            "@pages/*": ["src/pages/*"],
+            "@utils/*": ["src/utils/*"],
+            "@components/*": ["src/components/*"],
+            "@router/*": ["src/router/*"]
+        }
+    },
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules"]
+}

@@ -1,0 +1,40 @@
+{
+    "name": "turborepo-basic-shared",
+    "version": "0.0.0",
+    "private": true,
+    "workspaces": [
+        "config/*",
+        "examples/*",
+        "enhance/*",
+        "core/*"
+    ],
+    "scripts": {
+        "dev:react": "turbo run dev --scope=example-react",
+        "dev:vue3": "turbo run dev --scope=example-vue3",
+        "dev:svelte": "turbo run dev --scope=example-svelte",
+        "dev:docs": "turbo run dev --scope=docs",
+        "build:react": "turbo run build --scope=react",
+        "build:vue3": "turbo run build --scope=vue3",
+        "build:lib": "turbo run build  --scope=vanilla --scope=react --scope=vue --scope=svelte",
+        "build:docs": "turbo run build --scope=docs",
+        "build:enhance-react": "turbo run build --scope=enhance-react",
+        "release:react": "node ./core/react/build/release.js",
+        "release:vue3": "node ./core/vue3/build/release.js",
+        "release:lib": "node ./core/react/build/release.js & node ./core/vue3/build/release.js",
+        "release:docs": "turbo run release --scope=docs",
+        "release:enhance-react": "node ./enhance/react/build/release.js",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "preinstall": "npx only-allow yarn"
+    },
+    "devDependencies": {
+        "prettier": "latest",
+        "rimraf": "latest",
+        "turbo": "latest"
+    },
+    "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=14.0.0"
+    },
+    "packageManager": "yarn@1.22.18"
+}

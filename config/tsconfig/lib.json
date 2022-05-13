@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Lib",
+    "extends": "./base.json",
+    "compilerOptions": {
+        "declaration": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}

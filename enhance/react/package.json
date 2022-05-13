@@ -1,0 +1,48 @@
+{
+    "name": "enhance-react",
+    "version": "0.0.1-10",
+    "type": "module",
+    "scripts": {
+        "build": "rimraf dist && node ./build/index.js",
+        "release": "rimraf dist && node ./build/release.js"
+    },
+    "peerDependencies": {
+        "@cfxjs/use-wallet-react": "latest",
+        "decimal.js": "^10.3.1",
+        "react": ">=16.8",
+        "react-dom": ">=16.8",
+        "zustand": ">=4.0.0-rc.1",
+        "lodash-es": "^4.17.15"
+    },
+    "devDependencies": {
+        "@types/lodash-es": "^4.17.6",
+        "@types/react": "^18.0.9",
+        "@types/react-dom": "^18.0.5",
+        "chalk": "^5.0.1",
+        "esbuild": "^0.14.42",
+        "inquirer": "^8.2.4",
+        "semver": "^7.3.7",
+        "tsconfig": "*",
+        "typescript": "latest"
+    },
+    "dependencies": {
+        "react": "^18.1.0",
+        "react-dom": "^18.1.0",
+        "decimal.js": "^10.3.1",
+        "lodash-es": "^4.17.21",
+        "zustand": "^4.0.0-rc.1",
+        "@cfxjs/use-wallet-react": "latest"
+    },
+    "license": "MIT",
+    "directories": {
+        "doc": "docs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Conflux-Chain/use-wallet.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Conflux-Chain/use-wallet/issues"
+    },
+    "homepage": "https://github.com/Conflux-Chain/use-wallet#readme"
+}

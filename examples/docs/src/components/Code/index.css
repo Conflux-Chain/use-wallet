@@ -1,0 +1,21 @@
+
+
+.prism-light > .prism-code {
+    background-color: #f5f2f0 !important;
+    text-shadow: white 0px 1px !important;
+}
+
+
+.prism-dark > .prism-code {
+    text-shadow: black 0px 1px !important;
+}
+
+.prism-code {
+    margin-top: .5rem !important;
+    margin-bottom: .5rem !important;
+    padding: 1rem !important;
+}
+
+.token-line {
+    line-height: 1.65rem !important;
+}
