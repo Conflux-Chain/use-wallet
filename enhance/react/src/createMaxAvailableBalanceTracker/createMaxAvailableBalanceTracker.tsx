@@ -3,7 +3,7 @@ import { subscribeWithSelector } from 'zustand/middleware';
 import { Unit, type store } from '@cfxjs/use-wallet-react/conflux';
 
 export interface Params {
-    crateTransaction: (currentBalance: Unit) => Partial<Record<'to' | 'data' | 'value', string>>;
+    createTransaction: ({ balance, account, chainId }: { balance: Unit, account: string; chainId: string; }) => Partial<Record<'to' | 'data' | 'value', string>> | false | null | undefined;
     store: typeof store;
     rpcUrl: string;
     estimate: (params: any, conf: { rpcUrl: string; store: typeof store }) => Promise<string>;
@@ -14,7 +14,7 @@ export interface MaxAvailableBalanceStore {
 }
 const maxAvailableBalanceStoreSelector = (state: MaxAvailableBalanceStore) => state.maxAvailableBalance;
 
-export default function createMaxAvailableBalanceTracker({ crateTransaction, store, rpcUrl, estimate }: Params) {
+export default function createMaxAvailableBalanceTracker({ createTransaction, store, rpcUrl, estimate }: Params) {
     const maxAvailableBalanceStore = create(subscribeWithSelector<MaxAvailableBalanceStore>(() => ({ maxAvailableBalance: undefined })));
 
     const startTrack = () => {
@@ -24,9 +24,19 @@ export default function createMaxAvailableBalanceTracker({ crateTransaction, sto
                 if (!balance) {
                     maxAvailableBalanceStore.setState({ maxAvailableBalance: undefined });
                 } else {
-                    estimate(crateTransaction(balance), { store, rpcUrl })
-                        .then((maxAvailableBalance) => maxAvailableBalanceStore.setState({ maxAvailableBalance: Unit.fromMinUnit(maxAvailableBalance) }))
-                        .catch(() => maxAvailableBalanceStore.setState({ maxAvailableBalance: undefined }));
+                    const { accounts, chainId } = store.getState();
+                    const transaction = createTransaction({ balance, account: accounts?.[0]!, chainId: chainId! });
+                    if (typeof transaction !== 'object') {
+                        maxAvailableBalanceStore.setState({ maxAvailableBalance: undefined });
+                    } else {
+                        estimate(transaction, { store, rpcUrl })
+                        .then((maxAvailableBalance) => {
+                            maxAvailableBalanceStore.setState({ maxAvailableBalance: Unit.fromMinUnit(maxAvailableBalance) })
+                        })
+                        .catch(() => {
+                            maxAvailableBalanceStore.setState({ maxAvailableBalance: undefined });
+                        });
+                    }
                 }
             },
             { fireImmediately: true }

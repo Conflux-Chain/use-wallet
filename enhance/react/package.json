@@ -1,6 +1,6 @@
 {
     "name": "enhance-react",
-    "version": "0.0.1-10",
+    "version": "0.0.1-12",
     "type": "module",
     "scripts": {
         "build": "rimraf dist && node ./build/index.js",
