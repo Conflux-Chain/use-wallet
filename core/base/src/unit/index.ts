@@ -99,6 +99,14 @@ class Unit {
         return new Unit(this.value.div(another.value));
     }
 
+    static pow = (a: Unit, b: Unit) => {
+        return new Unit(a.value.pow(b.value));
+    }
+
+    pow = (another: Unit) => {
+        return new Unit(this.value.pow(another.value));
+    }
+
     equalsWith = (another: Unit) => {
         return this.value.eq(another.value);
     }
@@ -118,13 +126,24 @@ class Unit {
         return this.value.div(calcDecimals(decimals)).toHex();
     };
 
-    toDecimalMinUnit = () => {
+    toDecimalMinUnit = (toFixed?: number) => {
+        if (typeof toFixed === 'number' && toFixed > 0) {
+            const strVal = this.value.toString();
+            const dotIndex = strVal.indexOf('.');
+            if (dotIndex === -1) return strVal + '.' + '0'.repeat(toFixed);
+            if (strVal.length - dotIndex - 1 < toFixed) return strVal + '0'.repeat(toFixed - (strVal.length - dotIndex - 1));
+            return strVal.slice(0, dotIndex) + '.' + strVal.slice(dotIndex + 1, dotIndex + toFixed + 1);
+        }
         return this.value.toString();
     };
 
     toHexMinUnit = () => {
         return this.value.toHex();
     };
+
+    toString = () => {
+        return this.toDecimalStandardUnit();
+    }
 
     [Symbol.toPrimitive](hint: 'string' | 'number' | 'default') {
         return hint == 'string' ? this.toDecimalStandardUnit() : this.value;

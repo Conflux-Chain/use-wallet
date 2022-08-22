@@ -13,6 +13,7 @@ declare class Unit {
     static sub: (a: Unit, b: Unit) => Unit;
     static mul: (a: Unit, b: Unit) => Unit;
     static div: (a: Unit, b: Unit) => Unit;
+    static pow: (a: Unit, b: Unit) => Unit;
     equals: (another: Unit) => boolean;
     lessThan: (another: Unit) => boolean;
     greaterThan: (another: Unit) => boolean;
@@ -22,6 +23,7 @@ declare class Unit {
     sub: (another: Unit) => Unit;
     mul: (another: Unit) => Unit;
     div: (another: Unit) => Unit;
+    pow: (another: Unit) => Unit;
     equalsWith: (another: Unit) => boolean;
     toDecimalStandardUnit: (toFixed?: number | undefined, decimals?: number) => string;
     toHexStandardUnit: (decimals?: number | undefined) => string;
