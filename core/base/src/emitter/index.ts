@@ -187,20 +187,23 @@ class Emitter<T extends RPCMethod> {
         this.trackBalanceChangeOnceCallback.push(callback);
     }
 
-    public connect = () => {
+    public connect = async () => {
         const currentStatus = this.state.status;
         if (currentStatus !== 'not-active') {
             if (currentStatus === 'active') return Promise.resolve(this.state.accounts);
             else throw new Error(`Current status ${currentStatus} is not allowed to connect.`);
         }
-        return this.batchGetInfo({ isRequestConnect: true });
+        this.handleStatusChanged('in-activating');
+        const res = this.batchGetInfo({ isRequestConnect: true });
+        res.catch(() => this.handleStatusChanged('not-active'))
+        return res;
     };
 
     public sendTransaction: T['sendTransaction'] = (params: Record<string, string>) => {
         if (!this.RPCMethod.sendTransaction) {
             throw new Error(`Current Wallet does'nt have sendTransaction method.`);
         }
-
+  
         const account = this.checkConnected('sendTransaction');
         return this.RPCMethod.sendTransaction({
             ...params,

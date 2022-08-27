@@ -29,6 +29,14 @@ class Unit {
         return a.value.eq(b.value);
     }
 
+    static min = (a: Unit, b: Unit) => {
+        return a.greaterThan(b) ? b : a;
+    }
+
+    static max = (a: Unit, b: Unit) => {
+        return a.greaterThan(b) ? a : b;
+    }
+
     equals = (another: Unit) => {
         return this.value.eq(another.value);
     }

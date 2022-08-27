@@ -5,6 +5,8 @@ declare class Unit {
     static fromStandardUnit: (value: string | number, decimals?: number) => Unit;
     static fromMinUnit: (value: string | number) => Unit;
     static equals: (a: Unit, b: Unit) => boolean;
+    static min: (a: Unit, b: Unit) => Unit;
+    static max: (a: Unit, b: Unit) => Unit;
     static lessThan: (a: Unit, b: Unit) => boolean;
     static greaterThan: (a: Unit, b: Unit) => boolean;
     static lessThanOrEqualTo: (a: Unit, b: Unit) => boolean;
@@ -27,7 +29,7 @@ declare class Unit {
     equalsWith: (another: Unit) => boolean;
     toDecimalStandardUnit: (toFixed?: number | undefined, decimals?: number) => string;
     toHexStandardUnit: (decimals?: number | undefined) => string;
-    toDecimalMinUnit: () => string;
+    toDecimalMinUnit: (toFixed?: number | undefined) => string;
     toHexMinUnit: () => string;
     [Symbol.toPrimitive](hint: 'string' | 'number' | 'default'): string | Decimal;
 }
