@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-Decimal.set({ precision: 50  });
+Decimal.set({ precision: 80  });
 
 const calcDecimals = (decimals: number = 18) => {
     let _decimals: number = decimals;;
@@ -122,6 +122,9 @@ class Unit {
     toDecimalStandardUnit = (toFixed?: number, decimals: number = 18) => {
         if (typeof toFixed === 'number' && toFixed > 0) {
             const strVal = this.value.div(calcDecimals(decimals)).toString();
+            if (strVal === 'NaN') return strVal;
+            if (strVal.indexOf('Infinity') !== -1) return strVal;
+            if (strVal.indexOf('e') !== -1) return strVal;
             const dotIndex = strVal.indexOf('.');
             if (dotIndex === -1) return strVal + '.' + '0'.repeat(toFixed);
             if (strVal.length - dotIndex - 1 < toFixed) return strVal + '0'.repeat(toFixed - (strVal.length - dotIndex - 1));
@@ -137,6 +140,9 @@ class Unit {
     toDecimalMinUnit = (toFixed?: number) => {
         if (typeof toFixed === 'number' && toFixed > 0) {
             const strVal = this.value.toString();
+            if (strVal === 'NaN') return strVal;
+            if (strVal.indexOf('Infinity') !== -1) return strVal;
+            if (strVal.indexOf('e') !== -1) return strVal;
             const dotIndex = strVal.indexOf('.');
             if (dotIndex === -1) return strVal + '.' + '0'.repeat(toFixed);
             if (strVal.length - dotIndex - 1 < toFixed) return strVal + '0'.repeat(toFixed - (strVal.length - dotIndex - 1));
