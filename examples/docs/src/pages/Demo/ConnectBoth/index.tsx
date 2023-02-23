@@ -5,7 +5,7 @@ import {
     useChainId as useFluentChainId,
     useBalance as useFluentBalance,
     connect as connectFluent,
-} from '@cfxjs/use-wallet-react/conflux';
+} from '@cfxjs/use-wallet-react/ethereum/Fluent';
 import {
     useStatus as useMetaMaskStatus,
     useAccount as useMetaMaskAccount,

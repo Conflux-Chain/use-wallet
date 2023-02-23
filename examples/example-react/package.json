@@ -8,10 +8,11 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@vitejs/plugin-react": "^3.1.0",
         "decimal.js": "^10.3.1",
         "react": "^18.1.0",
         "react-dom": "^18.1.0",
-        "zustand": "4.0.0-rc.1"
+        "zustand": "^4.3.6"
     },
     "devDependencies": {
         "@types/react": "^18.0.9",
@@ -20,6 +21,6 @@
         "base": "*",
         "tsconfig": "*",
         "typescript": "latest",
-        "vite": "^3.0.9"
+        "vite": "^4.2.1"
     }
 }
