@@ -7,14 +7,14 @@ import Select from 'react-select';
 const transitions = {
     en: {
         step1: `Way 1: Import the default wallet of a chain (usually the most popular wallet that occupies window.\${chainName}, e.g. MetamMask in ethereum, Fluent in conflux) via '@cfxjs/use-wallet/\${chainName}'.`,
-        step2: `Taking the ethereum chain as an example, this import can support the default MetaMask wallet, as well as other wallets (e.g. Fluent, MetaX) with hosting turned on.`,
+        step2: `Taking the ethereum chain as an example, this import can support the default MetaMask wallet, as well as other wallets (e.g. Fluent, OKX) with hosting turned on.`,
         step3: `Way 2: Import a specific wallet of the chain via '@cfxjs/use-wallet/\${chainName}/\${walletName}'.`,
         step4: `Take the ethereum chain as an example: if you use import { useStatus } from '@cfxjs/use-wallet/ethereum/MetaMask', the status of useStatus is 'not-installed' when MetaMask is hosted.`,
         step5: `This import method of specifying wallets makes it easy to implement such functions as multi-wallet login.`,
     },
     zh: {
         step1: `方式一：通过 '@cfxjs/use-wallet/\${chainName}' 导入 某条链默认钱包 (通常是占据了 window.\${chainName} 的最流行的钱包，如 ethereum 下的 MetamMask, conflux 下的 Fluent)。`,
-        step2: `以 ethereum链 为例，这种导入方式可以支持默认的 MetaMask 钱包，也可以支持其他钱包(如 Fluent、MetaX)开启托管的情况。`,
+        step2: `以 ethereum链 为例，这种导入方式可以支持默认的 MetaMask 钱包，也可以支持其他钱包(如 Fluent、OKX)开启托管的情况。`,
         step3: `方式二：通过 '@cfxjs/use-wallet/\${chainName}/\${walletName}' 导入 某条链特定钱包。`,
         step4: `以 ethereum链 为例：如果使用 import { useStatus } from '@cfxjs/use-wallet/ethereum/MetaMask'，当MetaMask被托管时，useStatus的状态就是 'not-installed'。`,
         step5: `这种指定钱包的导入方式，可以很方便的实现 多钱包登陆 这类功能。`,
@@ -27,7 +27,7 @@ const supports = [
     },
     {
         name: 'ethereum',
-        wallet: ['MetaMask', 'Fluent', 'Coinbase', 'MetaX', 'TokenPocket'],
+        wallet: ['MetaMask', 'Fluent', 'Coinbase', 'OKX', 'TokenPocket'],
     },
 ];
 const chainOptions = supports.map(chain => ({ value: chain.name, label: chain.name }))
