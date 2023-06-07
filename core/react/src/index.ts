@@ -32,11 +32,11 @@ export const useBalance = () => {
             if (--referenceCount === 0) {
                 Emitter.stopTrackBalance();
             }
-        }
+        };
     }, []);
 
     return store(selectors.balance);
-}
+};
 
 export const trackBalanceChangeOnce = Emitter.trackBalanceChangeOnce;
 export const completeDetect = Emitter.completeDetect;
@@ -52,6 +52,6 @@ export const requestPermissions = Emitter.requestPermissions;
 export const requestCrossNetworkPermission = Emitter.requestCrossNetworkPermission;
 export const setCrossNetworkChain = Emitter.setCrossNetworkChain;
 export let provider = Emitter.provider;
-Emitter.completeDetect().then(() => provider = Emitter.provider);
+Emitter.completeDetect().then(() => (provider = Emitter.provider));
 
 export { Unit };

@@ -1,32 +1,35 @@
 import React from 'react';
 import useI18n from '@hooks/useI18n';
+import './index.css';
 
 const transitions = {
     en: {
         useWallet: 'use-wallet',
         slogan: `A simpler way to 'use' wallet in web development`,
-        introduce: 'This is a front-end-view wallet hooks library for lightweight dapp rapid development use, only encapsulating the wallet injection in the window provider.If you need more complete and powerful support, js-conflux-sdk or web3.js will be more suitable.',
+        introduce:
+            '<code>use-wallet</code> is a front-end perspective wallet hooks library designed to provide rapid development support for lightweight dapps, it only encapsulates the provider that the wallet injects into the window. <code>js-conflux-sdk</code> or <code>web3.js</code> would be more suitable if you need more complete and powerful support.',
         feature1_title: 'Can support any chain/any wallet/any framework',
-        feature1_text: `currently has support for react/vue3 framework; conflux chain (Portal, Fluent) | ethereum chain (MetaMask, Fluent, MetaX, CoinBase)`,
+        feature1_text: `Currently, <code>use-wallet</code> already supports conflux chains (including Portal and Fluent) and ethereum chains (including MetaMask, Fluent, MetaX and Coinbase). We also provide integration support for React and Vue3 frameworks.`,
         feature2_title: 'Easy to use',
-        feature2_text: `use-wallet has a high level encapsulation, without the need to pay attention to the provider and other specification-oriented concepts. From a front-end developer's perspective, focus on hooks and func and just use them.`,
-        feature3_title: 'Fine-grained hooks to avoid duplicate render',
-        feature3_text: `Some similar hooks wrappers in the community have a habit of returning a lot of data wrapped together, which causes unnecessary render and is not advocated.`,
+        feature2_text: `<code>use-wallet</code> is an advanced wrapper library for front-end developers that eliminates the need for users to pay attention to underlying provider and other specification concepts. You can easily integrate wallet functionality into your application by directly using hooks and func provided by <code>use-wallet</code>.`,
+        feature3_title: 'Effective avoidance of duplicate rendering',
+        feature3_text: `<code>use-wallet</code> subdivides related data into different hooks and uses batching techniques to handle changes to the data to avoid unnecessary re-rendering. Some similar hooks in the community have the habit of returning a lot of data wrapped up together, which tends to cause unnecessary re-rendering and is discouraged.`,
         feature4_title: 'Tiny',
-        feature4_text: `use-wallet only communicates with the wallet through the wallet-injected provider, as well as providing some lightweight tooling methods.In many cases, developing a dapp doesn't require importing a large and comprehensive library like js-conflux-sdk, web3.js.(gzip: 3.7kb - source code, 20kb - include decimal.js)`,
+        feature4_text: `<code>use-wallet</code> is a library that communicates with wallets only through a wallet-injected provider, while providing some lightweight tooling methods. For many dapp development scenarios, there is no need to introduce big and comprehensive libraries like <code>js-conflux-sdk</code> or <code>web3.js</code>. (gzip: 3.7kb - source, 20kb - includes decimal.js)`,
     },
     zh: {
         useWallet: 'use-wallet',
         slogan: `在前端开发过程中更简单地使用钱包`,
-        introduce: '这是一个前端视角的钱包 hooks 库，供轻量级 dapp 快速开发使用，仅仅封装了钱包注入在 window 中的 provider。如果你需要更完整强大的功能支持， js-conflux-sdk 或者 web3.js会更适合。',
-        feature1_title: '可以 任意链/任意钱包/任意框架',
-        feature1_text: `目前已经支持 react/vue3 框架; conflux链(Portal、Fluent) | ethereum链(MetaMask、Fluent、MetaX、CoinBase)`,
+        introduce:
+            '<code>use-wallet</code> 是一个前端视角的钱包 hooks 库，旨在为轻量级 dapp 提供快速开发支持，它仅仅封装了钱包注入在 window 中的 provider。如果你需要更完整强大的功能支持， <code>js-conflux-sdk</code> 或者 <code>web3.js</code> 会更适合。',
+        feature1_title: '支持任意链/任意钱包/任意框架',
+        feature1_text: `目前，<code>use-wallet</code> 已经支持 conflux 链（包括 Portal 和 Fluent）以及 ethereum 链（包括 MetaMask、Fluent、MetaX 和 Coinbase）。同时，我们还提供了对于 React 和 Vue3 框架的集成支持。`,
         feature2_title: '开箱即用',
-        feature2_text: `use-wallet 做了高层次的封装，无需关注 provider 等偏规范的概念。以前端开发者的视角，聚焦于 hooks 和 func，直接使用即可。`,
-        feature3_title: '细分的 hooks、数据变动的批处理 以规避重复渲染',
-        feature3_text: `社区中的一些同类 hooks 封装习惯把很多数据封装在一起返回。这容易引起不必要的重复渲染，是不被提倡的。`,
+        feature2_text: `<code>use-wallet</code> 是一个针对前端开发者的高级封装库，用户无需关注底层的 provider 等规范概念。可以直接使用 <code>use-wallet</code> 提供的 hooks 和 func，轻松集成钱包功能到你的应用中。`,
+        feature3_title: '有效规避重复渲染',
+        feature3_text: `<code>use-wallet</code> 将相关的数据细分为不同的 hooks 并使用批处理技术来处理数据的变动，以避免不必要的重复渲染。社区中的一些同类 hooks 习惯把很多数据封装在一起返回，这容易引起不必要的重复渲染，是不被提倡的。`,
         feature4_title: '体积小',
-        feature4_text: `use-wallet 仅仅通过钱包注入的 provider 来沟通钱包，以及提供了一些轻量级的工具方法。很多情况下，开发一个 dapp 并不需要引入 js-conflux-sdk、web3.js 这样大而全的库。(gzip: 3.7kb - 源码, 20kb - 包含 decimal.js)`,
+        feature4_text: `<code>use-wallet</code> 是一个仅通过钱包注入的 provider 来与钱包进行通信的库，同时提供了一些轻量级的工具方法。对于许多 dapp 开发场景来说，并不需要引入像 <code>js-conflux-sdk</code>、<code>web3.js</code> 这样的大而全的库。(gzip: 3.7kb - 源码, 20kb - 包含 decimal.js)`,
     },
 } as const;
 
@@ -59,14 +62,7 @@ const features = [
         title: 'feature3_title',
         text: 'feature3_text',
         icon: (
-            <svg
-                className="h-7 w-7"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-            >
+            <svg className="h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
         ),
@@ -94,9 +90,7 @@ const GuidePage: React.FC = () => {
             <div className="lg:text-center">
                 <h2 className="text-base text-primary font-semibold tracking-wide transition-colors">{i18n.useWallet}</h2>
                 <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-text1 sm:text-4xl transition-colors">{i18n.slogan}</p>
-                <p className="mt-4 max-w-4xl text-xl text-text2 lg:mx-auto transition-colors">
-                    {i18n.introduce}
-                </p>
+                <p className="mt-4 max-w-4xl text-xl text-text2 lg:mx-auto transition-colors" dangerouslySetInnerHTML={{ __html: i18n.introduce }} />
             </div>
 
             <div className="mt-14">
@@ -107,9 +101,12 @@ const GuidePage: React.FC = () => {
                                 <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white transition-colors">
                                     {feature.icon}
                                 </div>
-                                <p className="ml-16 text-lg leading-6 font-medium text-text1 transition-colors">{i18n[feature.title]}</p>
+                                <p
+                                    className="ml-16 text-lg leading-6 font-medium text-text1 transition-colors"
+                                    dangerouslySetInnerHTML={{ __html: i18n[feature.title] }}
+                                />
                             </div>
-                            <dd className="mt-2 ml-16 text-base text-text2 transition-colors">{i18n[feature.text]}</dd>
+                            <dd className="mt-2 ml-16 text-base text-text2 transition-colors" dangerouslySetInnerHTML={{ __html: i18n[feature.text] }} />
                         </div>
                     ))}
                 </div>
