@@ -31,20 +31,20 @@ const UseStatus: React.FC = () => {
     const currentLib = useCurrentLib();
     const code = `declare const useStatus: () => "in-detecting" | "not-installed" | "not-active" | "in-activating" | "active";`;
     const usage = `import { useStatus } from '@cfxjs/use-wallet-${currentLib}/conflux';
-    
+
 const status = useStatus(); //"in-detecting" | "not-installed" | "not-active" | "in-activating" | "active"`;
 
     return (
         <section>
             <h3>useStatus</h3>
 
-            <h4 className="my-[16px]">declare:</h4>
+            <h4>declare:</h4>
             <Code language="ts">{code}</Code>
 
-            <h4 className="my-[16px]">Usage</h4>
+            <h4>Usage</h4>
             <Code language="ts">{usage}</Code>
 
-            <h4 className="my-[16px]">Description:</h4>
+            <h4>Description:</h4>
             <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />
 
             <p className="font-bold">

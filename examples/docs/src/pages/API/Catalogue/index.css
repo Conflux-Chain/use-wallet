@@ -13,7 +13,7 @@
 }
 
 .docs h4 {
-    @apply px-[8px] mb-[2px] text-text1 text-[18px] leading-[28px] font-medium transition-colors opacity-90;
+    @apply px-[8px] my-[16px] text-text1 text-[18px] leading-[28px] font-medium transition-colors opacity-90;
 }
 
 .docs p {
