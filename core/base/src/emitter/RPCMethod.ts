@@ -1,4 +1,3 @@
-
 abstract class RPCMethod {
     abstract provider: any;
     account!: string;
@@ -21,13 +20,13 @@ abstract class RPCMethod {
 
     detectAndSetProvider = () => {
         const p = this.detectProvider();
-        p.then(provider => this.provider = provider);
+        p.then((provider) => (this.provider = provider)).catch((err) => console.warn(err));
         return p;
-    }
+    };
 
     setAccounts = (accounts: Array<string>) => {
         this.account = accounts?.[0];
-    }
+    };
 
     getProvider = () => this.provider;
 }
