@@ -21,11 +21,13 @@ const transitions = {
 const SendTransaction: React.FC = () => {
     const i18n = useI18n(transitions);
     const currentLib = useCurrentLib();
+
     const code = `declare const sendTransaction: ({ from, to, value, data }: {
-        to: string;
-        value?: string;
-        data?: string | undefined;
-    }) => Promise<string>;`;
+    to: string;
+    value?: string;
+    data?: string | undefined;
+}) => Promise<string>;`;
+
     const usage = `import { sendTransaction } from '@cfxjs/use-wallet-${currentLib}/conflux';
     
 const handleSendTransaction = async() => {

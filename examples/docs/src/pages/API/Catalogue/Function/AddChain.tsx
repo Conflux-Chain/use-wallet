@@ -1,6 +1,7 @@
 import React from 'react';
 import Code from '@components/Code';
 import useI18n from '@hooks/useI18n';
+import useCurrentLib from '@hooks/useCurrentLib';
 
 const transitions = {
     en: {
@@ -15,25 +16,9 @@ const transitions = {
 
 const AddChain: React.FC = () => {
     const i18n = useI18n(transitions);
+    const currentLib = useCurrentLib();
 
-    return (
-        <section>
-            <h3>addChain</h3>
-
-            <h4>declare:</h4>
-            <Code language='ts'>
-                {code}
-            </Code>
-
-            <h4 className='mt-[16px]'>Description:</h4>
-            <p>{i18n.step1}</p>
-            <p>{i18n.step2}</p>
-        </section>
-    );
-}
-
-const code = `
-interface AddChainParameter {
+    const code = `interface AddChainParameter {
     chainId: string; // A 0x-prefixed hexadecimal string
     chainName: string;
     nativeCurrency: {
@@ -45,7 +30,34 @@ interface AddChainParameter {
     blockExplorerUrls?: string[];
     iconUrls?: string[]; // Currently ignored.
 }
-
+    
 declare const addChain: (param: AddChainParameter) => Promise<null>;`;
+
+    const usage = `import { addChain } from '@cfxjs/use-wallet-${currentLib}/conflux';
+    
+const handleAddChain = async() => {
+    try {
+        await addChain(chainParams: AddChainParameter);
+    } catch (err) {
+        console.log(err);
+    }
+}`;
+
+    return (
+        <section>
+            <h3>addChain</h3>
+
+            <h4>declare:</h4>
+            <Code language="ts">{code}</Code>
+
+            <h4>Usage:</h4>
+            <Code language="ts">{usage}</Code>
+
+            <h4>Description:</h4>
+            <p>{i18n.step1}</p>
+            <p>{i18n.step2}</p>
+        </section>
+    );
+};
 
 export default AddChain;
