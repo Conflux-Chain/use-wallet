@@ -18,7 +18,7 @@ const UseAccount: React.FC = () => {
     const code = `declare const useAccount: () => string | undefined;`;
     const usage = `import { useAccount } from '@cfxjs/use-wallet-${currentLib}/conflux';
     
-const account = useAccount(); // your account | undefined`;
+const account = useAccount(); // Your account | undefined`;
 
     return (
         <section>
@@ -27,7 +27,7 @@ const account = useAccount(); // your account | undefined`;
             <h4>declare:</h4>
             <Code language="ts">{code}</Code>
 
-            <h4>Usage</h4>
+            <h4>Usage:</h4>
             <Code language="ts">{usage}</Code>
 
             <h4 className="mt-[16px]">Description:</h4>

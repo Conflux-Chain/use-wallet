@@ -1,6 +1,7 @@
 import React from 'react';
 import Code from '@components/Code';
 import useI18n, { compiled } from '@hooks/useI18n';
+import useCurrentLib from '@hooks/useCurrentLib';
 
 const transitions = {
     en: {
@@ -13,18 +14,23 @@ const transitions = {
 
 const UseChainId: React.FC = () => {
     const i18n = useI18n(transitions);
+    const currentLib = useCurrentLib();
+    const code = `declare const useChainId: () => string | undefined;`;
+    const usage = `import { useChainId } from '@cfxjs/use-wallet-${currentLib}/conflux';
+    
+const chainId = useChainId();  // Your chainId | indefined`;
 
     return (
         <section>
             <h3>useChainId</h3>
             <h4>declare:</h4>
             <Code language="ts">{code}</Code>
+            <h4>Usage:</h4>
+            <Code language="ts">{usage}</Code>
             <h4>Description:</h4>
             <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />{' '}
         </section>
     );
 };
-
-const code = `declare const useChainId: () => string | undefined;`;
 
 export default UseChainId;

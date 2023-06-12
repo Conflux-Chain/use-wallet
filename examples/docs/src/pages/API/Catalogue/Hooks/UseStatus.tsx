@@ -41,7 +41,7 @@ const status = useStatus(); //"in-detecting" | "not-installed" | "not-active" | 
             <h4>declare:</h4>
             <Code language="ts">{code}</Code>
 
-            <h4>Usage</h4>
+            <h4>Usage:</h4>
             <Code language="ts">{usage}</Code>
 
             <h4>Description:</h4>
