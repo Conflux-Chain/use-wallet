@@ -40,6 +40,20 @@ export interface TransactionParameters {
     nonce?: string;
 }
 
+export interface TypedSignParams {
+    domain: {
+        chainId?: number | string;
+        name?: string; // A user-friendly name to the specific contract you're signing for.
+        verifyingContract?: string; // Add a verifying contract to make sure you're establishing contracts with the proper entity.
+        version?: string; // This identifies the latest version.
+    };
+    message: {};
+    primaryType: string; // This refers to the keys of the following types object.
+    types: {
+        CIP23Domain: Array<{ name: string; type: string }>; // This refers to the domain the contract is hosted on.
+    } & Record<string, Array<{ name: string; type: string }>>;
+}
+
 export interface Provider {
     isConnected(): boolean;
     on(event: 'connect', cb: (param: { chainId: string; networkId: number }) => void): void;
@@ -47,8 +61,11 @@ export interface Provider {
     on(event: 'accountsChanged', cb: (accounts: Array<string>) => void): void;
     on(event: 'chainChanged', cb: (chainId: string) => void): void;
     off(event: Events, cb: Function): void;
-    request(args: { method: `cfx_accounts`, params?: { chainId: string }; }): Promise<Array<string>>;
-    request(args: { method: `cfx_requestAccounts`, params?: [{ wallet_crossNetworkTypeGetConfluxBase32Address: {}, wallet_crossNetworkTypeGetEthereumHexAddress: {} }] }): Promise<Array<string>>;
+    request(args: { method: `cfx_accounts`; params?: { chainId: string } }): Promise<Array<string>>;
+    request(args: {
+        method: `cfx_requestAccounts`;
+        params?: [{ wallet_crossNetworkTypeGetConfluxBase32Address: {}; wallet_crossNetworkTypeGetEthereumHexAddress: {} }];
+    }): Promise<Array<string>>;
     request(args: { method: `cfx_chainId` }): Promise<string>;
     request(args: { method: `cfx_sendTransaction`; params: [TransactionParameters] }): Promise<string>;
     request(args: { method: `cfx_getBalance`; params: [string, 'latest_state'] }): Promise<string>;

@@ -1,7 +1,7 @@
 import Emitter from '../../emitter';
 import RPCMethod from '../../emitter/RPCMethod';
 import detectProvider from '../../detect';
-import type { Provider, TransactionParameters, AddChainParameter, WatchAssetParams } from './type';
+import type { Provider, TransactionParameters, AddChainParameter, WatchAssetParams, TypedSignParams } from './type';
 
 export class ConfluxRPCMethod extends RPCMethod {
     declare provider: Provider;
@@ -60,7 +60,7 @@ export class ConfluxRPCMethod extends RPCMethod {
             params: [message, this.account],
         });
 
-    typedSign = (typedData: Record<string, any>) =>
+    typedSign = (typedData: TypedSignParams) =>
         this.provider!.request({
             method: 'cfx_signTypedData_v4',
             params: [this.account, JSON.stringify(typedData)],

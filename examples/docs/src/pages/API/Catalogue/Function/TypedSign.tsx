@@ -21,16 +21,14 @@ const TypedSign: React.FC = () => {
             <h3>typedSign</h3>
 
             <h4>declare:</h4>
-            <Code language='ts'>
-                {code}
-            </Code>
+            <Code language="ts">{code}</Code>
 
-            <h4 className='mt-[16px]'>Description:</h4>
+            <h4 className="mt-[16px]">Description:</h4>
             <p>{i18n.step1}</p>
             <p>{i18n.step2}</p>
         </section>
     );
-}
+};
 
 const code = `declare const typedSign: (typedData: Record<string, any>) => Promise<string>;`;
 
