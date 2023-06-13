@@ -17,8 +17,7 @@ const transitions = {
 const WatchAsset: React.FC = () => {
     const i18n = useI18n(transitions);
     const currentLib = useCurrentLib();
-    const code = `
-interface WatchAssetParams {
+    const code = `interface WatchAssetParams {
     type: 'ERC20'; // In the future, other standards will be supported
     options: {
         address: string; // The address of the token contract
