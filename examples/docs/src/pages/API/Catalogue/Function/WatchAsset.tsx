@@ -1,38 +1,23 @@
 import React from 'react';
 import Code from '@components/Code';
-import useI18n from '@hooks/useI18n';
+import useI18n, { compiled } from '@hooks/useI18n';
+import useCurrentLib from '@hooks/useCurrentLib';
 
 const transitions = {
     en: {
-        step1: `The watchAsset function return a Promise.calling watchAsset when the status is 'active' will invoke a wallet confirmation. If it is not called when 'active', the Promise will simply reject.`,
-        step2: `A successful add will resolve true, a failed add may resolve false or reject.The behavior depends on the wallet.`,
+        step1: `The <code>watchAsset</code> function returns a Promise. Calling <code>watchAsset</code> when the status is <code>'active'</code> raises a confirmation box to allow the user to track the appropriate token in the wallet based on the input. If not called when <code>'active'</code>, the Promise will simply reject.`,
+        step2: `A successful add will resolve <code>true</code>, a failed add may resolve <code>false</code> or reject. The behavior depends on the wallet.`,
     },
     zh: {
-        step1: `watchAsset 函数返回一个 Promise。在 status 为 'active' 时调用 watchAsset，会根据入参调起钱包确认框。如果不在 'active' 时调用，Promise 会直接 reject。`,
-        step2: `成功添加会 resolve true，失败可能会 resolve false， 也可能 reject。具体行为取决于钱包。`,
+        step1: `<code>watchAsset</code> 函数返回一个 Promise。在 status 为 <code>'active'</code> 时调用 <code>watchAsset</code>，会根据入参调起确认框来允许用户在钱包中追踪相应的 token。如果不在 <code>'active'</code> 时调用，Promise 会直接 reject。`,
+        step2: `成功添加会 resolve <code>true</code>，失败可能会 resolve <code>false</code>， 也可能 reject。具体行为取决于钱包。`,
     },
 } as const;
 
 const WatchAsset: React.FC = () => {
     const i18n = useI18n(transitions);
-
-    return (
-        <section>
-            <h3>watchAsset</h3>
-
-            <h4>declare:</h4>
-            <Code language='ts'>
-                {code}
-            </Code>
-
-            <h4 className='mt-[16px]'>Description:</h4>
-            <p>{i18n.step1}</p>
-            <p>{i18n.step2}</p>
-        </section>
-    );
-}
-
-const code = `
+    const currentLib = useCurrentLib();
+    const code = `
 interface WatchAssetParams {
     type: 'ERC20'; // In the future, other standards will be supported
     options: {
@@ -44,5 +29,33 @@ interface WatchAssetParams {
 }
 
 declare const watchAsset: (param: WatchAssetParams) => Promise<boolean>;`;
+
+    const usage = `import { watchAsset } from '@cfxjs/use-wallet-${currentLib}/conflux';
+
+const handleWatchAsset = async() => {
+    try {
+        const res = await watchAsset(assetParams: WatchAssetParams);
+        console.log(res);
+    } catch (err) {
+        console.log(err);
+    }
+}`;
+
+    return (
+        <section>
+            <h3>watchAsset</h3>
+
+            <h4>declare:</h4>
+            <Code language="ts">{code}</Code>
+
+            <h4>Usage:</h4>
+            <Code language="ts">{usage}</Code>
+
+            <h4 className="mt-[16px]">Description:</h4>
+            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step2, {}) }} />
+        </section>
+    );
+};
 
 export default WatchAsset;
