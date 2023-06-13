@@ -28,7 +28,7 @@ const chainId = useChainId();  // Your chainId | indefined`;
             <h4>Usage:</h4>
             <Code language="ts">{usage}</Code>
             <h4>Description:</h4>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />{' '}
+            <p dangerouslySetInnerHTML={{ __html: i18n.step1 }} />{' '}
         </section>
     );
 };

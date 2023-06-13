@@ -33,7 +33,7 @@ const balance = useBalance();  // Your balance Unit | undefined`;
             <Code language="ts">{usage}</Code>
 
             <h4>Description:</h4>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step1 }} />
             <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step2, { currentLib: currentLib }) }} />
         </section>
     );

@@ -73,12 +73,12 @@ const Install: React.FC = () => {
             <Code language="ts">{codeImport(currentLib, currentChain.value, currentWallet.value)}</Code>
 
             <h4 className="my-[16px]">{i18n.title1}</h4>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, { chainName: '{chainName}' }) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step1 }} />
             <p>{i18n.step2}</p>
             <h4 className="my-[16px]">{i18n.title2}</h4>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step3, { chainName: '{chainName}', walletName: '{walletName}' }) }} />
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step4, { useStatus: '{useStatus}' }) }} />
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step5, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step3 }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step4 }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step5 }} />
         </section>
     );
 };

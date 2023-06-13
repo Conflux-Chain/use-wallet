@@ -45,34 +45,34 @@ const status = useStatus(); //"in-detecting" | "not-installed" | "not-active" | 
             <Code language="ts">{usage}</Code>
 
             <h4>Description:</h4>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step1 }} />
 
             <p className="font-bold">
                 <code>in-detecting:</code>
             </p>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step2, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step2 }} />
             <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step3, { currentLib: currentLib }) }} />
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step4, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step4 }} />
 
             <p className="font-bold">
                 <code>not-installed:</code>
             </p>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step5, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step5 }} />
 
             <p className="font-bold">
                 <code>active:</code>
             </p>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step6, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step6 }} />
 
             <p className="font-bold">
                 <code>not-active:</code>
             </p>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step7, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step7 }} />
 
             <p className="font-bold">
                 <code>in-activating:</code>
             </p>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step8, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step8 }} />
         </section>
     );
 };

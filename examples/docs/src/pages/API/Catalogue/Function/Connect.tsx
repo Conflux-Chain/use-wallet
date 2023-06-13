@@ -56,11 +56,11 @@ const ConnectButton: React.FC = () =>{
             <Code language="ts">{usage}</Code>
 
             <h4 className="mt-[16px]">Description:</h4>
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step2, {}) }} />
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step3, {}) }} />
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step4, {}) }} />
-            <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step5, {}) }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step1 }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step2 }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step3 }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step4 }} />
+            <p dangerouslySetInnerHTML={{ __html: i18n.step5 }} />
         </section>
     );
 };

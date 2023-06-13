@@ -40,15 +40,15 @@ const BasicUsage: React.FC = () => {
         <>
             <section>
                 <h3>basic usage SPA</h3>
-                <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, {}) }} />
+                <p dangerouslySetInnerHTML={{ __html: i18n.step1 }} />
                 <h4 className="my-[16px]">{i18n.title1}</h4>
                 <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step2, { currentLib: currentLib }) }} />
                 <h4 className="my-[16px]">{i18n.title2}</h4>
-                <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step3, {}) }} />
+                <p dangerouslySetInnerHTML={{ __html: i18n.step3 }} />
                 <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step4, { currentLib: currentLib }) }} />
                 <h4 className="my-[16px">{i18n.title3}</h4>
-                <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step5, {}) }} />
-                <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step6, {}) }} />
+                <p dangerouslySetInnerHTML={{ __html: i18n.step5 }} />
+                <p dangerouslySetInnerHTML={{ __html: i18n.step6 }} />
                 <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step7, { currentLib: currentLib }) }} />
 
                 <Code className="mt-[16px]">{getCodeSPA(currentLib)}</Code>
@@ -56,7 +56,7 @@ const BasicUsage: React.FC = () => {
 
             <section>
                 <h3>basic usage SSG</h3>
-                <p dangerouslySetInnerHTML={{ __html: compiled(i18n.ssr_step1, {}) }} />
+                <p dangerouslySetInnerHTML={{ __html: i18n.ssr_step1 }} />
                 <Code className="mt-[16px]">{getCodeSSR(currentLib)}</Code>
             </section>
         </>
