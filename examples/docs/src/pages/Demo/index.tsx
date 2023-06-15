@@ -19,52 +19,50 @@ const demos = [
         title: 'demo_connect_title',
         introduce: 'demo_connect_introduce',
         Demo: ConnectDemo,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/Connect/index.tsx'
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/Connect/index.tsx',
     },
     {
         title: 'demo_connect_both_title',
         introduce: 'demo_connect_both_introduce',
         Demo: ConnectBothDemo,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/ConnectBoth/index.tsx'
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/ConnectBoth/index.tsx',
     },
     {
         title: 'demo_connect_switch_title',
         introduce: 'demo_connect_switch_introduce',
         Demo: ConnectSwitch,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/ConnectSwitch/index.tsx'
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/ConnectSwitch/index.tsx',
     },
     {
         title: 'demo_send_transaction_title',
         introduce: 'demo_send_transaction_introduce',
         Demo: SendTransaction,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/SendTransaction/index.tsx'
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/SendTransaction/index.tsx',
     },
     {
         title: 'demo_sign_title',
         introduce: 'demo_sign_introduce',
         Demo: Sign,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/Sign/index.tsx'
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/Sign/index.tsx',
     },
     {
         title: 'demo_addSwitch_title',
         introduce: 'demo_addSwitch_introduce',
         Demo: AddSwitch,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/docs/pages/Demo/AddSwitch/index.tsx'
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/AddSwitch/index.tsx',
     },
 ] as const;
 
-const demosMap = Object.fromEntries(demos.map((demo) => [demo.title, demo])) as Record<typeof demos[number]['title'], typeof demos[number]>;
+const demosMap = Object.fromEntries(demos.map((demo) => [demo.title, demo])) as Record<(typeof demos)[number]['title'], (typeof demos)[number]>;
 
 const transitions = {
     en: {
         demo_connect_title: 'Connect fluent wallet',
         demo_connect_introduce: `The first step of Dapp, connect your wallet.Then you can get information about your current account.`,
         demo_connect_both_title: 'Connect both fluent and metamask',
-        demo_connect_both_introduce:
-            'A dapp that needs to cross-chain, or conflux cross-space, needs to connect to multiple wallets at the same time.',
+        demo_connect_both_introduce: 'A dapp that needs to cross-chain, or conflux cross-space, needs to connect to multiple wallets at the same time.',
         demo_connect_switch_title: 'Switch connect wallet with the same code',
-        demo_connect_switch_introduce:
-            `Maybe you need to make a dapp that supports both Conflux and Ethereum, and don't want to maintain two similar pieces of code.`,
+        demo_connect_switch_introduce: `Maybe you need to make a dapp that supports both Conflux and Ethereum, and don't want to maintain two similar pieces of code.`,
         demo_send_transaction_title: 'Send Transaction',
         demo_send_transaction_introduce: `This example demonstrates how to send a transaction.`,
         demo_sign_title: 'Sign',
@@ -78,8 +76,7 @@ const transitions = {
         demo_connect_both_title: '同时连接 fluent 和 metamask',
         demo_connect_both_introduce: '需要跨链的 dapp，或者是 conflux 跨space 的 dapp，需要同时连接多个钱包。',
         demo_connect_switch_title: '同一份代码切换连接的钱包',
-        demo_connect_switch_introduce:
-            '也许你需要做一个同时支持 Conflux 和 Ethereum 的 dapp，又不想维护两份相似的代码。',
+        demo_connect_switch_introduce: '也许你需要做一个同时支持 Conflux 和 Ethereum 的 dapp，又不想维护两份相似的代码。',
         demo_send_transaction_title: '发起交易',
         demo_send_transaction_introduce: `这个例子演示了如何发起一笔交易。`,
         demo_sign_title: '签名',
@@ -92,13 +89,11 @@ const transitions = {
 const DemoPage: React.FC = () => {
     const i18n = useI18n(transitions);
 
-    const [currentDemoTitle, setCurrentDemoTitle] = useState<keyof typeof demosMap>(
-        () => {
-            const last = localStorage.getItem('current-demo') as keyof typeof demosMap;
-            if (!last || !demosMap[last]) return 'demo_connect_title';
-            return last;
-        }
-    );
+    const [currentDemoTitle, setCurrentDemoTitle] = useState<keyof typeof demosMap>(() => {
+        const last = localStorage.getItem('current-demo') as keyof typeof demosMap;
+        if (!last || !demosMap[last]) return 'demo_connect_title';
+        return last;
+    });
     const [currentRef, rect] = useMeasure();
     const currentDemo = useMemo(() => demosMap[currentDemoTitle], [currentDemoTitle]);
     const handleChangeDemo = useCallback((demoTitle: keyof typeof demosMap) => {
@@ -139,8 +134,8 @@ const DemoPage: React.FC = () => {
         from: { borderColor: 'transparent', translateX: '-50%', width: 480, height: rect.height },
         to: {
             translateX: '-50%',
-            width: open ? Math.min(window.innerWidth * .8, 1024) : 480,
-            height: open ? 460: rect.height,
+            width: open ? Math.min(window.innerWidth * 0.8, 1024) : 480,
+            height: open ? 460 : rect.height,
             borderColor: open ? 'var(--color-primary)' : 'transparent',
         },
     });
@@ -158,27 +153,27 @@ const DemoPage: React.FC = () => {
 
     useChain(
         open ? [currentDemoSpringRef, panelSpringRef, transApi] : [transApi, panelSpringRef, currentDemoSpringRef],
-        open ? [0, 0.1, 0.2] : [0, 0.48, 0.57],
+        open ? [0, 0.1, 0.2] : [0, 0.48, 0.57]
     );
-    
+
     return (
         <>
             <a.dl
                 ref={panelRef}
                 className={cx(
                     'absolute top-12 left-1/2 translate-x-[-50%] max-w-[1024px] rounded-md bg-primarytrans dark:bg-[#4b5563] border-4 border-transparent contain-strict transition-colors not-transition-border-color z-10',
-                    !open && 'pointer-events-none',
+                    !open && 'pointer-events-none'
                 )}
                 style={panelStyle}
-            >   
-                <CustomScrollbar  className='h-[460px]' contentClassName='w-full pt-4 pb-5 flex flex-wrap justify-center items-stretch gap-4'>
+            >
+                <CustomScrollbar className="h-[460px]" contentClassName="w-full pt-4 pb-5 flex flex-wrap justify-center items-stretch gap-4">
                     {transition(
                         (style, demo) =>
                             demo && (
                                 <a.div
                                     className={cx(
                                         'w-[480px] max-w-[100%] px-6 py-4 rounded-md shadow-md border-2 border-transparent transition-colors hover:border-primary bg-white dark:bg-[#374151]',
-                                        demo.title === currentDemo.title ? 'border-primary pointer-events-none' : 'hover:border-dashed cursor-pointer',
+                                        demo.title === currentDemo.title ? 'border-primary pointer-events-none' : 'hover:border-dashed cursor-pointer'
                                     )}
                                     style={style}
                                     onClick={() => handleChangeDemo(demo.title)}
@@ -186,7 +181,7 @@ const DemoPage: React.FC = () => {
                                     <div className="text-lg font-semibold text-text1 transition-colors">{i18n[demo.title]}</div>
                                     <div className="mt-4 text-base text-text2 transition-colors">{i18n[demo.introduce]}</div>
                                 </a.div>
-                            ),
+                            )
                     )}
                 </CustomScrollbar>
             </a.dl>
@@ -194,14 +189,24 @@ const DemoPage: React.FC = () => {
                 ref={currentRef}
                 className={cx(
                     'absolute top-12 left-1/2 translate-x-[-50%] w-[480px] max-w-[100%] px-6 py-4 rounded-md bg-primarytrans dark:bg-[#4b5563] shadow-md dark:shadow-none contain-content transition-colors z-20',
-                    open && 'pointer-events-none',
+                    open && 'pointer-events-none'
                 )}
                 style={currentDemoStyle}
             >
                 <div className="relative text-lg font-semibold text-text1 transition-colors">
-                    <p className='w-[55%]'>{i18n[currentDemo.title]}</p>
-                    <a className="button absolute w-10 p-0 h-8 text-sm top-0 right-[7.5rem]" href={currentDemo.code} target="_blank" rel="nofollow noopener noreferrer" title={currentDemo.code}><img className="w-5 h-5 max-w-none" src={Code} alt="code" /></a>
-                    <button className="button absolute px-2 h-8 text-sm top-0 right-0" onClick={openPanel}>More Demo</button>
+                    <p className="w-[55%]">{i18n[currentDemo.title]}</p>
+                    <a
+                        className="button absolute w-10 p-0 h-8 text-sm top-0 right-[7.5rem]"
+                        href={currentDemo.code}
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                        title={currentDemo.code}
+                    >
+                        <img className="w-5 h-5 max-w-none" src={Code} alt="code" />
+                    </a>
+                    <button className="button absolute px-2 h-8 text-sm top-0 right-0" onClick={openPanel}>
+                        More Demo
+                    </button>
                 </div>
                 <div className="relative mt-4 text-base text-text2 transition-colors">{i18n[currentDemo.introduce]}</div>
             </a.div>
@@ -210,7 +215,7 @@ const DemoPage: React.FC = () => {
     );
 };
 
-const DemoContainer: React.FC<{ Demo: React.FC; mt: number; }> = memo(({ Demo, mt = 280 }) => {
+const DemoContainer: React.FC<{ Demo: React.FC; mt: number }> = memo(({ Demo, mt = 280 }) => {
     return (
         <div className="mx-auto w-[600px] flex flex-col justify-center" style={{ marginTop: mt }}>
             <Demo />
