@@ -9,24 +9,26 @@ import FunctionAPI from '@pages/API/Catalogue/Function';
 import HooksAPI from '@pages/API/Catalogue/Hooks';
 import UtilsAPI from '@pages/API/Catalogue/Utils';
 import OthersAPI from '@pages/API/Catalogue/Others';
+import FAQAPI from '@pages/API/Catalogue/FAQ';
 import Navbar from '@pages/Navbar';
 import { LocaleContext } from '@hooks/useI18n';
 import { ModeContext } from '@hooks/useMode';
 
 const APIDocs = (lib: 'react' | 'vue3' | 'svelte') => (
     <Route key={lib} path={lib}>
-        <Route index element={<BasicAPI />}  />
-        <Route key='basic' path='basic' element={<BasicAPI />}  />
-        <Route key='function' path='function' element={<FunctionAPI />} />
-        <Route key='hooks' path='hooks' element={<HooksAPI />} />
-        <Route key='utils' path='utils' element={<UtilsAPI />} />
-        <Route key='others' path='others' element={<OthersAPI />} />
+        <Route index element={<BasicAPI />} />
+        <Route key="basic" path="basic" element={<BasicAPI />} />
+        <Route key="function" path="function" element={<FunctionAPI />} />
+        <Route key="hooks" path="hooks" element={<HooksAPI />} />
+        <Route key="utils" path="utils" element={<UtilsAPI />} />
+        <Route key="others" path="others" element={<OthersAPI />} />
+        <Route key="faq" path="faq" element={<FAQAPI />} />
     </Route>
-)
+);
 
 const AppRouter = () => {
     const [mode, setMode] = useState<'light' | 'dark'>(() => {
-        const last = localStorage.getItem('mode') as 'light' || 'light';
+        const last = (localStorage.getItem('mode') as 'light') || 'light';
         if (last === 'light' || last === 'dark') return last;
         return 'light';
     });
@@ -50,38 +52,42 @@ const AppRouter = () => {
     const [locale, setLocal] = useState<'zh' | 'en'>(() => {
         const last = localStorage.getItem('locale') as 'en' | 'zh';
         if (last === 'en' || last === 'zh') return last;
-        return (navigator.language.includes('zh') ? 'zh' : 'en')
+        return navigator.language.includes('zh') ? 'zh' : 'en';
     });
-    const handleSwitchLocale = useCallback(() => setLocal(preLocale => {
-        const locale = preLocale === 'zh' ? 'en' : 'zh';
-        localStorage.setItem('locale', locale);
-        return locale;
-    }), []);
+    const handleSwitchLocale = useCallback(
+        () =>
+            setLocal((preLocale) => {
+                const locale = preLocale === 'zh' ? 'en' : 'zh';
+                localStorage.setItem('locale', locale);
+                return locale;
+            }),
+        []
+    );
 
     return (
         <ModeContext.Provider value={mode}>
             <LocaleContext.Provider value={locale}>
                 <Router>
                     <Navbar handleSwitchLocale={handleSwitchLocale} handleSwitchMode={handleSwitchMode} />
-                    <CustomScrollbar contentClassName='scroll-content'>
+                    <CustomScrollbar contentClassName="scroll-content">
                         <Routes>
-                            <Route key='Guide' path='/' element={<GuidePage />} />
-                            <Route key='Demo' path='demo' element={<DemoPage />} />
-                            <Route key='API' path='api' element={<APIPage />}>
+                            <Route key="Guide" path="/" element={<GuidePage />} />
+                            <Route key="Demo" path="demo" element={<DemoPage />} />
+                            <Route key="API" path="api" element={<APIPage />}>
                                 {APIDocs('react')}
                                 {APIDocs('vue3')}
                                 {APIDocs('svelte')}
                             </Route>
-                            <Route key='Demo' path='demo' element={<DemoPage />} />
-                            <Route path="api/" element={<Navigate to="/api/react"/>} />
-                            <Route path="api/*" element={<Navigate to="/api/react"/>} />
-                            <Route path="*" element={<Navigate to="/"/>} />
+                            <Route key="Demo" path="demo" element={<DemoPage />} />
+                            <Route path="api/" element={<Navigate to="/api/react" />} />
+                            <Route path="api/*" element={<Navigate to="/api/react" />} />
+                            <Route path="*" element={<Navigate to="/" />} />
                         </Routes>
                     </CustomScrollbar>
                 </Router>
             </LocaleContext.Provider>
         </ModeContext.Provider>
     );
-}
+};
 
 export default AppRouter;

@@ -4,8 +4,8 @@ import cx from 'clsx';
 import { throttle } from 'lodash-es';
 import useMode from '@hooks/useMode';
 
-const libs = ['react', 'vue3',  'svelte'] as const;
-const menu = ['basic', 'hooks',  'function', 'utils', 'others'] as const;
+const libs = ['react', 'vue3', 'svelte'] as const;
+const menu = ['basic', 'hooks', 'function', 'utils', 'others', 'FAQ'] as const;
 
 const Menu: React.FC = () => {
     const mode = useMode();
@@ -24,7 +24,7 @@ const Menu: React.FC = () => {
                             currentLib !== lib && 'hover:text-text1 cursor-pointer',
                             currentLib === lib ? 'pointer-events-none text-text1' : 'text-text2',
                             currentLib === lib && mode === 'dark' && 'bg-[#4b5563]',
-                            currentLib !== lib && mode === 'dark' && 'hover:bg-[#374151]',
+                            currentLib !== lib && mode === 'dark' && 'hover:bg-[#374151]'
                         )}
                         to={`${lib}/${currentCataloguePath}`}
                         key={lib}
@@ -34,7 +34,7 @@ const Menu: React.FC = () => {
                             <span
                                 className={cx(
                                     'absolute w-full left-0 bottom-0 h-1 rounded-sm bg-primary opacity-0 transition-opacity',
-                                    currentLib === lib && 'opacity-100',
+                                    currentLib === lib && 'opacity-100'
                                 )}
                             />
                         )}
@@ -50,7 +50,7 @@ const Menu: React.FC = () => {
                             currentCataloguePath !== cataloguePath && 'hover:text-text1 cursor-pointer',
                             currentCataloguePath === cataloguePath ? 'pointer-events-none text-text1' : 'text-text2',
                             currentCataloguePath === cataloguePath && mode === 'dark' && 'bg-[#4b5563]',
-                            currentCataloguePath !== cataloguePath && mode === 'dark' && 'hover:bg-[#374151]',
+                            currentCataloguePath !== cataloguePath && mode === 'dark' && 'hover:bg-[#374151]'
                         )}
                         to={`${currentLib}/${cataloguePath}`}
                         key={cataloguePath}
@@ -60,7 +60,7 @@ const Menu: React.FC = () => {
                             <span
                                 className={cx(
                                     'absolute w-full left-0 bottom-0 h-1 rounded-sm bg-primary opacity-0 transition-opacity',
-                                    currentCataloguePath === cataloguePath && 'opacity-100',
+                                    currentCataloguePath === cataloguePath && 'opacity-100'
                                 )}
                             />
                         )}
@@ -72,7 +72,7 @@ const Menu: React.FC = () => {
     );
 };
 
-const SideSectionBar: React.FC<{ currentCataloguePath: string; }> = memo(({ currentCataloguePath }) => {
+const SideSectionBar: React.FC<{ currentCataloguePath: string }> = memo(({ currentCataloguePath }) => {
     const [sections, setSections] = useState<Array<HTMLHeadingElement>>([]);
     const [currentSection, setCurrentSection] = useState('');
     const currentCatalogue = menu.find((cataloguePath) => cataloguePath === currentCataloguePath);
@@ -85,7 +85,7 @@ const SideSectionBar: React.FC<{ currentCataloguePath: string; }> = memo(({ curr
         scrollEl.scrollTo({ top: 0 });
         if (!currentCatalogue || !scrollEl) return;
         const sections = Array.from(document.querySelectorAll('h3'));
-        if (!sections?.length)  return;
+        if (!sections?.length) return;
         setSections(sections);
         setCurrentSection(sections[0].textContent ?? '');
 
@@ -94,8 +94,7 @@ const SideSectionBar: React.FC<{ currentCataloguePath: string; }> = memo(({ curr
         const getScrollJudge = () => {
             scrollJudgeRef.current = sections.map((section) => ({ top: section.offsetTop - 128, name: section.textContent! }));
             maxScrollDistance = scrollEl.scrollHeight - scrollEl.clientHeight;
-            canReachLast =
-                scrollJudgeRef.current.length >= 2 && maxScrollDistance > scrollJudgeRef.current[scrollJudgeRef.current.length - 2].top;
+            canReachLast = scrollJudgeRef.current.length >= 2 && maxScrollDistance > scrollJudgeRef.current[scrollJudgeRef.current.length - 2].top;
             if (!canReachLast) {
                 scrollJudgeRef.current[scrollJudgeRef.current.length - 2].cannotReach = true;
             }
@@ -125,12 +124,7 @@ const SideSectionBar: React.FC<{ currentCataloguePath: string; }> = memo(({ curr
         if (sectionIndex === -1 || !scrollElRef.current) return;
         const section = scrollJudgeRef.current[sectionIndex];
         scrollElRef.current.scrollTo({
-            top:
-                sectionIndex === 0
-                    ? 0
-                    : section.cannotReach
-                    ? scrollElRef.current.scrollHeight - scrollElRef.current.clientHeight - 40
-                    : section.top,
+            top: sectionIndex === 0 ? 0 : section.cannotReach ? scrollElRef.current.scrollHeight - scrollElRef.current.clientHeight - 40 : section.top,
             behavior: 'smooth',
         });
     }, []);

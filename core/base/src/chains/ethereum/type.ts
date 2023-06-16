@@ -38,6 +38,20 @@ export interface TransactionParameters {
     data?: string; // Optional, but used for defining smart contract creation and interaction.
 }
 
+export interface TypedSignParams {
+    domain: {
+        chainId?: number | string;
+        name?: string; // A user-friendly name to the specific contract you're signing for.
+        verifyingContract?: string; // Add a verifying contract to make sure you're establishing contracts with the proper entity.
+        version?: string; // This identifies the latest version.
+    };
+    message: {};
+    primaryType: string; // This refers to the keys of the following types object.
+    types: {
+        EIP712Domain: Array<{ name: string; type: string }>; // This refers to the domain the contract is hosted on.
+    } & Record<string, Array<{ name: string; type: string }>>;
+}
+
 export interface Provider {
     isConnected(): boolean;
     on(event: 'connect', cb: (param: { chainId: string; networkId: number }) => void): void;

@@ -64,7 +64,7 @@ class Emitter<T extends RPCMethod> {
             this.emitter.emit(stateKey, newVal);
 
             if (stateKey === 'balance' && this.trackBalanceChangeOnceCallback.length) {
-                this.trackBalanceChangeOnceCallback.forEach(callback => callback());
+                this.trackBalanceChangeOnceCallback.forEach((callback) => callback());
                 this.trackBalanceChangeOnceCallback = [];
             }
         }
@@ -185,7 +185,7 @@ class Emitter<T extends RPCMethod> {
     public trackBalanceChangeOnce = (callback: VoidFunction) => {
         if (typeof callback !== 'function') return;
         this.trackBalanceChangeOnceCallback.push(callback);
-    }
+    };
 
     public connect = async () => {
         const currentStatus = this.state.status;
@@ -195,7 +195,7 @@ class Emitter<T extends RPCMethod> {
         }
         this.handleStatusChanged('in-activating');
         const res = this.batchGetInfo({ isRequestConnect: true });
-        res.catch(() => this.handleStatusChanged('not-active'))
+        res.catch(() => this.handleStatusChanged('not-active'));
         return res;
     };
 
@@ -203,7 +203,7 @@ class Emitter<T extends RPCMethod> {
         if (!this.RPCMethod.sendTransaction) {
             throw new Error(`Current Wallet does'nt have sendTransaction method.`);
         }
-  
+
         const account = this.checkConnected('sendTransaction');
         return this.RPCMethod.sendTransaction({
             ...params,
@@ -219,16 +219,16 @@ class Emitter<T extends RPCMethod> {
 
         this.checkConnected('personalSign');
         return this.RPCMethod.personalSign(message);
-    }
+    };
 
-    public typedSign = (typedData: Record<string, unknown>) => {
+    public typedSign: T['typedSign'] = (typedData: Record<string, unknown>) => {
         if (!this.RPCMethod.typedSign) {
             throw new Error(`Current Wallet does'nt have typedSign method.`);
         }
 
         this.checkConnected('typedSign');
         return this.RPCMethod.typedSign(typedData);
-    }
+    };
 
     public addChain: T['addChain'] = (params: unknown) => {
         if (!this.RPCMethod.addChain) {
@@ -237,7 +237,7 @@ class Emitter<T extends RPCMethod> {
 
         this.checkConnected('addChain');
         return this.RPCMethod.addChain(params);
-    }
+    };
 
     public switchChain: T['switchChain'] = (params: unknown) => {
         if (!this.RPCMethod.switchChain) {
@@ -246,7 +246,7 @@ class Emitter<T extends RPCMethod> {
 
         this.checkConnected('switchChain');
         return this.RPCMethod.switchChain(params);
-    }
+    };
 
     public watchAsset: T['watchAsset'] = (params: unknown) => {
         if (!this.RPCMethod.watchAsset) {
@@ -255,7 +255,7 @@ class Emitter<T extends RPCMethod> {
 
         this.checkConnected('watchAsset');
         return this.RPCMethod.watchAsset(params);
-    }
+    };
 
     public requestPermissions: T['requestPermissions'] = (params: unknown) => {
         if (!this.RPCMethod.requestPermissions) {
@@ -263,7 +263,7 @@ class Emitter<T extends RPCMethod> {
         }
 
         return this.RPCMethod.requestPermissions(params);
-    }
+    };
 
     public requestCrossNetworkPermission: T['requestCrossNetworkPermission'] = () => {
         if (!this.RPCMethod.requestCrossNetworkPermission) {
@@ -271,16 +271,16 @@ class Emitter<T extends RPCMethod> {
         }
 
         return this.RPCMethod.requestCrossNetworkPermission();
-    }
+    };
 
     public setCrossNetworkChain = (chainId?: string) => {
         if (typeof chainId !== 'string' && chainId !== undefined) return;
         this.RPCMethod.crossNetworkChain = chainId;
-        this.RPCMethod.getAccounts().then(accounts => {
+        this.RPCMethod.getAccounts().then((accounts) => {
             this.RPCMethod.setAccounts(accounts);
             this.handleAccountsChanged(accounts);
-        })
-    }
+        });
+    };
 }
 
 export default Emitter;
