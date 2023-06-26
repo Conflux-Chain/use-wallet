@@ -5,11 +5,13 @@ import React from 'react';
 
 const transitions = {
     en: {
-        title1: `Import method:`,
+        title1: `Core Space:`,
+        title2: `eSpace:`,
         step1: `To manage both Core Space and eSpace in Fluent, simply import from different portals. Import Core Space from <code>"@cfxjs/use-wallet-{currentLib}/conflux/Fluent"</code> and eSpace from <code>"@cfxjs/use-wallet-{currentLib}/ethereum/Fluent"</code> to import eSpace.`,
     },
     zh: {
-        title1: `导入方式：`,
+        title1: `Core Space:`,
+        title2: `eSpace:`,
         step1: `如果要在 Fluent 中同时管理 Core Space 和 eSpace，只需从不同的入口导入即可。从 <code>"@cfxjs/use-wallet-{currentLib}/conflux/Fluent"</code> 中导入 Core Space，从 <code>“@cfxjs/use-wallet-{currentLib}/ethereum/Fluent”</code> 中导入 eSpace。`,
     },
 };
@@ -18,7 +20,7 @@ const OnlyFluent: React.FC = () => {
     const i18n = useI18n(transitions);
     const currentLib = useCurrentLib();
 
-    const code = `import {
+    const code1 = `import {
     useStatus as useCoreStatus,
     useAccount as useCoreAccount,
     useChainId as useCoreChainId,
@@ -33,8 +35,9 @@ const OnlyFluent: React.FC = () => {
     typedSign as typedSignCore,
     trackBalanceChangeOnce as trackCoreBalanceChangeOnce,
     completeDetect as completeDetectCore,
-} from "@cfxjs/use-wallet-${currentLib}/conflux/Fluent";
-import {
+} from "@cfxjs/use-wallet-${currentLib}/conflux/Fluent";`;
+
+    const code2 = `import {
     useStatus as useESapceStatus,
     useAccount as useESapceAccount,
     useChainId as useESapceChainId,
@@ -57,7 +60,10 @@ import {
             <p dangerouslySetInnerHTML={{ __html: compiled(i18n.step1, { currentLib: currentLib }) }} />
 
             <h4>{i18n.title1}</h4>
-            <Code language="ts">{code}</Code>
+            <Code language="ts">{code1}</Code>
+
+            <h4>{i18n.title2}</h4>
+            <Code language="ts">{code2}</Code>
         </section>
     );
 };
