@@ -1,6 +1,6 @@
 {
     "name": "react",
-    "version": "0.0.1-51",
+    "version": "0.0.2-1",
     "type": "module",
     "scripts": {
         "build": "rimraf dist && node ./build/index.js",
