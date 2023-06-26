@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import type Emitter from 'base/src/chains/conflux';
+import type Emitter from 'base/src/chains/ethereum/Halo';
 import { type State } from 'base/src/emitter';
 import { type store } from './index';
 

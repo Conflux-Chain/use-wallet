@@ -32,7 +32,7 @@ const supports = [
     },
     {
         name: 'ethereum',
-        wallet: ['MetaMask', 'Fluent', 'Coinbase', 'OKX', 'TokenPocket'],
+        wallet: ['MetaMask', 'Fluent', 'Coinbase', 'OKX', 'TokenPocket', 'Halo'],
     },
 ];
 const chainOptions = supports.map((chain) => ({ value: chain.name, label: chain.name }));
