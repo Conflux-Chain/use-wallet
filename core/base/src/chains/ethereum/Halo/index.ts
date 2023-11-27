@@ -4,6 +4,7 @@ import { EthereumRPCMethod } from '../index';
 import type { Provider } from '../type';
 
 class HaloRPCMethod extends EthereumRPCMethod {
+    sessionKey = 'haloEthereum';
     detectProvider = () => detectProvider<Provider>({ injectFlag: 'haloEthereum' });
 }
 

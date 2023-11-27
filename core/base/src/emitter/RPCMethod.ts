@@ -17,6 +17,9 @@ abstract class RPCMethod {
     requestPermissions?(params: any): Promise<any>;
     requestCrossNetworkPermission?(): Promise<any>;
     crossNetworkChain?: string;
+    sessionKey?: string;
+    retryLimit = 2;
+    detectTimeout = 1500;
 
     detectAndSetProvider = () => {
         const p = this.detectProvider();

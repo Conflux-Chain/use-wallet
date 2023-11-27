@@ -4,6 +4,7 @@ import { ConfluxRPCMethod } from '../index';
 import type { Provider } from '../type';
 
 class FluentRPCMethod extends ConfluxRPCMethod {
+    sessionKey = 'conflux-isFluent';
     detectProvider = () => detectProvider<Provider>({ injectFlag: 'conflux', walletFlag: 'isFluent' });
 
     getAccounts = () =>

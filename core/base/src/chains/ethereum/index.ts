@@ -4,6 +4,7 @@ import detectProvider from '../../detect';
 import type { Provider, TransactionParameters, AddChainParameter, WatchAssetParams, TypedSignParams } from './type';
 
 export class EthereumRPCMethod extends RPCMethod {
+    sessionKey = 'ethereum--isMetaMask';
     declare provider: Provider;
 
     detectProvider = () => detectProvider<Provider>({ injectFlag: 'ethereum', defaultWaltFlag: 'isMetaMask' });

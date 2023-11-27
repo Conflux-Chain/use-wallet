@@ -18,12 +18,21 @@ class Emitter<T extends RPCMethod> {
         balance: undefined,
     };
     private trackBalanceInterval?: number;
+    private detectTimer?: NodeJS.Timeout;
     private trackBalanceChangeOnceCallback: Array<VoidFunction> = [];
     private RPCMethod: RPCMethod;
     public provider!: T['provider'];
 
     private resolveDetect!: () => void;
-    private detectPromise = new Promise<void>((resolve) => (this.resolveDetect = resolve));
+    private detectPromise = new Promise<void>(
+        (resolve) =>
+            (this.resolveDetect = () => {
+                if (this.detectTimer) {
+                    clearTimeout(this.detectTimer);
+                }
+                resolve();
+            }),
+    );
 
     constructor(RPCMethod: T) {
         this.RPCMethod = RPCMethod;
@@ -38,6 +47,17 @@ class Emitter<T extends RPCMethod> {
                 this.handleStatusChanged('not-installed');
                 this.resolveDetect();
             });
+        this.detectTimer = setTimeout(() => {
+            console.error(`Unable to detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'}.`);
+            if (this.RPCMethod.sessionKey) {
+                const times = Number(sessionStorage.getItem(this.RPCMethod.sessionKey) || 0);
+                if (times >= this.RPCMethod.retryLimit) {
+                    throw new Error(`Unable to detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'}.`);
+                }
+                sessionStorage.setItem(this.RPCMethod.sessionKey, String(times + 1));
+            }
+            window.location.reload();
+        }, this.RPCMethod.detectTimeout);
     }
 
     private handleStateChange = <T extends keyof State>(stateKey: T, newVal: State[T]) => {
