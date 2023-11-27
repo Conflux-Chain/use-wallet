@@ -4,6 +4,7 @@ import detectProvider from '../../detect';
 import type { Provider, TransactionParameters, AddChainParameter, WatchAssetParams, TypedSignParams } from './type';
 
 export class ConfluxRPCMethod extends RPCMethod {
+    sessionKey = 'conflux';
     declare provider: Provider;
 
     detectProvider = () => {

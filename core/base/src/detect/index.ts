@@ -1,43 +1,24 @@
-export default function detectProvider<T extends Object>(
-    {
-        silent,
-        timeout,
-        walletFlag,
-        isSingleWalletFlag,
-        injectFlag,
-        defaultWaltFlag,
-    }: { silent?: boolean; timeout?: number; walletFlag?: string; isSingleWalletFlag?: boolean; injectFlag: string; defaultWaltFlag?: string } = {
-        silent: false,
-        timeout: 1500,
-        injectFlag: 'ethereum'
-    }
-): Promise<T> {
-    let handled = false;
-
+export default function detectProvider<T extends Object>({
+    silent = false,
+    interval = 10,
+    timeout = 100,
+    walletFlag,
+    isSingleWalletFlag,
+    injectFlag = 'ethereum',
+    defaultWaltFlag,
+}: {
+    silent?: boolean;
+    interval?: number;
+    timeout?: number;
+    walletFlag?: string;
+    isSingleWalletFlag?: boolean;
+    injectFlag: string;
+    defaultWaltFlag?: string;
+}): Promise<T> {
     return new Promise((resolve, reject) => {
-        if ((globalThis as any)[injectFlag]) {
-            handleEthereum();
-        } else {
-            globalThis.addEventListener(`${injectFlag}#initialized`, handleEthereum, { once: true });
+        async function handleEthereum() {
+            let provider = (await getProvider(injectFlag, interval, timeout)) as T;
 
-            if (Number(timeout) > 0) {
-                setTimeout(() => {
-                    handleEthereum();
-                }, timeout);
-            } else {
-                handleEthereum();
-            }
-        }
-
-        function handleEthereum() {
-            if (handled) {
-                return;
-            }
-            handled = true;
-
-            globalThis.removeEventListener(`${injectFlag}#initialized`, handleEthereum);
-
-            let provider = (globalThis as any)[injectFlag] as T;
             if (!provider) {
                 return reject(`Unable to detect window.${injectFlag}.`);
             }
@@ -70,10 +51,29 @@ export default function detectProvider<T extends Object>(
                 reject(message);
             }
         }
+        handleEthereum();
     });
 }
 
 function judgeIsSpecifiedWallet(provider: any, walletFlag: string, isSingleWalletFlag: boolean = false) {
     const walletFlagKeys = provider ? Object.keys(provider).filter((key) => key?.startsWith('is')) : [];
-    return !!provider && (isSingleWalletFlag ? (walletFlagKeys.length === 1 && walletFlagKeys[0] === walletFlag) : walletFlagKeys.includes(walletFlag));
+    return !!provider && (isSingleWalletFlag ? walletFlagKeys.length === 1 && walletFlagKeys[0] === walletFlag : walletFlagKeys.includes(walletFlag));
 }
+
+const getProvider = async (injectFlag: string, interval: number, timeout: number) => {
+    return new Promise((resolve) => {
+        const _resolve = (res: unknown) => {
+            clearInterval(intervalId);
+            clearTimeout(timeoutId);
+            resolve(res);
+        };
+        const timeoutId = setTimeout(() => {
+            _resolve(null);
+        }, timeout);
+        const intervalId = setInterval(() => {
+            if ((globalThis as any)[injectFlag]) {
+                _resolve((globalThis as any)[injectFlag]);
+            }
+        }, interval);
+    });
+};
