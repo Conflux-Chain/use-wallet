@@ -38,6 +38,8 @@ export const useBalance = () => {
     return store(selectors.balance);
 };
 
+export const startTrackBalance = Emitter.startTrackBalance;
+export const stopTrackBalance = Emitter.stopTrackBalance;
 export const trackBalanceChangeOnce = Emitter.trackBalanceChangeOnce;
 export const completeDetect = Emitter.completeDetect;
 

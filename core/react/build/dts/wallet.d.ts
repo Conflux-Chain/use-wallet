@@ -27,6 +27,8 @@ export declare const addChain: (params: import('./type').AddChainParameter) => P
 export declare const switchChain: (chainId: string) => Promise<string>;
 export declare const watchAsset: (param: import('./type').WatchAssetParams) => Promise<string>;
 export declare const provider: import('./type').Provider | undefined;
+export declare const startTrackBalance: (interval?: number) => void;
+export declare const stopTrackBalance: () => void;
 export declare const trackBalanceChangeOnce: (callback: VoidFunction) => void;
 export declare const completeDetect: () => Promise<void>;
 export declare const requestPermissions: (params: Record<string, any>) => Promise<Record<string, string>>;

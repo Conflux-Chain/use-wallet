@@ -181,7 +181,8 @@ class Emitter<T extends RPCMethod> {
 
     public completeDetect = () => this.detectPromise;
 
-    public startTrackBalance = () => {
+    public startTrackBalance = (interval = 1500) => {
+        this.stopTrackBalance();
         const getAndSetBalance = () => {
             const account = this.state.accounts?.[0];
             const chainId = this.state.chainId;
@@ -192,7 +193,7 @@ class Emitter<T extends RPCMethod> {
         };
 
         getAndSetBalance();
-        this.trackBalanceInterval = setInterval(getAndSetBalance, 1500) as unknown as number;
+        this.trackBalanceInterval = setInterval(getAndSetBalance, interval) as unknown as number;
     };
 
     public stopTrackBalance = () => {
