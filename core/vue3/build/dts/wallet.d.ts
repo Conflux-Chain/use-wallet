@@ -16,7 +16,7 @@ export declare const connect: () => Promise<string[]>;
 export declare const sendTransaction: (params: Omit<import("./type").TransactionParameters, "from">) => Promise<string>;
 export declare const personalSign: (message: string) => Promise<string>;
 export declare const typedSign: (typedData: Record<string, any>) => Promise<string>;
-export declare const addChain: (params: import("./type").AddChainParameter) => Promise<string>;
+export declare const addChain: (params: import('./type').AddChainParameter, needConnected?: boolean) => Promise<string>;
 export declare const switchChain: (chainId: string) => Promise<string>;
 export declare const watchAsset: (param: import("./type").WatchAssetParams) => Promise<string>;
 export declare const provider: import("./type").Provider | undefined;
