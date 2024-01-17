@@ -251,13 +251,13 @@ class Emitter<T extends RPCMethod> {
         return this.RPCMethod.typedSign(typedData);
     };
 
-    public addChain: T['addChain'] = (params: unknown) => {
+    public addChain = (params: Parameters<T['addChain']>[0], needConnected = true) => {
         if (!this.RPCMethod.addChain) {
             throw new Error(`Current Wallet does'nt have addChain method.`);
         }
 
-        this.checkConnected('addChain');
-        return this.RPCMethod.addChain(params);
+        needConnected && this.checkConnected('addChain');
+        return this.RPCMethod.addChain(params) as ReturnType<T['addChain']>;
     };
 
     public switchChain: T['switchChain'] = (params: unknown) => {
