@@ -1,7 +1,9 @@
-import useI18n from '@hooks/useI18n';
+import useI18n, { useLocale } from '@hooks/useI18n';
 import React from 'react';
-import FluentAdvanceImg1 from '@assets/fluentAdvance1.jpg';
-import FluentAdvanceImg2 from '@assets/fluentAdvance2.jpg';
+import FluentAdvanceImgZh1 from '@assets/fluentAdvance1.jpg';
+import FluentAdvanceImgZh2 from '@assets/fluentAdvance2.jpg';
+import FluentAdvanceImgEn1 from '@assets/fluentAdvanceEn1.jpg';
+import FluentAdvanceImgEn2 from '@assets/fluentAdvanceEn2.jpg';
 import Code from '@components/Code';
 import useCurrentLib from '@hooks/useCurrentLib';
 
@@ -26,6 +28,7 @@ const transitions = {
 
 const FluentHostMetaMask: React.FC = () => {
     const i18n = useI18n(transitions);
+    const local = useLocale();
     const currentLib = useCurrentLib();
     const code = `import { provider, completeDetect } from '@cfxjs/use-wallet-${currentLib}/ethereum';
 
@@ -41,10 +44,18 @@ completeDetect().then(() => {
             <h3>Fluent host MetaMask</h3>
 
             <h4>{i18n.title1}</h4>
-            <div className="flex justify-center">
-                <img src={FluentAdvanceImg1} alt="fluent_advance" className="w-[30%] h-[30%] mr-[40px]" />
-                <img src={FluentAdvanceImg2} alt="fluent_advance" className="w-[30%] h-[30%]" />
-            </div>
+            {local == 'en' && (
+                <div className="flex justify-center">
+                    <img src={FluentAdvanceImgEn1} alt="fluent_advance" className="w-[30%] h-[30%] mr-[40px]" />
+                    <img src={FluentAdvanceImgEn2} alt="fluent_advance" className="w-[30%] h-[30%]" />
+                </div>
+            )}
+            {local == 'zh' && (
+                <div className="flex justify-center">
+                    <img src={FluentAdvanceImgZh1} alt="fluent_advance" className="w-[30%] h-[30%] mr-[40px]" />
+                    <img src={FluentAdvanceImgZh2} alt="fluent_advance" className="w-[30%] h-[30%]" />
+                </div>
+            )}
             <p dangerouslySetInnerHTML={{ __html: i18n.step1 }} />
             <p dangerouslySetInnerHTML={{ __html: i18n.step2 }} />
 

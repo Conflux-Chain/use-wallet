@@ -9,7 +9,7 @@ const transitions = {
         introduce:
             '<code>use-wallet</code> is a front-end perspective wallet hooks library designed to provide rapid development support for lightweight dapps, it only encapsulates the provider that the wallet injects into the window. <code>js-conflux-sdk</code> or <code>web3.js</code> would be more suitable if you need more complete and powerful support.',
         feature1_title: 'Can support any chain/any wallet/any framework',
-        feature1_text: `Currently, <code>use-wallet</code> already supports conflux chains (including Portal and Fluent) and ethereum chains (including MetaMask, Fluent, MetaX and Coinbase). We also provide integration support for React and Vue3 frameworks.`,
+        feature1_text: `Currently, <code>use-wallet</code> already supports conflux chains (including Portal and Fluent) and ethereum chains (including MetaMask, Fluent, MetaX, Halo and Coinbase). We also provide integration support for React and Vue3 frameworks.`,
         feature2_title: 'Easy to use',
         feature2_text: `<code>use-wallet</code> is an advanced wrapper library for front-end developers that eliminates the need for users to pay attention to underlying provider and other specification concepts. You can easily integrate wallet functionality into your application by directly using hooks and func provided by <code>use-wallet</code>.`,
         feature3_title: 'Effective avoidance of duplicate rendering',
@@ -23,7 +23,7 @@ const transitions = {
         introduce:
             '<code>use-wallet</code> 是一个前端视角的钱包 hooks 库，旨在为轻量级 dapp 提供快速开发支持，它仅仅封装了钱包注入在 window 中的 provider。如果你需要更完整强大的功能支持， <code>js-conflux-sdk</code> 或者 <code>web3.js</code> 会更适合。',
         feature1_title: '支持任意链/任意钱包/任意框架',
-        feature1_text: `目前，<code>use-wallet</code> 已经支持 conflux 链（包括 Portal 和 Fluent）以及 ethereum 链（包括 MetaMask、Fluent、MetaX 和 Coinbase）。同时，我们还提供了对于 React 和 Vue3 框架的集成支持。`,
+        feature1_text: `目前，<code>use-wallet</code> 已经支持 conflux 链（包括 Portal 和 Fluent）以及 ethereum 链（包括 MetaMask、Fluent、MetaX、Halo 和 Coinbase）。同时，我们还提供了对于 React 和 Vue3 框架的集成支持。`,
         feature2_title: '开箱即用',
         feature2_text: `<code>use-wallet</code> 是一个针对前端开发者的高级封装库，用户无需关注底层的 provider 等规范概念。可以直接使用 <code>use-wallet</code> 提供的 hooks 和 func，轻松集成钱包功能到你的应用中。`,
         feature3_title: '有效规避重复渲染',
