@@ -19,37 +19,37 @@ const demos = [
         title: 'demo_connect_title',
         introduce: 'demo_connect_introduce',
         Demo: ConnectDemo,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/Connect/index.tsx',
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/dev-examples/docs/src/pages/Demo/Connect/index.tsx',
     },
     {
         title: 'demo_connect_both_title',
         introduce: 'demo_connect_both_introduce',
         Demo: ConnectBothDemo,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/ConnectBoth/index.tsx',
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/dev-examples/docs/src/pages/Demo/ConnectBoth/index.tsx',
     },
     {
         title: 'demo_connect_switch_title',
         introduce: 'demo_connect_switch_introduce',
         Demo: ConnectSwitch,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/ConnectSwitch/index.tsx',
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/dev-examples/docs/src/pages/Demo/ConnectSwitch/index.tsx',
     },
     {
         title: 'demo_send_transaction_title',
         introduce: 'demo_send_transaction_introduce',
         Demo: SendTransaction,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/SendTransaction/index.tsx',
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/dev-examples/docs/src/pages/Demo/SendTransaction/index.tsx',
     },
     {
         title: 'demo_sign_title',
         introduce: 'demo_sign_introduce',
         Demo: Sign,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/Sign/index.tsx',
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/dev-examples/docs/src/pages/Demo/Sign/index.tsx',
     },
     {
         title: 'demo_addSwitch_title',
         introduce: 'demo_addSwitch_introduce',
         Demo: AddSwitch,
-        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/examples/docs/src/pages/Demo/AddSwitch/index.tsx',
+        code: 'https://github.com/Conflux-Chain/use-wallet/blob/main/dev-examples/docs/src/pages/Demo/AddSwitch/index.tsx',
     },
 ] as const;
 

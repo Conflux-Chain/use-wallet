@@ -22,6 +22,7 @@ store.subscribe(
             const connectBtn = document.querySelector<HTMLButtonElement>('#connect')!;
             connectBtn.disabled = status !== 'not-active';
             connectBtn!.innerText = status === 'not-installed' ? 'Fluent Not Install' : status === 'not-active' ? 'Connect Fluent' : 'connecting...';
+            connectBtn.addEventListener('click', () => connect());
         } else if (status === 'active') {
             unsubWallState?.();
             unsubWallState = store.subscribe(

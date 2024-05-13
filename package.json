@@ -5,6 +5,7 @@
     "workspaces": [
         "config/*",
         "examples/*",
+        "dev-examples/*",
         "enhance/*",
         "core/*"
     ],
