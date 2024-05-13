@@ -1,0 +1,20 @@
+{
+  "name": "vanillademo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@cfxjs/use-wallet-react": "^0.0.2-6",
+    "decimal.js": "^10.4.3",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}

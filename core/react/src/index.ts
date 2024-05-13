@@ -15,7 +15,7 @@ export const store = create(
     }))
 );
 
-subStateChange(Emitter, store);
+subStateChange(Emitter, store)
 
 export const useStatus = () => store(selectors.status);
 export const useChainId = () => store(selectors.chainId);

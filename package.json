@@ -15,7 +15,7 @@
         "dev:docs": "turbo run dev --scope=docs",
         "build:react": "turbo run build --scope=react",
         "build:vue3": "turbo run build --scope=vue3",
-        "build:lib": "turbo run build  --scope=vanilla --scope=react --scope=vue --scope=svelte",
+        "build:lib": "turbo run build  --scope=react --scope=vue",
         "build:docs": "turbo run build --scope=docs",
         "build:enhance-react": "turbo run build --scope=enhance-react",
         "release:react": "node ./core/react/build/release.js",
