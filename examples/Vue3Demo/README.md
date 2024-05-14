@@ -1,9 +1,20 @@
-# Vue 3 + TypeScript + Vite
+# README
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is the example project showing how to use the `use-wallet` library to connect to Fluent wallet with Conflux eSpace as target chain using [Vue.js](https://vuejs.org/).
 
-## Recommended Setup
+You can also switch to other wallets like Metamask or switch to other target chains like Conflux core space by modifying the example code.
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+## How to start
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+Making sure [node](https://nodejs.org/en) is installed. Then run
+
+```sh
+# install dependencies
+npm install
+# develop and project will start on localhost:5173
+npm run dev
+# or build
+npm run build
+# preview built files
+npm run preview
+```
