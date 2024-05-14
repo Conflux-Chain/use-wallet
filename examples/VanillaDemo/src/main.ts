@@ -5,8 +5,20 @@ enum TargetChains {
     eSpaceMainnet = '1030',
     eSpaceTestnet = '71',
 }
+const targetChainName = "eSpaceMainnet"
+const typedSignDomainName = "EIP712Domain"
 
-const TargetChain = TargetChains.eSpaceMainnet;
+// uncomment to use Core Space setting
+// import { store, connect, Unit, sendTransaction, typedSign, switchChain } from '@cfxjs/use-wallet-react/conflux/Fluent';
+// enum TargetChains {
+//     coreSpaceMainnet = '1029',
+//     coreSpaceTestnet = '1',
+// }
+// const targetChainName = "coreSpaceMainnet"
+// const typedSignDomainName = "CIP23Domain"
+
+
+const targetChain = TargetChains[targetChainName];
 
 let unsubWallState: ReturnType<(typeof store)['subscribe']> | null = null;
 store.subscribe(
@@ -28,7 +40,7 @@ store.subscribe(
             unsubWallState = store.subscribe(
                 (state) => [state.accounts, state.chainId, state.balance] as const,
                 ([accounts, chainId, balance]) => {
-                    const isChainMatch = chainId === TargetChain;
+                    const isChainMatch = chainId === targetChain;
                     if (isChainMatch) {
                         const account = accounts?.[0];
                         document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -92,7 +104,7 @@ store.subscribe(
                                     primaryType: 'Mail',
                                     types: {
                                         // This refers to the domain the contract is hosted on.
-                                        EIP712Domain: [
+                                        [typedSignDomainName]: [
                                             { name: 'name', type: 'string' },
                                             { name: 'version', type: 'string' },
                                             { name: 'chainId', type: 'uint256' },
@@ -123,11 +135,11 @@ store.subscribe(
                         });
                     } else {
                         document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-                            <p>Current Chain is not Target Chain -- ${TargetChain === TargetChains.eSpaceMainnet ? 'eSpaceMainnet' : 'eSpaceTestnet'} </p>
+                            <p>Current Chain is not Target Chain -- ${targetChainName} </p>
                             <button id="switch">Switch to Target Chain</button>
                         `;
                         const switchBtn = document.querySelector<HTMLButtonElement>('#switch')!;
-                        switchBtn.addEventListener('click', () => switchChain(`0x${(+TargetChain).toString(16)}`));
+                        switchBtn.addEventListener('click', () => switchChain(`0x${(+targetChain).toString(16)}`));
                     }
                 },
                 {
