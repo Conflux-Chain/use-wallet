@@ -15,11 +15,11 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn install
       - run: yarn build:docs
-      - run: cp CNAME ./examples/docs/dist/
+      - run: cp CNAME ./dev-examples/docs/dist/
       - name: Deploy to use-wallet.fluentwallet.dev
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: "use-wallet.fluentwallet.dev"
-          project: "./examples/docs/dist/"
+          project: "./dev-examples/docs/dist/"
           login: ${{ secrets.CONFLUX_ECO_SURGE_LOGIN}}
           token: ${{ secrets.CONFLUX_ECO_SURGE_TOKEN}}
