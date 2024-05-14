@@ -14,7 +14,7 @@ npm install
 # develop and project will start on localhost:5173
 npm run dev
 # or build
-npm build
+npm run build
 # preview built files
-
+npm run preview
 ```
