@@ -13,6 +13,10 @@ jobs:
         node-version: [20.11.1]
     steps:
       - uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - run: yarn install
       - run: yarn build:docs
       - run: cp CNAME ./dev-examples/docs/dist/
