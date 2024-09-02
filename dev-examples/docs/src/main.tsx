@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import Router from '@router/index';
 import { completeDetect as completeDetectConflux } from '@cfxjs/use-wallet-react/conflux';
-import { completeDetect as completeDetectEthereum } from '@cfxjs/use-wallet-react/ethereum';
+import { completeDetect as completeDetectEthereum } from '@cfxjs/use-wallet-react/ethereum/Fluent';
 import 'custom-react-scrollbar/dist/style.css';
 import './index.css';
 
