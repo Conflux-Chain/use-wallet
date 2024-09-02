@@ -25,8 +25,7 @@
         "release:docs": "turbo run release --scope=docs",
         "release:enhance-react": "node ./enhance/react/build/release.js",
         "lint": "turbo run lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "preinstall": "npx only-allow yarn"
+        "format": "prettier --write \"**/*.{ts,tsx,md}\""
     },
     "devDependencies": {
         "prettier": "latest",
@@ -35,7 +34,7 @@
     },
     "engines": {
         "npm": ">=7.0.0",
-        "node": ">=14.0.0"
+        "node": ">=20.0.0"
     },
     "packageManager": "yarn@1.22.18"
 }
