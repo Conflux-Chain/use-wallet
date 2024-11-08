@@ -1,11 +1,24 @@
+export class NotDetectedError extends Error {
+    constructor(public message: string) {
+        super(message);
+        this.message = message;
+    }
+}
+export class NotMatchError extends Error {
+    constructor(public message: string) {
+        super(message);
+        this.message = message;
+    }
+}
+
 export default function detectProvider<T extends Object>({
     silent = false,
     interval = 10,
-    timeout = 100,
+    timeout = 200,
     walletFlag,
     isSingleWalletFlag,
     injectFlag = 'ethereum',
-    defaultWaltFlag,
+    defaultWalletFlag,
 }: {
     silent?: boolean;
     interval?: number;
@@ -13,14 +26,14 @@ export default function detectProvider<T extends Object>({
     walletFlag?: string;
     isSingleWalletFlag?: boolean;
     injectFlag: string;
-    defaultWaltFlag?: string;
+    defaultWalletFlag?: string;
 }): Promise<T> {
     return new Promise((resolve, reject) => {
         async function handleEthereum() {
             let provider = (await getProvider(injectFlag, interval, timeout)) as T;
 
             if (!provider) {
-                return reject(`Unable to detect window.${injectFlag}.`);
+                return reject(new NotDetectedError(`Unable to detect window.${injectFlag}.`));
             }
 
             let mustBeSpecifiedWallet = false;
@@ -30,8 +43,8 @@ export default function detectProvider<T extends Object>({
             const providers = (provider as any).providers;
             if (providers?.length) {
                 if (typeof walletFlag !== 'string' || !walletFlag) {
-                    if (defaultWaltFlag) {
-                        provider = providers.find((provider: any) => judgeIsSpecifiedWallet(provider, defaultWaltFlag, isSingleWalletFlag));
+                    if (defaultWalletFlag) {
+                        provider = providers.find((provider: any) => judgeIsSpecifiedWallet(provider, defaultWalletFlag, isSingleWalletFlag));
                     } else {
                         provider = providers[0];
                     }
@@ -48,7 +61,7 @@ export default function detectProvider<T extends Object>({
             } else {
                 const message = `Non-${walletFlag} Wallet detected.`;
                 !silent && console.error('detect-provider:', message);
-                reject(message);
+                reject(new NotMatchError(message));
             }
         }
         handleEthereum();

@@ -1,4 +1,6 @@
 abstract class RPCMethod {
+    abstract sessionKey: string;
+    abstract injectFlag: string;
     abstract provider: any;
     account!: string;
     abstract detectProvider(): Promise<any>;
@@ -17,19 +19,40 @@ abstract class RPCMethod {
     requestPermissions?(params: any): Promise<any>;
     requestCrossNetworkPermission?(): Promise<any>;
     crossNetworkChain?: string;
-    sessionKey?: string;
     retryLimit = 2;
     detectTimeout = 1500;
 
     detectAndSetProvider = () => {
         const p = this.detectProvider();
-        p.then(provider => (this.provider = provider)).catch(err => console.warn(err));
+        p.then((provider) => (this.provider = provider)).catch((err) => console.warn(err));
         return p;
-    }
+    };
+
+    subProvider = () => {
+        if (this.provider) return Promise.resolve(this.provider);
+        return new Promise((resolve, reject) => {
+            let hasValue = false;
+            let value = window[this.injectFlag as any] as any;
+            Object.defineProperty(window, this.injectFlag, {
+                get: () => value,
+                set: (provider: any) => {
+                    value = provider;
+                    if (this.provider || hasValue) {
+                        reject();
+                        return;
+                    }
+                    if (value) {
+                        hasValue = true;
+                        this.detectAndSetProvider().then(resolve, reject);
+                    }
+                },
+            });
+        });
+    };
 
     setAccounts = (accounts: Array<string>) => {
         this.account = accounts?.[0];
-    }
+    };
 
     getProvider = () => this.provider;
 }

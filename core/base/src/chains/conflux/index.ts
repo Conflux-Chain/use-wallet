@@ -5,10 +5,11 @@ import type { Provider, TransactionParameters, AddChainParameter, WatchAssetPara
 
 export class ConfluxRPCMethod extends RPCMethod {
     sessionKey = 'conflux';
+    injectFlag = 'conflux';
     declare provider: Provider;
 
     detectProvider = () => {
-        const p = detectProvider<Provider>({ injectFlag: 'conflux' });
+        const p = detectProvider<Provider>({ injectFlag: this.injectFlag });
 
         // Conflux Portal Wallet support
         p.then((provider) => {
