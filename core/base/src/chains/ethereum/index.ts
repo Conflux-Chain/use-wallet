@@ -5,9 +5,10 @@ import type { Provider, TransactionParameters, AddChainParameter, WatchAssetPara
 
 export class EthereumRPCMethod extends RPCMethod {
     sessionKey = 'ethereum--isMetaMask';
+    injectFlag = 'ethereum';
     declare provider: Provider;
 
-    detectProvider = () => detectProvider<Provider>({ injectFlag: 'ethereum', defaultWaltFlag: 'isMetaMask' });
+    detectProvider = () => detectProvider<Provider>({ injectFlag: this.injectFlag, defaultWalletFlag: 'isMetaMask' });
 
     requestAccounts = () => this.provider!.request({ method: 'eth_requestAccounts' });
 

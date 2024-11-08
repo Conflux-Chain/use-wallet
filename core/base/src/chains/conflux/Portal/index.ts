@@ -5,7 +5,7 @@ import type { Provider } from '../type';
 
 class PortalRPCMethod extends ConfluxRPCMethod {
     sessionKey = 'conflux-isConfluxPortal';
-    detectProvider = () => detectProvider<Provider>({ injectFlag: 'conflux', walletFlag: 'isConfluxPortal' });
+    detectProvider = () => detectProvider<Provider>({ injectFlag: this.injectFlag, walletFlag: 'isConfluxPortal' });
 }
 
 export default new Emitter(new PortalRPCMethod());

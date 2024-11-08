@@ -1,6 +1,7 @@
 import mitt from 'mitt';
 import Unit from '../unit';
 import type RPCMethod from './RPCMethod';
+import { NotDetectedError } from '../detect';
 
 export type State = {
     status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
@@ -37,28 +38,33 @@ class Emitter<T extends RPCMethod> {
     constructor(RPCMethod: T) {
         this.RPCMethod = RPCMethod;
         this.RPCMethod.detectAndSetProvider()
-            .then((provider) => {
-                this.batchGetInfo();
-                this.RPCMethod.onChainIdChange(() => this.batchGetInfo());
-                this.RPCMethod.onAccountsChange(() => this.batchGetInfo());
-                this.provider = provider;
-            })
-            .catch(() => {
+            .then(this.setProvider)
+            .catch((e) => {
                 this.handleStatusChanged('not-installed');
                 this.resolveDetect();
+                if (e instanceof NotDetectedError) {
+                    this.RPCMethod.subProvider().then(this.setProvider);
+                }
             });
         this.detectTimer = setTimeout(() => {
-            console.error(`Unable to detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'}.`);
+            console.error(`detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'} timeout.`);
             if (this.RPCMethod.sessionKey) {
                 const times = Number(sessionStorage.getItem(this.RPCMethod.sessionKey) || 0);
                 if (times >= this.RPCMethod.retryLimit) {
-                    throw new Error(`Unable to detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'}.`);
+                    throw new Error(`detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'} timeout.`);
                 }
                 sessionStorage.setItem(this.RPCMethod.sessionKey, String(times + 1));
             }
             window.location.reload();
         }, this.RPCMethod.detectTimeout);
     }
+
+    setProvider = (provider: any) => {
+        this.batchGetInfo();
+        this.RPCMethod.onChainIdChange(() => this.batchGetInfo());
+        this.RPCMethod.onAccountsChange(() => this.batchGetInfo());
+        this.provider = provider;
+    };
 
     private handleStateChange = <T extends keyof State>(stateKey: T, newVal: State[T]) => {
         const preVal = this.state[stateKey];

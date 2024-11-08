@@ -46,7 +46,7 @@ const WalletInfo: React.FC = memo(() => {
             const hash = await typedSign({
                 domain: {
                     // This defines the network, in this case, Mainnet.
-                    chainId: 1,
+                    chainId: chainId,
                     // Give a user-friendly name to the specific contract you're signing for.
                     name: 'Ether Mail',
                     // Add a verifying contract to make sure you're establishing contracts with the proper entity.
@@ -108,7 +108,7 @@ const WalletInfo: React.FC = memo(() => {
         } catch (err) {
             console.log(err);
         }
-    }, [account]);
+    }, [account, chainId]);
 
     return (
         <div>

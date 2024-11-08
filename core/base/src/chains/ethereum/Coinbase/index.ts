@@ -5,7 +5,7 @@ import type { Provider } from '../type';
 
 class CoinbaseRPCMethod extends EthereumRPCMethod {
     sessionKey = 'ethereum-isCoinbaseWallet';
-    detectProvider = () => detectProvider<Provider>({ injectFlag: 'ethereum', walletFlag: 'isCoinbaseWallet' });
+    detectProvider = () => detectProvider<Provider>({ injectFlag: this.injectFlag, walletFlag: 'isCoinbaseWallet' });
 }
 
 export default new Emitter(new CoinbaseRPCMethod());
