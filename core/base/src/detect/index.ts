@@ -11,6 +11,16 @@ export class NotMatchError extends Error {
     }
 }
 
+export interface DetectProviderConfig {
+    silent?: boolean;
+    interval?: number;
+    timeout?: number;
+    walletFlag?: string;
+    isSingleWalletFlag?: boolean;
+    injectFlag: string;
+    defaultWalletFlag?: string;
+}
+
 export default function detectProvider<T extends Object>({
     silent = false,
     interval = 10,
@@ -19,15 +29,7 @@ export default function detectProvider<T extends Object>({
     isSingleWalletFlag,
     injectFlag = 'ethereum',
     defaultWalletFlag,
-}: {
-    silent?: boolean;
-    interval?: number;
-    timeout?: number;
-    walletFlag?: string;
-    isSingleWalletFlag?: boolean;
-    injectFlag: string;
-    defaultWalletFlag?: string;
-}): Promise<T> {
+}: DetectProviderConfig): Promise<T> {
     return new Promise((resolve, reject) => {
         async function handleEthereum() {
             let provider = (await getProvider(injectFlag, interval, timeout)) as T;

@@ -1,9 +1,13 @@
+import type { DetectProviderConfig } from '../detect';
+
+export type CustomDetectConfig = Omit<DetectProviderConfig, 'walletFlag' | 'isSingleWalletFlag' | 'injectFlag' | 'defaultWalletFlag'>;
+
 abstract class RPCMethod {
     abstract sessionKey: string;
     abstract injectFlag: string;
     abstract provider: any;
     account!: string;
-    abstract detectProvider(): Promise<any>;
+    abstract detectProvider(config?: CustomDetectConfig): Promise<any>;
     abstract requestAccounts(): Promise<Array<string>>;
     abstract getAccounts(): Promise<Array<string>>;
     abstract getChainId(): Promise<string>;
@@ -21,32 +25,19 @@ abstract class RPCMethod {
     crossNetworkChain?: string;
     retryLimit = 2;
     detectTimeout = 1500;
+    subTimeout = 1000;
+    subInterval = 100;
 
-    detectAndSetProvider = () => {
-        const p = this.detectProvider();
+    detectAndSetProvider = (config?: CustomDetectConfig) => {
+        const p = this.detectProvider(config);
         p.then((provider) => (this.provider = provider)).catch((err) => console.warn(err));
         return p;
     };
 
     subProvider = () => {
-        if (this.provider) return Promise.resolve(this.provider);
-        return new Promise((resolve, reject) => {
-            let hasValue = false;
-            let value = window[this.injectFlag as any] as any;
-            Object.defineProperty(window, this.injectFlag, {
-                get: () => value,
-                set: (provider: any) => {
-                    value = provider;
-                    if (this.provider || hasValue) {
-                        reject();
-                        return;
-                    }
-                    if (value) {
-                        hasValue = true;
-                        this.detectAndSetProvider().then(resolve, reject);
-                    }
-                },
-            });
+        return this.detectAndSetProvider({
+            timeout: this.subTimeout,
+            interval: this.subInterval,
         });
     };
 
