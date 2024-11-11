@@ -1,5 +1,5 @@
 import Emitter from '../../emitter';
-import RPCMethod from '../../emitter/RPCMethod';
+import RPCMethod, { type CustomDetectConfig } from '../../emitter/RPCMethod';
 import detectProvider from '../../detect';
 import type { Provider, TransactionParameters, AddChainParameter, WatchAssetParams, TypedSignParams } from './type';
 
@@ -8,8 +8,8 @@ export class ConfluxRPCMethod extends RPCMethod {
     injectFlag = 'conflux';
     declare provider: Provider;
 
-    detectProvider = () => {
-        const p = detectProvider<Provider>({ injectFlag: this.injectFlag });
+    detectProvider = (config: CustomDetectConfig = {}) => {
+        const p = detectProvider<Provider>({ injectFlag: this.injectFlag, ...config });
 
         // Conflux Portal Wallet support
         p.then((provider) => {

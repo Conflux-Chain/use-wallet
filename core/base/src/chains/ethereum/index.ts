@@ -1,5 +1,5 @@
 import Emitter from '../../emitter';
-import RPCMethod from '../../emitter/RPCMethod';
+import RPCMethod, { type CustomDetectConfig } from '../../emitter/RPCMethod';
 import detectProvider from '../../detect';
 import type { Provider, TransactionParameters, AddChainParameter, WatchAssetParams, TypedSignParams } from './type';
 
@@ -8,7 +8,7 @@ export class EthereumRPCMethod extends RPCMethod {
     injectFlag = 'ethereum';
     declare provider: Provider;
 
-    detectProvider = () => detectProvider<Provider>({ injectFlag: this.injectFlag, defaultWalletFlag: 'isMetaMask' });
+    detectProvider = (config: CustomDetectConfig = {}) => detectProvider<Provider>({ injectFlag: this.injectFlag, defaultWalletFlag: 'isMetaMask', ...config });
 
     requestAccounts = () => this.provider!.request({ method: 'eth_requestAccounts' });
 
