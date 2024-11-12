@@ -7,6 +7,7 @@ import type { CustomDetectConfig } from '../../../emitter/RPCMethod';
 class FluentRPCMethod extends EthereumRPCMethod {
     sessionKey = 'fluent-isFluent';
     injectFlag = 'fluent';
+    subTimeout = 5000;
     detectProvider = (config: CustomDetectConfig = {}) => detectProvider<Provider>({ injectFlag: this.injectFlag, walletFlag: 'isFluent', ...config });
 
     requestCrossNetworkPermission = () =>

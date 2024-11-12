@@ -30,11 +30,12 @@ abstract class RPCMethod {
 
     detectAndSetProvider = (config?: CustomDetectConfig) => {
         const p = this.detectProvider(config);
-        p.then((provider) => (this.provider = provider)).catch((err) => console.warn(err));
+        p.then((provider) => (this.provider = provider)).catch((err) => console.warn(err, Date.now()));
         return p;
     };
 
     subProvider = () => {
+        if (this.provider) return Promise.resolve(this.provider);
         return this.detectAndSetProvider({
             timeout: this.subTimeout,
             interval: this.subInterval,
