@@ -7,6 +7,7 @@ export class ConfluxRPCMethod extends RPCMethod {
     sessionKey = 'conflux';
     injectFlag = 'conflux';
     declare provider: Provider;
+    subTimeout = 5000;
 
     detectProvider = (config: CustomDetectConfig = {}) => {
         const p = detectProvider<Provider>({ injectFlag: this.injectFlag, ...config });

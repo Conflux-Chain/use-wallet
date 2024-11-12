@@ -1,7 +1,6 @@
 import mitt from 'mitt';
 import Unit from '../unit';
 import type RPCMethod from './RPCMethod';
-import { NotDetectedError } from '../detect';
 
 export type State = {
     status: 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active';
@@ -42,7 +41,7 @@ class Emitter<T extends RPCMethod> {
             .catch((e) => {
                 this.handleStatusChanged('not-installed');
                 this.resolveDetect();
-                if (e instanceof NotDetectedError) {
+                if (typeof e === 'string' && e.startsWith('Unable to detect window.')) {
                     this.RPCMethod.subProvider().then(this.setProvider);
                 }
             });
