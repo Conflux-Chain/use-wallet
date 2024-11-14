@@ -50,6 +50,8 @@ class Emitter<T extends RPCMethod> {
             if (this.RPCMethod.sessionKey) {
                 const times = Number(sessionStorage.getItem(this.RPCMethod.sessionKey) || 0);
                 if (times >= this.RPCMethod.retryLimit) {
+                    this.handleStatusChanged('not-active');
+                    this.resolveDetect();
                     throw new Error(`detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'} timeout.`);
                 }
                 sessionStorage.setItem(this.RPCMethod.sessionKey, String(times + 1));
