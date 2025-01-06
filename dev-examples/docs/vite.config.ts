@@ -14,5 +14,6 @@ export default defineConfig({
             '@components': path.resolve(__dirname, 'src/components'),
             '@router': path.resolve(__dirname, 'src/router'),
         },
-    }
+    },
+    base: './'
 });
