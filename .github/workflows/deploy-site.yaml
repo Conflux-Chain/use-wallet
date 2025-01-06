@@ -11,6 +11,9 @@ jobs:
     strategy:
       matrix:
         node-version: [20.11.1]
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 20
@@ -19,11 +22,8 @@ jobs:
           node-version: 20
       - run: yarn install
       - run: yarn build:docs
-      - run: cp CNAME ./dev-examples/docs/dist/
-      - name: Deploy to use-wallet.fluentwallet.dev
-        uses: dswistowski/surge-sh-action@v1
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          domain: "use-wallet.fluentwallet.dev"
-          project: "./dev-examples/docs/dist/"
-          login: ${{ secrets.CONFLUX_ECO_SURGE_LOGIN}}
-          token: ${{ secrets.CONFLUX_ECO_SURGE_TOKEN}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dev-examples/docs/dist
