@@ -1,6 +1,7 @@
 import esbuild from 'esbuild';
 import { buildUtils, allChainAndWallets, createChainPlugin, copyDts, copyPkg } from '../../base/build/index.js';
 import { createRequire } from 'module';
+import { copyFile } from 'fs';
 const require = createRequire(import.meta.url);
 const pkg = require('../package.json');
 
@@ -32,5 +33,21 @@ allChainAndWallets.forEach((chain) => {
         })
         .then(() => copyDts(chain));
 });
+
+esbuild
+    .build({
+        entryPoints: ['./src/createWallet.ts'],
+        entryNames: 'index',
+        bundle: true,
+        sourcemap: false,
+        minify: false,
+        format: 'esm',
+        target: ['esnext'],
+        ...createChainPlugin('ethereum/6963'),
+        external: ['react', 'react-dom', 'zustand'],
+    })
+    .then(() => {
+        copyFile('./build/dts/6963.d.ts', `./dist/ethereum/6963/index.d.ts`, () => {});
+    });
 
 copyPkg(pkg);
