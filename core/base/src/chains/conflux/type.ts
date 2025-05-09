@@ -1,5 +1,12 @@
 type Events = 'chainChanged' | 'accountsChanged' | 'connect' | 'disconnect';
 
+export interface ProviderInfo {
+    uuid: string;
+    name: string;
+    icon: string;
+    rdns: string;
+};
+
 export interface ProviderRpcError extends Error {
     message: string;
     code: number;

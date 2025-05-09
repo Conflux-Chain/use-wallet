@@ -4,7 +4,7 @@ import { EthereumRPCMethod } from '../index';
 import type { Provider } from '../type';
 import type { CustomDetectConfig } from '../../../emitter/RPCMethod';
 
-class FluentRPCMethod extends EthereumRPCMethod {
+export class FluentRPCMethod extends EthereumRPCMethod {
     sessionKey = 'fluent-isFluent';
     injectFlag = 'fluent';
     subTimeout = 5000;

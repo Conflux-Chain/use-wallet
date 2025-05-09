@@ -9,19 +9,17 @@ const run = async (command) => {
     await exec(command);
 };
 
-    
 export function buildUtils() {
     // build detect
-    esbuild
-        .build({
-            entryPoints: ['../base/src/detect/index.ts'],
-            outfile: 'dist/utils/detect.js',
-            bundle: true,
-            sourcemap: false,
-            minify: false,
-            format: 'esm',
-            target: ['esnext'],
-        })
+    esbuild.build({
+        entryPoints: ['../base/src/detect/index.ts'],
+        outfile: 'dist/utils/detect.js',
+        bundle: true,
+        sourcemap: false,
+        minify: false,
+        format: 'esm',
+        target: ['esnext'],
+    });
 
     // build Unit
     esbuild
@@ -92,16 +90,15 @@ export function buildUtils() {
         });
 
     // build RPCMethod
-    esbuild
-        .build({
-            entryPoints: ['../base/src/emitter/RPCMethod.ts'],
-            outfile: 'dist/utils/RPCMethod.js',
-            bundle: true,
-            sourcemap: false,
-            minify: false,
-            format: 'esm',
-            target: ['esnext'],
-        })
+    esbuild.build({
+        entryPoints: ['../base/src/emitter/RPCMethod.ts'],
+        outfile: 'dist/utils/RPCMethod.js',
+        bundle: true,
+        sourcemap: false,
+        minify: false,
+        format: 'esm',
+        target: ['esnext'],
+    });
 }
 
 export const allChainAndWallets = readdirSync('../base/src/chains').reduce((pre, chain) => {
@@ -109,6 +106,7 @@ export const allChainAndWallets = readdirSync('../base/src/chains').reduce((pre,
         pre.push(chain);
         readdirSync(`../base/src/chains/${chain}`)
             .filter((file) => statSync(`../base/src/chains/${chain}/${file}`).isDirectory())
+            .filter((file) => file !== '6963')
             .forEach((wallet) => {
                 pre.push(`${chain}/${wallet}`);
             });
@@ -117,18 +115,20 @@ export const allChainAndWallets = readdirSync('../base/src/chains').reduce((pre,
 }, []);
 
 // build chain & wallet
-export const createChainPlugin = (chain) => {
+export const createChainPlugin = (chainOrWallet) => {
+    const isChain = chainOrWallet.indexOf('/') === -1;
+
     return {
-        outdir: `dist/${chain}/`,
+        outdir: `dist/${chainOrWallet}/`,
         plugins: [
             {
                 name: 'chain',
                 setup(build) {
                     build.onResolve({ filter: /^base\/src\/chains\// }, (args) => {
-                        return { path: path.join(args.resolveDir, '../../', args.path.split('/').slice(0, 4).join('/'), '../', `${chain}/index.ts`) };
+                        return { path: path.join(args.resolveDir, '../../', args.path.split('/').slice(0, 4).join('/'), '../', `${chainOrWallet}/index.ts`) };
                     });
 
-                    const prePath = chain.indexOf('/') !== -1 ? '../../' : '../';
+                    const prePath = !isChain ? '../../' : '../';
                     build.onResolve({ filter: /^.*\/unit$/ }, () => {
                         return { path: `${prePath}utils/unit.js`, external: true };
                     });
@@ -144,6 +144,12 @@ export const createChainPlugin = (chain) => {
                     build.onResolve({ filter: /^.*\/helpers$/ }, () => {
                         return { path: `${prePath}utils/helpers.js`, external: true };
                     });
+
+                    if (!isChain) {
+                        build.onResolve({ filter: /^.*\/index$/ }, () => {
+                            return { path: `../index.js`, external: true };
+                        });
+                    }
                 },
             },
         ],
@@ -161,11 +167,9 @@ export const copyDts = (chain) => {
         copyFile('./build/dts/wallet.d.ts', `./dist/${chain}/index.d.ts`, () => {});
         if (existsSync(`../base/src/chains/${chain}/type.ts`)) {
             copyFile(`../base/src/chains/${chain}/type.ts`, `./dist/${chain}/type.d.ts`, () => {});
-        } else if (existsSync(`../base/src/chains/${chain.split('/')[0]}/type.ts`)) {
-            copyFile(`../base/src/chains/${chain.split('/')[0]}/type.ts`, `./dist/${chain}/type.d.ts`, () => {});
         }
     }
-}
+};
 
 export const copyPkg = (pkg) => {
     try {
@@ -179,4 +183,4 @@ export const copyPkg = (pkg) => {
     writeFile('./dist/package.json', JSON.stringify(pkg), () => {
         run('npx prettier ./dist/package.json --write');
     });
-}
+};

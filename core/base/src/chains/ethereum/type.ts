@@ -1,5 +1,23 @@
 type Events = 'chainChanged' | 'accountsChanged' | 'connect' | 'disconnect';
 
+export interface ProviderInfo {
+    uuid: string;
+    name: string;
+    icon: string;
+    rdns: string;
+};
+
+export type EIP6963ProviderInfo = ProviderInfo;
+
+export interface EIP6963AnnounceProviderEvent extends CustomEvent {
+    type: "eip6963:announceProvider";
+    detail: EIP6963ProviderDetail;
+}
+
+export interface EIP6963ProviderDetail {
+    info: EIP6963ProviderInfo;
+    provider: Provider;
+}
 export interface ProviderRpcError extends Error {
     message: string;
     code: number;

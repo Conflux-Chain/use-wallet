@@ -1,5 +1,6 @@
 import Unit from '../utils/unit';
 import { type State } from '../utils/emitter';
+
 type Write<T extends object, U extends object> = Omit<T, keyof U> & U;
 type StoreSubscribeWithSelector<T extends State> = {
     subscribe: {
@@ -10,6 +11,7 @@ type StoreSubscribeWithSelector<T extends State> = {
         }): () => void;
     };
 };
+
 export declare const store: import("zustand").UseBoundStore<Write<import("zustand").StoreApi<State>, StoreSubscribeWithSelector<State>>>;
 export declare const useStatus: () => "in-detecting" | "not-installed" | "not-active" | "in-activating" | "active" | "chain-error";
 export declare const useChainId: () => string | undefined;
@@ -30,5 +32,6 @@ export declare const completeDetect: () => Promise<void>;
 export declare const requestPermissions: (params: Record<string, any>) => Promise<Record<string, string>>
 export declare const requestCrossNetworkPermission: () => Promise<Record<string, string>>;
 export declare const setCrossNetworkChain: (chainId?: string) => void;
+export declare const providerInfo: import('./type').ProviderInfo | undefined;
 
 export { Unit };

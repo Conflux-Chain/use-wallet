@@ -26,16 +26,20 @@ class Emitter<T extends RPCMethod> {
     private resolveDetect!: () => void;
     private detectPromise = new Promise<void>(
         (resolve) =>
-            (this.resolveDetect = () => {
-                if (this.detectTimer) {
-                    clearTimeout(this.detectTimer);
-                }
-                resolve();
-            }),
+        (this.resolveDetect = () => {
+            if (this.detectTimer) {
+                clearTimeout(this.detectTimer);
+            }
+            resolve();
+        }),
     );
 
     constructor(RPCMethod: T) {
         this.RPCMethod = RPCMethod;
+        if (typeof this.RPCMethod.detectProvider !== 'function') {
+            return;
+        }
+
         this.RPCMethod.detectAndSetProvider()
             .then(this.setProvider)
             .catch((e) => {

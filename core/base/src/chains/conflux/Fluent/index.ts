@@ -4,7 +4,7 @@ import { ConfluxRPCMethod } from '../index';
 import type { Provider } from '../type';
 import type { CustomDetectConfig } from '../../../emitter/RPCMethod';
 
-class FluentRPCMethod extends ConfluxRPCMethod {
+export class FluentRPCMethod extends ConfluxRPCMethod {
     sessionKey = 'conflux-isFluent';
 
     detectProvider = (config: CustomDetectConfig = {}) => detectProvider<Provider>({ injectFlag: this.injectFlag, walletFlag: 'isFluent', ...config });

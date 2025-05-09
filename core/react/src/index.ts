@@ -5,6 +5,7 @@ import Unit from 'base/src/unit';
 import Emitter from 'base/src/chains/ethereum/Halo';
 import { subStateChange, selectors } from './helpers';
 import { type State } from 'base/src/emitter';
+export * from 'base/src/chains/ethereum/Halo';
 
 export const store = create(
     subscribeWithSelector<State>(() => ({
