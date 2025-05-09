@@ -17,7 +17,7 @@ type StoreSubscribeWithSelector<T extends State> = {
     };
 };
 
-export interface EIP6963Emitter {
+export interface EIP6963Wallet {
     store: import('zustand').UseBoundStore<Write<import('zustand').StoreApi<State>, StoreSubscribeWithSelector<State>>>;
     useStatus: () => 'in-detecting' | 'not-installed' | 'not-active' | 'in-activating' | 'active' | 'chain-error';
     useChainId: () => string | undefined;
@@ -41,6 +41,6 @@ export interface EIP6963Emitter {
     providerInfo: ProviderInfo | undefined;
 }
 
-export default function createEIP6963Emitter(providerDetail: EIP6963ProviderDetail): EIP6963Emitter;
+export function createWallet(providerDetail: EIP6963ProviderDetail): EIP6963Wallet;
 
 export { Unit };
