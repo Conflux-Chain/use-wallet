@@ -34,7 +34,7 @@ class Emitter<T extends RPCMethod> {
         }),
     );
 
-    constructor(RPCMethod: T) {
+    constructor(RPCMethod: T, { isEIP6963 = false }: { isEIP6963?: boolean } = { isEIP6963: false }) {
         this.RPCMethod = RPCMethod;
         if (typeof this.RPCMethod.detectProvider !== 'function') {
             return;
@@ -49,6 +49,11 @@ class Emitter<T extends RPCMethod> {
                     this.RPCMethod.subProvider().then(this.setProvider);
                 }
             });
+
+        if (isEIP6963) {
+            return;
+        }
+        
         this.detectTimer = setTimeout(() => {
             console.error(`detect ${this.RPCMethod.sessionKey ? 'window.' + this.RPCMethod.sessionKey.split('-')[0] : 'wallet'} timeout.`);
             if (this.RPCMethod.sessionKey) {
