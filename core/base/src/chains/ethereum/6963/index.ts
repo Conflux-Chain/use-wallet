@@ -5,7 +5,7 @@ import type { EIP6963ProviderDetail } from '../type';
 export class EIP6963RPCMethod extends EthereumRPCMethod {
     constructor(detail: EIP6963ProviderDetail) {
         super();
-        this.sessionKey = `eip6963-${detail.info.uuid}`;
+        this.sessionKey = `eip6963-${detail.info.name}`;
         this.provider = detail.provider;
     }
 
@@ -13,7 +13,7 @@ export class EIP6963RPCMethod extends EthereumRPCMethod {
 }
 
 const createEIP6963Emitter = (providerDetail: EIP6963ProviderDetail) => {
-    return new Emitter(new EIP6963RPCMethod(providerDetail));
+    return new Emitter(new EIP6963RPCMethod(providerDetail), { isEIP6963: true });
 }
 
 export default createEIP6963Emitter;
