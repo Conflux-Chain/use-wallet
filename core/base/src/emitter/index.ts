@@ -11,12 +11,7 @@ export type State = {
 
 class Emitter<T extends RPCMethod> {
     private emitter = mitt<State>();
-    private state: State = {
-        status: 'in-detecting',
-        accounts: undefined,
-        chainId: undefined,
-        balance: undefined,
-    };
+    private state: State;
     private trackBalanceInterval?: number;
     private detectTimer?: NodeJS.Timeout;
     private trackBalanceChangeOnceCallback: Array<VoidFunction> = [];
@@ -35,6 +30,12 @@ class Emitter<T extends RPCMethod> {
     );
 
     constructor(RPCMethod: T, { isEIP6963 = false }: { isEIP6963?: boolean } = { isEIP6963: false }) {
+        this.state = {
+            status: isEIP6963 ? 'not-active' : 'in-detecting',
+            accounts: undefined,
+            chainId: undefined,
+            balance: undefined,
+        };
         this.RPCMethod = RPCMethod;
         if (typeof this.RPCMethod.detectProvider !== 'function') {
             return;
