@@ -12,7 +12,7 @@ const createWallet = (providerDetail: Parameters<typeof createEIP6963Emitter>[0]
 
   const store = create(
     subscribeWithSelector<State>(() => ({
-      status: 'in-detecting',
+      status: 'not-active',
       accounts: undefined,
       chainId: undefined,
       balance: undefined,
